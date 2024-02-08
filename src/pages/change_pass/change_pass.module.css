@@ -1,0 +1,147 @@
+.interview_main {
+    font-family: "Raleway", sans-serif;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+  background-color: skyblue;
+  }
+  
+  .interview {
+    width: 50%;
+    padding: 20px;
+    height: auto;
+  }
+  
+  .interview input,textarea,select {
+    width: 100%;
+    padding: 5px;
+    margin: 5px 0;
+    border: none;
+    border-radius: 5px;
+    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+  }
+  
+  .interview input,textarea,select:focus {
+    outline-color: rgb(173, 173, 233);
+  }
+  
+  
+  .profile_img img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+  }
+ 
+  
+  .submit_btn {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .my_btn {
+    position: relative;
+  }
+  .my_btn button{
+    border: 1px solid #3d3c3c;
+    height: 5vh;
+    border-radius: 3px;
+    background-color:#2672C8;
+    color: whitesmoke;
+    font-size: 15px;
+    font-weight: 400;
+  }
+
+  
+  .container
+  {
+    text-align: center;
+  }
+  /* @media (min-width:250px) and (max-width:600px){
+    .my_btn {
+      position: relative;
+    }
+    .my_btn button{
+      height: auto;
+      border: 1px solid #3d3c3c;
+    border-radius: 3px;
+      background-color:#2672C8;
+      color: whitesmoke;
+      font-size: 15px;
+      font-weight: 400;
+    }
+    input
+    {
+      width: 100%;
+    }
+  } */
+  /* @media (min-width:300px) and (max-width:430px){
+    .my_btn {
+      position: relative;
+    }
+    .my_btn button{
+      background-color:#2672C8;
+      color: whitesmoke;
+      font-size: 15px;
+      font-weight: 500;
+    }
+    input
+    {
+      width: 100%;
+    }
+  }
+  @media (min-width:430px) and (max-width:580px){
+    .my_btn {
+      position: relative;
+    }
+    .my_btn button{
+      background-color: #2672C8;
+      color: whitesmoke;
+      font-size: 15px;
+      font-weight: 500;
+    }
+  } */
+
+  @media only screen and (max-width:768px)
+{
+    .my_btn button
+    {
+        height: 100%;
+    }
+    input
+    {
+      width: 100%;
+    }
+    
+}
+
+@media only screen and (min-width:769px) and (max-width:1366px)
+{
+    .my_btn button
+    {
+        height: 100%;
+        color:white;
+        background-color:#2672C8; 
+        border: 1px solid #3d3c3c;
+        border-radius: 3px;
+         font-size:15px;
+         font-weight:400;
+    }
+  
+}
+
+@media only screen and (min-width:1367px)
+{
+    .my_btn button
+    {
+        height: 100%;
+        color:white;
+        background-color:#2672C8; 
+        border: 1px solid #3d3c3c;
+        border-radius: 3px;
+         font-size:15px;
+         font-weight:400;
+    }
+}
