@@ -15,7 +15,7 @@ const Edit_affiliations = (props) => {
     >
       <Modal show={isOpen1} onHide={close_fun1}>
         <Modal.Header closeButton>
-          <Modal.Title style={{alignContent:'center'}}>Update Affiliation Detail</Modal.Title>
+          <Modal.Title style={{alignContent:'center'}}>Update Affiliation</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className={style.container}>

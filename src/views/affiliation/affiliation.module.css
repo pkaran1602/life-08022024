@@ -1,6 +1,7 @@
 .container
 {
     text-align: center;
+    padding-bottom: 25px;
 }
 .profile_img img {
     border-radius: 50%;

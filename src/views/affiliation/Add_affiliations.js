@@ -2,15 +2,12 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import style from './affiliation.module.css'
-import { useState } from 'react';
 import profile from '../../assets/images/profile.png'
 import { Container, Row } from 'react-bootstrap';
 
 const Add_affiliations = (props) => {
 
-
-
-  const { close_fun,isOpen, open_add_fun, addAffiliation_fun,img,link, handleChange,handleFile } = props
+  const { close_fun,isOpen, addAffiliation_fun,img,link, handleChange,handleFile } = props
  
   return (
     <div
@@ -19,7 +16,7 @@ const Add_affiliations = (props) => {
     >
       <Modal show={isOpen} onHide={close_fun}>
         <Modal.Header closeButton>
-          <Modal.Title style={{alignContent:'center'}}>Add Affiliation Detail</Modal.Title>
+          <Modal.Title style={{alignContent:'center'}}>Add Affiliation</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className={style.container}>
@@ -70,6 +67,6 @@ const Add_affiliations = (props) => {
         </Modal.Body>
       </Modal>
     </div>
-  );
+  )
 }
 export default Add_affiliations;

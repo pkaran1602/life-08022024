@@ -1,5 +1,24 @@
 .container
 {
+    height: 30vh;
+}
+.my_modal
+{
+    margin-top: 25vh;
+}
+
+.my_profile
+{
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+}
+.my_profile img
+{
+    width: 120px;
+}
+.my_details
+{
+    margin-top: 10px;
+    text-align: center;
+
 }

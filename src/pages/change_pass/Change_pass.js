@@ -4,7 +4,6 @@ import stylesheet from './change_pass.module.css'
 import Swal from 'sweetalert2'
 import Card from 'react-bootstrap/Card'
 import { change_password } from 'src/axios/Api'
-import { useNavigate } from 'react-router-dom'
 
 const Change_pass = () => {
 
@@ -55,19 +54,24 @@ const Change_pass = () => {
 
   const submit_fun = (e) => {
     e.preventDefault()
-
-    if (data.current_password.length===0 || data.current_password.length===0 || data.current_password.length===0) {
+    if (data.current_password.length === 0 || data.current_password.length === 0 || data.current_password.length === 0) {
       setError2(true)
-    } 
-    else{
-      change_password(data).then((response)=>{
-        if(response.status ===1){ 
+    }
+    else {
+      change_password(data).then((response) => {
+        if (response.status === 1) {
           Swal.fire({
             title: 'Password has been changed successfully',
             icon: 'success',
           })
           setData({ current_password: '', new_password: '', confirm_password: '' })
           setError2(false)
+        } else if (response.status === 0) {
+          Swal.fire({
+            title: "Current password is invalid.",
+            icon: 'warning',
+          })
+          setData({ current_password: '', new_password: '', confirm_password: '' })
         }
       })
     }
@@ -111,9 +115,9 @@ const Change_pass = () => {
                       )}
                     </div>
                     <div>
-                        {error2 && data.current_password.length===0 ?
+                      {error2 && data.current_password.length === 0 ?
                         <label style={{ color: 'red' }}>Current Password is Required</label>
-                        :""
+                        : ""
                       }
                     </div>
                   </Col>
@@ -146,10 +150,10 @@ const Change_pass = () => {
                     </div>
                     {errors && errors.new_password && <p className="text-danger">{errors.new_password}</p>}
                     <div>
-                          {error2 && data.new_password.length===0?
-                          <label style={{ color: 'red' }}>New Password is Required</label>
-                          :""
-                        }
+                      {error2 && data.new_password.length === 0 ?
+                        <label style={{ color: 'red' }}>New Password is Required</label>
+                        : ""
+                      }
                     </div>
                   </Col>
                 </Row>
@@ -183,10 +187,10 @@ const Change_pass = () => {
                       <p className="text-danger">{errors.confirm_password}</p>
                     )}
                     <div>
-                      {error2 && data.confirm_password.length===0 ?
-                      <label style={{ color: 'red' }}>Confirm Password is Required</label>
-                    :""  
-                    }
+                      {error2 && data.confirm_password.length === 0 ?
+                        <label style={{ color: 'red' }}>Confirm Password is Required</label>
+                        : ""
+                      }
                     </div>
                   </Col>
                 </Row>
@@ -203,4 +207,4 @@ const Change_pass = () => {
   )
 };
 
-export default Change_pass
+export default Change_pass;

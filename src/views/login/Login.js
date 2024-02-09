@@ -30,8 +30,7 @@ const Login = () => {
   }
 
   const loginFun = (e) => {
-    e.preventDefault()
-    // alert(LOGIN_FAILED)  
+    e.preventDefault() 
     dispatch(userLogin(user))
   }
 

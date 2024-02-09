@@ -106,3 +106,30 @@ export const send_pust_notification = async (data) => {
         return response.data;
     });
 };
+
+export const forgot_pass = async (user_data) => {
+    return axios.post(API_URL + "forgotPassword",user_data, {
+        headers: authHeader()
+    }
+    ).then((response) => {
+        return response.data;
+    });
+};
+
+export const verify_otp = async (user_data) => {
+    return axios.post(API_URL + "verifyOTP",user_data, {
+        headers: authHeader()
+    }
+    ).then((response) => {
+        return response.data;
+    });
+};
+
+export const reorder_data = async (data) => {
+    return axios.post(API_URL + "re_order_affiliation",data, {
+        headers: authHeader()
+    }
+    ).then((response) => {
+        return response.data;
+    });
+};
