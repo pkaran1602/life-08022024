@@ -12,15 +12,27 @@
     width:20%;
     height: 40px !important;
     color:white;
-    background-color:#2672C8; 
+    background-color:#c8b026; 
     border: 1px solid #3d3c3c;
     border-radius: 3px;
      font-size:15px;
      font-weight:400;
 }
+.left_div{
+    padding-top: 15px;
+    background-color: rgb(118, 190, 238);
+}
 .my_logo img
 {
+    margin-top: 20px;
     width: 180px;
+}
+.reset_link {
+    display: flex;
+    justify-content: flex-end;
+}
+.reset_link  a{
+  text-decoration: none;
 }
 
 @media only screen and (max-width:768px)
@@ -44,7 +56,7 @@
         width:100%;
         height: 100%;
         color:white;
-        background-color:#2672C8; 
+        background-color:#7ca8da; 
         border: 1px solid #3d3c3c;
         border-radius: 3px;
          font-size:15px;

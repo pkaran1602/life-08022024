@@ -24,12 +24,14 @@ const Notification_table = (props) => {
       },
       {
         accessorKey: 'createdAt',
-        header: 'Title',
+        header: 'Sent On',
         size: 200,
       },
     ],
     [],
   );
+
+  
 
   const table = useMaterialReactTable({
     enableColumnActions: false,

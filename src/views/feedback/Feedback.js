@@ -77,24 +77,23 @@ const Feedback = () => {
 
   return (
     <>
-     <div>
-      {isLoading &&
-        <My_Loader />
-      }
-      {!isLoading &&
-      <>
       <div>
-        <span style={{ color: '#424242', fontSize: '24px', fontWeight: '500' }}>
-          Feedbacks
-        </span>
+        {isLoading &&
+          <My_Loader />
+        }
+        {!isLoading &&
+          < div style={{backgroundColor:'white', padding:'30px',paddingTop:'20px'}}>
+            <div >
+              <span style={{ color: '#424242', fontSize: '24px', fontWeight: '500' }}>
+              Feedbacks Management
+              </span>
+            </div>
+            <div style={{ marginTop: '20px' }}>
+              <MaterialReactTable table={table} />
+            </div>
+          </div>
+        }
       </div>
-      <div style={{marginTop:'20px'}}>
-
-        <MaterialReactTable table={table} />;
-      </div>
-      </>
-}
-</div>
     </>
   )
 };

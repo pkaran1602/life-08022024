@@ -127,7 +127,8 @@ const Affiliation_Main = () => {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Your Details has been Added",
+          title: "Life Of Me",
+          text: "Updated successfully",
           showConfirmButton: false,
           timer: 1500
         });
@@ -138,12 +139,13 @@ const Affiliation_Main = () => {
 
   const delete_fun = (data) => {
     Swal.fire({
-      title: "Are you sure ?",
+      title: "Delete?",
+      text: "Are you sure you want to delete?",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Delete"
+      confirmButtonColor: " rgba(201, 153, 33, 0.733)",
+      cancelButtonColor: "#757575",
+      confirmButtonText: "Delete",
     }).then((result) => {
       if (result.isConfirmed) {
         remove_affiliation_data(data.id).then((response) => {
@@ -162,6 +164,7 @@ const Affiliation_Main = () => {
     });
   };
 
+
   const columns = useMemo(
     () => [
       {
@@ -175,6 +178,7 @@ const Affiliation_Main = () => {
         size: 150,
         Cell: tableProps => (
           <img
+            style={{ borderRadius: '7px' }}
             src={tableProps.renderedCellValue}
             width={60}
             alt='Logo'
@@ -185,6 +189,12 @@ const Affiliation_Main = () => {
         accessorKey: 'link',
         header: 'Web URL',
         size: 200,
+        Cell: tableProps => (
+          <a style={{ textDecoration: 'none' }} href={tableProps.row.original.link} target="_blank" rel="noopener noreferrer">
+            {tableProps.row.original.link}
+          </a>
+        )
+
       },
       {
         accessorFn: (row) =>
@@ -200,11 +210,12 @@ const Affiliation_Main = () => {
           </>,
         id: 'Button',
         header: 'AAA',
-        Header: () => <i>Actions</i>,
+        Header: () => <p>Actions</p>,
       },
     ],
     [],
   );
+
 
   const table = useMaterialReactTable({
     autoResetPageIndex: false,
@@ -245,18 +256,18 @@ const Affiliation_Main = () => {
         <My_Loader />
       }
       {!isLoading &&
-        <div>
-          <div style={{ paddingBottom: '20px', display: 'flex', justifyContent: 'space-between' }}>
+        <div style={{ backgroundColor: 'white', paddingTop: '20px' }}>
+          <div style={{ padding: '30px', paddingTop: '10px', display: 'flex', justifyContent: 'space-between' }}>
             <div>
               <span style={{ color: '#424242', fontSize: '24px', fontWeight: '500' }}>
                 Affiliations
               </span>
             </div>
             <div>
-              <Button variant='outline-primary' onClick={open_add_fun} >Add Affiliations</Button>
+              <Button variant='outline-primary' onClick={open_add_fun} >Add Affiliation</Button>
             </div>
           </div>
-          <div>
+          <div style={{ padding: '30px', paddingTop: '10px' }}>
             <MaterialReactTable table={table} />
           </div>
           <div>

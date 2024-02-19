@@ -14,10 +14,10 @@ const Edit_affiliations = (props) => {
       style={{ display: 'block', position: 'initial' }}
     >
       <Modal show={isOpen1} onHide={close_fun1}>
-        <Modal.Header closeButton>
+        <Modal.Header style={{backgroundColor:'skyblue'}} closeButton>
           <Modal.Title style={{alignContent:'center'}}>Update Affiliation</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body style={{backgroundColor:'whitesmoke'}}>
           <div className={style.container}>
           <form onSubmit={editAffiliation_fun}>
             <Container>
@@ -27,7 +27,7 @@ const Edit_affiliations = (props) => {
               <div className={style.profile_img}>
                 <div>
               <label>
-                <img src={img1 ? img1 : affiliations_data.image } width={60} alt="" />
+                <img style={{cursor:'grabbing'}} src={img1 ? img1 : affiliations_data.image } width={60} alt="" />
                 <input
                   type="file"
                   name='file'
@@ -45,7 +45,7 @@ const Edit_affiliations = (props) => {
               </div>
               <div style={{paddingTop:'10px'}}>
                 <input
-                style={{width:'75%',height:'5vh' , border:'1px solid #757575', borderRadius:'2px'}}
+                style={{width:'75%',height:'5vh' , border:'1px solid #757575', borderRadius:'7px',padding:'0 8px'}}
                   type="text"
                   name='link'
                   onChange={handle_change}

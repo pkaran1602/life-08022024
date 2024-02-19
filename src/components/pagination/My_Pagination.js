@@ -18,7 +18,6 @@ const My_Pagination = (props) => {
     )
   }
 
-
   return (
     <div>
      <Pagination>

@@ -1,102 +1,134 @@
 import React, { useState } from 'react'
-import style from './forgot_pass.module.css'
-import Swal from 'sweetalert2'
-import { useNavigate } from 'react-router-dom'
-import { CCard, CCardBody, CCardGroup, CContainer, CForm, CFormInput, CInputGroup, CInputGroupText, CRow } from '@coreui/react'
+import {
+  CCard,
+  CCardBody,
+  CCardGroup,
+  CCol,
+  CContainer,
+  CForm,
+  CFormInput,
+  CInputGroup,
+  CInputGroupText,
+  CRow,
+} from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilUser } from '@coreui/icons'
 import app_logo from '../../../assets/brand/logo.png'
-import { forgot_pass } from 'src/axios/Api'
+import style from './forgot_pass.module.css'
+import { useNavigate } from 'react-router-dom';
+import { forgot_pass, verify_otp } from 'src/axios/Api'
+import Verify_otp from './Verify_otp'
+
+
 
 const Forgot_pass = () => {
-  const navigate = useNavigate()
-
-  const [errors, setErrors] = useState({})
-  const [email, setEmail] = useState("")
+  const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
+  const [error, setError] = useState(null);
+  const [verify_error, setVerify_error] = useState(null);
+  const [otp, setOtp] = useState("");
+  const [email, setEmail] = useState("");
 
   const handleChange = (e) => {
-    validate(e.target.name, e.target.value)
-    setEmail(e.target.value)
-  }
-
-  const validate = (name, value) => {
-    switch (name) {
-      case "email":
-        var validRegex =
-          /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-        if (!value.match(validRegex)) {
-          setErrors({
-            ...errors,
-            email: "Please enter a valid email !",
-          });
-        } else {
-          delete errors.email;
-          setErrors(errors);
-        }
-        break;
-      default:
-        break;
+   
+    let email_text = e.target.value;
+    setEmail(email_text);
+    var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    if (!email_text.match(validRegex)) {
+      setError('Please enter a valid email.');
+    } else {
+      setError(null);
     }
-  }
-
-
-  const submit_fun = (e) => {
-    e.preventDefault()
+  };
+  const submitFun = (e) => {
+    e.preventDefault();
     forgot_pass({ email: email }).then((res) => {
-      if (res.status === 1) {
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: 'Email has been sent to your registered email address',
-          showConfirmButton: false,
-          timer: 1500,
-        })
-        navigate('/otp_password', {state:{email: email}});
+      if (res.status === 0) {
+        setIsOpen(true);
+      } else if (res.status === 1) {
+        setError(res.message);
+      }
+    });
+  };
+  const closeFun = () => {
+    setIsOpen(false);
+    setVerify_error(null);
+    setOtp('');
+  };
+
+  const verifyFun = (e) => {
+    e.preventDefault();
+    verify_otp({ email: email, otp: otp }).then((response) => {
+      if (response.status === 1) {
+
+      } else if (response.status === 0) {
+        // setVerify_error("The OTP you provided is invalid. Please try again.")
+          navigate('/reset_password', { state: { email: email } });
       }
     })
   };
 
-  return (
-    <div className={style.login_form}>
-      <div className="bg-light min-vh-100  d-flex flex-row align-items-center">
-        <CContainer>
-          <div className={style.main_container} >
-            <CCardGroup>
-              <CCard className="text-white bg-primary py-1"  >
-                <CCardBody className="text-center">
-                  <div>
-                    <h2>Life of Me</h2>
-                    <img src={app_logo} width='100px' />
-                  </div>
-                  <CForm onSubmit={submit_fun}>
-                    <h2>Forgot Password ?</h2>
-                    <br />
-                    <p className="text-white">Enter Your Email to get a link to reset your Password</p>
-                    <br />
-                    <div className={style.my_input} >
-                      <CInputGroup className="mb-3">
-                        <CInputGroupText>
-                          <CIcon icon={cilUser} />
-                        </CInputGroupText>
-                        <CFormInput placeholder="Email"
-                          type="text" name="email" value={email} onChange={handleChange} required
-                        />
-                      </CInputGroup>
-                    </div>
-                    <CRow>
-                      <div className={style.my_btn} style={{ display: 'flex', justifyContent: 'center', }}>
-                        <button type='submit' >Send</button>
-                      </div>
-                    </CRow>
-                  </CForm>
-                </CCardBody>
-              </CCard>
-            </CCardGroup>
-          </div>
-        </CContainer>
-      </div>
-    </div>
-  )
-};
+ 
 
+  return (
+    <>
+      <div className={style.login_form}>
+        <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
+          <CContainer>
+            <CRow className="justify-content-center">
+              <CCol md={8}>
+                <CCardGroup>
+                  <CCard className={style.left_div}>
+                    <CCardBody className="text-center">
+                      <div className={style.my_logo}>
+                        <h2>Life of Me</h2>
+                        <img src={app_logo} />
+                      </div>
+                    </CCardBody>
+                  </CCard>
+                  <CCard className="p-4">
+                    <CCardBody>
+                      <CForm onSubmit={submitFun}>
+                        <h3>Reset password</h3>
+                        <p className="text-medium-emphasis">Enter your email to reset password</p>
+                        <CInputGroup className="mb-3">
+                          <CInputGroupText>
+                            <CIcon icon={cilUser} />
+                          </CInputGroupText>
+                          <CFormInput
+                            placeholder="Email"
+                            name="email"
+                            value={email}
+                            onChange={handleChange}
+                            required
+                          />
+                        </CInputGroup>
+                        {error &&
+                          <p className='text-danger'>{error}</p>
+                        }
+                        <CRow>
+                          <div className={style.my_btn}>
+                            <button type="submit">Submit</button>
+                          </div>
+                        </CRow>
+                      </CForm>
+                    </CCardBody>
+                  </CCard>
+                </CCardGroup>
+              </CCol>
+            </CRow>
+          </CContainer>
+        </div>
+        <Verify_otp
+          isOpen={isOpen}
+          closeFun={closeFun}
+          otp={otp}
+          setOtp={setOtp}
+          verifyFun={verifyFun}
+          verify_error={verify_error}
+        />
+      </div>
+    </>
+  )
+}
 export default Forgot_pass;

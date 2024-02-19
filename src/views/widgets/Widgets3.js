@@ -10,9 +10,9 @@ import Select from '@mui/material/Select';
 import { Button } from 'react-bootstrap';
 import style from './widgets.module.css'
 
-const Widgets = () => {
+const Widgets3 = () => {
 
-  const [selected_value, setSelected_value] = useState("total")
+  const [selected_value, setSelected_value] = useState("week")
   const [total_user, setTotal_user] = useState(10);
   const [learner, setLearner] = useState(5);
   const [open, setOpen] = useState(5);
@@ -25,12 +25,10 @@ const Widgets = () => {
 
   const handleChange = (event) => {
     setSelected_value(event.target.value);
-    if (event.target.value === "total") {
-    }
-    if (event.target.value === "date") {
-      setShow(true)
-      setShow1(false)
-    } else if (event.target.value === "date1") {
+    if (event.target.value === "week") {
+        setShow1(false)
+    }  
+   else if (event.target.value === "date1") {
       setShow1(true)
       setShow(false)
     } else {
@@ -50,7 +48,7 @@ const Widgets = () => {
   return (
     <>
       <div>
-        <h1 style={{color:'#424242',fontSize:'26px',fontWeight:'450',}}>Users</h1>
+        <h1 style={{color:'#424242',fontSize:'26px',fontWeight:'450',}}>Wish certificates</h1>
       </div>
       <br />
       <div style={{ display: 'flex', justifyContent: 'start' }}>
@@ -62,14 +60,10 @@ const Widgets = () => {
               displayEmpty
               inputProps={{ 'aria-label': 'Without label' }}
             >
-              <MenuItem style={{ fontSize: '15px', color: '#757575' }} value="total"> Total</MenuItem>
-              <MenuItem style={{ fontSize: '15px', color: '#757575' }} value="day"> Per day</MenuItem>
               <MenuItem style={{ fontSize: '15px', color: '#757575' }} value="week">Week</MenuItem>
               <MenuItem style={{ fontSize: '15px', color: '#757575' }} value="month">Month</MenuItem>
-              <MenuItem style={{ fontSize: '15px', color: '#757575' }} value="quarter">Quarter</MenuItem>
               <MenuItem style={{ fontSize: '15px', color: '#757575' }} value="year">Year</MenuItem>
               <MenuItem style={{ fontSize: '15px', color: '#757575' }} value="date1">To date</MenuItem>
-              <MenuItem style={{ fontSize: '15px', color: '#757575' }} value="date"> Custom date A-B</MenuItem>
             </Select>
             {show1 &&
               <div className='mt-3'>
@@ -78,18 +72,6 @@ const Widgets = () => {
                 </div>
                 <div className={style.my_input}>
                   <input  type="date" name='date' value={selectdate.end_date} onChange={handlechange_date} />
-                </div>
-              </div>
-            }
-            {show &&
-              <div className='d-flex align-center mt-3'>
-                <div className={style.my_input}>
-                  <label style={{ fontSize: '15px', color: '#757575' }} for='date'>Start Date</label>
-                  <input type="date" name='date' value={selectdate.start_date} onChange={handlechange_date} />
-                </div>
-                <div className={style.my_input} style={{ paddingLeft: '20px' }}>
-                  <label style={{ fontSize: '15px', color: '#757575' }} for='date'>End Date</label>
-                  <input style={{ border: '0.1px solid #757575', color: '#757575', backgroundColor: '#ededed' }} type="date" name='date' value={selectdate.end_date} onChange={handlechange_date} />
                 </div>
               </div>
             }
@@ -141,4 +123,4 @@ const Widgets = () => {
     </>
   )
 };
-export default Widgets;
+export default Widgets3;

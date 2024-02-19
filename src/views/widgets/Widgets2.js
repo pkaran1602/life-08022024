@@ -70,59 +70,6 @@ const Widgets2 = () => {
         />
       </CCol>
     </CRow>
-    <div style={{marginTop:'20px'}}>
-    <CRow>
-      <CCol md={6} lg={3} >
-        <CWidgetStatsA
-          className="p-4"
-          color="primary"
-          value={
-            <>
-             {total_user}
-            </>
-          }
-          title="MALE"
-        />
-      </CCol>
-      <CCol md={6} lg={3} >
-        <CWidgetStatsA
-          className="p-4"
-          color="info"
-          value={
-            <>
-             {total_user}
-            </>
-          }
-          title="MALE"
-        />
-      </CCol>
-      <CCol md={6} lg={3} >
-        <CWidgetStatsA
-          className="p-4"
-          color="warning"
-          value={
-            <>
-             {total_user}
-            </>
-          }
-          title="MALE"
-        />
-      </CCol>
-      <CCol md={6} lg={3} >
-        <CWidgetStatsA
-          className="p-4"
-          color="success"
-          value={
-            <>
-             {total_user}
-            </>
-          }
-          title="MALE"
-        />
-      </CCol>
-    
-    </CRow>
-    </div>
     </>
   )
 }

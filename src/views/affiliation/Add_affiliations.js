@@ -15,10 +15,10 @@ const Add_affiliations = (props) => {
       style={{ display: 'block', position: 'initial' }}
     >
       <Modal show={isOpen} onHide={close_fun}>
-        <Modal.Header closeButton>
+        <Modal.Header style={{backgroundColor:'skyblue'}} closeButton>
           <Modal.Title style={{alignContent:'center'}}>Add Affiliation</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body style={{backgroundColor:'whitesmoke'}}>
           <div className={style.container}>
           <form onSubmit={addAffiliation_fun}>
             <Container>
@@ -28,8 +28,9 @@ const Add_affiliations = (props) => {
               <div className={style.profile_img}>
                 <div>
               <label>
-                <img src={img ? img : profile} width={60} alt="" />
+                <img style={{cursor:'grabbing'}} src={img ? img : profile} width={60} alt="" />
                 <input
+                  accept="image/png"
                   type="file"
                   name='file'
                   onChange={handleFile}
@@ -46,7 +47,7 @@ const Add_affiliations = (props) => {
               </div>
               <div style={{paddingTop:'10px'}}>
                 <input
-                style={{width:'75%',height:'5vh' , border:'1px solid #757575', borderRadius:'2px'}}
+                style={{width:'75%',height:'5vh' , border:'1px solid #757575', borderRadius:'7px',padding:'0 8px'}}
                   type="text"
                   name='link'
                   onChange={handleChange}

@@ -183,3 +183,68 @@
       margin-left: -7px; } 
 
 }
+.picker-container {
+  position: relative;
+  width: 300px;
+}
+.emoji-icon {
+  cursor: pointer;
+  position: absolute;
+  top: 8px;
+  right: 5px;
+}
+ .nav-item:hover
+{
+background-color:rgba(201, 153, 33, 0.733);
+}
+
+.sidebar-nav .nav-link.active
+{
+  background:rgba(201, 153, 33, 0.733);
+}
+.btn {
+  --bs-btn-color: #fff;;
+  --bs-btn-bg: rgba(201, 153, 33, 0.733);
+  --bs-btn-border-color: rgba(201, 153, 33, 0.733);
+  --bs-btn-hover-color: #fff;;
+  --bs-btn-hover-bg: rgba(201, 153, 33, 0.733);
+  --bs-btn-hover-border-color: rgba(201, 153, 33, 0.733);
+  --bs-btn-focus-shadow-rgb: 49,132,253;
+  --bs-btn-active-color: rgba(201, 153, 33, 0.733);
+  --bs-btn-active-bg: rgba(201, 153, 33, 0.733)0;
+  --bs-btn-active-border-color: rgba(201, 153, 33, 0.733)0;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #fff;;
+  --bs-btn-disabled-bg: rgba(201, 153, 33, 0.733);
+  --bs-btn-disabled-border-color: rgba(201, 153, 33, 0.733);
+}
+.btn:hover {
+  color: var(--bs-btn-hover-color);
+  background-color:  rgba(201, 153, 33, 0.733);
+  border-color: var(--bs-btn-hover-border-color);
+}
+.profile_img:hover
+{
+    background-color: #f7f7f7 ;
+}
+.dropdown-item:active {
+  color: var(--bs-dropdown-link-active-color);
+  text-decoration: none;
+  background-color:  rgba(201, 153, 33, 0.733) !important;
+}
+.my_nav:hover                   
+{
+  background-color: #f7f7f7;
+}
+
+@media screen and (min-width:1500px) and (max-width:2000px)
+{
+  .container-lg
+  {
+      max-width: 1500px !important;
+  }
+  .btn-primary
+  {
+    height: 3.4vh;
+  }
+}

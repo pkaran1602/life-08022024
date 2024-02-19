@@ -5,7 +5,7 @@ import { CSidebar, CSidebarBrand, CSidebarNav } from '@coreui/react'
 
 import { AppSidebarNav } from './AppSidebarNav'
 
-import brand_logo from '../assets/brand/logo1.png';
+import brand_logo from '../assets/brand/logo.png';
 
 import SimpleBar from 'simplebar-react'
 import 'simplebar/dist/simplebar.min.css'
@@ -24,7 +24,7 @@ const AppSidebar = () => {
       style={{ backgroundColor: '#1192CF' }}
     >
       <CSidebarBrand className="d-none d-md-flex" to="/">
-        <img src={brand_logo} width='50px' />
+        <img src={brand_logo} width='50px' style={{backgroundColor:'white',borderRadius:'30px'}} />
       </CSidebarBrand>
       <CSidebarNav>
         <SimpleBar>

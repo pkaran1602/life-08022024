@@ -1,0 +1,83 @@
+.main_select_menu
+{
+    height: 5vh;
+    font-size: 16px;
+    color: #757575;
+}
+.my_input
+{
+    margin-top: 3px;
+}
+.my_input input
+{
+    border: 0.1px solid rgb(117, 117, 117);
+    color: rgb(117, 117, 117);
+    background-color: rgb(237, 237, 237);
+    border-radius: 5px;
+    width: 200px;
+    height: 4.8vh;
+    padding: 0 10px;
+}
+.my_btn
+{
+    margin-top: -5px;
+    margin-left: 15px;
+}
+
+
+
+/* .filter_btn
+{
+    height: 37px;
+    background-color: rgba(201, 153, 33, 0.733);
+} */
+
+/* @media screen and (min-width:500px) and (max-width:780px)
+{
+    .filter_btn
+{
+    height: 47px;
+}
+}
+@media screen and (min-width:780px) and (max-width:1100px)
+{
+    .filter_btn
+{
+    height: 47px;
+}
+} */
+@media screen and (min-width:1100px) and (max-width:1466px)
+{
+    .filter_btn
+{
+    height: 47px;
+}
+}
+@media screen and (min-width:1500px) and (max-width:2000px)
+{
+    .filter_btn
+{
+    height: 60px !important;
+}
+.my_input
+{
+    margin-top: 3px;
+}
+.my_input input
+{
+    border: 0.1px solid rgb(117, 117, 117);
+    color: rgb(117, 117, 117);
+    background-color: rgb(237, 237, 237);
+    border-radius: 5px;
+    width: 200px;
+    height: 2.8vh;
+    padding: 0 10px;
+}
+.main_select_menu
+{
+    height: 2.9vh;
+    font-size: 16px;
+    color: #757575;
+}
+
+}

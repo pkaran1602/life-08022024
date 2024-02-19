@@ -5,13 +5,14 @@ import { useSelector } from 'react-redux';
 import Forgot_pass from './views/login/fogot_pass/Forgot_pass';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css'
-import Otp_password from './views/login/fogot_pass/Otp_password';
+
 
 
 
 
 const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'));
 const Login = React.lazy(() => import('./views/login/Login'));
+const ResetPassword = React.lazy(() => import('./views/login/fogot_pass/ResetPassword'));
 
 const loading = (
   <div className="pt-3 text-center">
@@ -30,7 +31,7 @@ const App = () => {
               <Route exact path="/login" name="Login Page" element={<Login />} />
               <Route path="*" name="Login Page" element={<Navigate to='/login' />} />
               <Route exact path='/forget_password' element={<Forgot_pass />} />
-              <Route exact path='/otp_password' element={<Otp_password />} />
+              <Route exact path='/reset_password' element={<ResetPassword />} />
             </>
           }
           {user &&

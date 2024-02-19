@@ -36,7 +36,7 @@ const _nav = [
   },
   {
     component: CNavItem,
-    name: 'Push Notification',
+    name: 'Push Notifications',
     to: '/push_notification',
     icon: <CIcon icon={cil3d} customClassName="nav-icon" />,
   },

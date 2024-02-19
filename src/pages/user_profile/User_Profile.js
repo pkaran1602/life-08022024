@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import stylesheet from './user_profile.module.css'
-import { CardFooter, Col, Container, Row } from 'react-bootstrap'
+import { Col, Row } from 'react-bootstrap'
 import profile from '../../assets/images/profile.png'
 import Button from 'react-bootstrap/Button'
-import Modal from 'react-bootstrap/Modal'
 import Swal from 'sweetalert2'
 import Card from 'react-bootstrap/Card'
 import { get_admin_data, update_admin_data, user_details } from 'src/axios/Api'
@@ -104,42 +103,37 @@ const User_Profile = () => {
   }, []);
 
   return (
-    <div className="modal show" style={{ display: 'block', position: 'initial' }}>
-      <Card style={{ width: '50%', marginLeft: 'auto', marginRight: 'auto' }} >
-        <Card.Header as="h5" style={{ textAlign: 'center' }} >UPDATE PROFILE DETAILS</Card.Header>
+    <div className={stylesheet.container}>
+      <Card className={stylesheet.card}>
+        <Card.Header className={stylesheet.card_header}> <h5>Update profile details</h5></Card.Header>
         <Card.Body>
           <form onSubmit={submit_fun}>
-            <div className={stylesheet.container}>
-              <div>
-                <Row>
-                  <Col>
-
-                    <label for="firstname" style={{ fontSize: '14px', color: '#757575' }}>
-                      Please select profile picture to upload.{' '}
-                      <span className="text-danger" style={{ fontSize: '20px' }}>
-                        *
-                      </span>{' '}
-                    </label>
-
+            <Row>
+              <Col md={4}>
+                <div className={stylesheet.left}>
+                  <div>
                     <div className={stylesheet.profile_img}>
+
                       <div>
+                        <label className={stylesheet.image_label}>
+                          Upload picture.
+                          <span className="text-danger" style={{ fontSize: '20px' }}>
+                            *
+                          </span>
+                        </label>
                         <label>
                           <img src={user_data.profile_pic !== "" ? user_data.profile_pic : profile} alt="" width="100px" />
-                          <input type="file" name="file" onChange={handleFile} hidden />
+                          <input accept="image/png" type="file" name="file" onChange={handleFile} hidden />
                         </label>
                       </div>
                     </div>
-                    <div>
-                      {/* {error2 && img === null ?
-                        <label style={{ color: 'red' }}>Profile Picture is Required</label>
-                        : ""
-                      } */}
-                    </div>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col className="me-1">
 
+                  </div>
+                </div>
+              </Col>
+              <Col md={8}>
+                <div className={stylesheet.right}>
+                  <div>
                     <div>
                       <label for="name" style={{ fontSize: '14px', color: '#757575' }}>
                         Name
@@ -153,6 +147,7 @@ const User_Profile = () => {
                             border: 'none',
                             borderBottom: '1px solid #757575',
                             outline: 'none',
+                            width: '80%'
                           }}
                           type="text"
                           name="name"
@@ -171,10 +166,6 @@ const User_Profile = () => {
                         : ""
                       }
                     </div>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
                     <div>
                       <label for="email" style={{ fontSize: '14px', color: '#757575' }}>
                         Email
@@ -191,6 +182,7 @@ const User_Profile = () => {
                             border: 'none',
                             borderBottom: '1px solid #757575',
                             outline: 'none',
+                            width: '80%'
                           }}
 
                           type="email"
@@ -207,10 +199,7 @@ const User_Profile = () => {
                         : ""
                       }
                     </div>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
+
                     <div>
                       <label for="phone" style={{ fontSize: '14px', color: '#757575' }}>
                         Phone No
@@ -228,6 +217,7 @@ const User_Profile = () => {
                             border: 'none',
                             borderBottom: '1px solid #757575',
                             outline: 'none',
+                            width: '80%'
                           }}
                           type="tel"
                           name="phone"
@@ -243,19 +233,16 @@ const User_Profile = () => {
                         : ""
                       }
                     </div>
-                  </Col>
-                </Row>
-              </div>
-              <br />
-              <div className={stylesheet.my_btn}>
-                <button type='submit'>Save changes</button>
-              </div>
+                  </div>
+                </div>
+              </Col>
+            </Row>
+            <div className={stylesheet.update_btn}>
+              <Button type='submit'>Save changes</Button>
             </div>
           </form>
         </Card.Body>
-
       </Card>
-
     </div>
   )
 }

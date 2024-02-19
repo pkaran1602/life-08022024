@@ -14,7 +14,7 @@ import {
   cilUser,
 } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
-
+import style from './appHeader.module.css';
 import avatar8 from './../../assets/images/8.jpg'
 import { useDispatch } from 'react-redux'
 import { userLogout } from 'src/redux/actions/authAction'
@@ -30,12 +30,12 @@ const AppHeaderDropdown = () => {
 
   const logoutFun = () => {
     Swal.fire({
-      title: "Are you sure you want to logout?",
-      // text: "You won't be able to revert this!",
+      title: "Life Of Me",
+      text: "Are you sure you want to logout?",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
+      confirmButtonColor: "rgba(201, 153, 33, 0.733)",
+      cancelButtonColor: "#757575",
       confirmButtonText: "Logout"
     }).then((result) => {
       if (result.isConfirmed) {
@@ -60,11 +60,11 @@ const AppHeaderDropdown = () => {
   
 
   return (
-    <CDropdown variant="nav-item">
-      <CDropdownToggle placement="bottom-end" className="py-0" caret={false}>
-        <CAvatar src={user_data.profile_pic} size="md" />
+    <CDropdown className='my_nav' variant="nav-item">
+      <CDropdownToggle placement="bottom-end" className="py-0 profile_img" caret={false}>
+        <CAvatar className='profile_img'   src={user_data.profile_pic} size="md" />
       </CDropdownToggle>
-      <CDropdownMenu className="pt-0" placement="bottom-end">
+      <CDropdownMenu className="pt-0 " placement="bottom-end">
         <CDropdownHeader className="bg-light fw-semibold py-2">Admin</CDropdownHeader>
         <NavLink style={{textDecoration:'none', color:'rgba(44, 56, 74, 0.95)'}} to='/my_profile'>
         <CDropdownItem >

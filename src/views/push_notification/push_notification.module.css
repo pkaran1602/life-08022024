@@ -1,53 +1,45 @@
-.container
-{
-    width: 100%;
-    height: auto;
+.container {
+  width: 100%;
+  height: auto;
+  padding: 30px;
+    background-color: white; 
+  padding-top: 10px;
 }
 .main_content {
-    position: sticky;
-    top: 0;
-    background-color: whitesmoke; /* Change this to your desired background color */
-    color: #fff; /* Change this to your desired text color */
-    padding: 10px 0; /* Adjust padding as needed */
-    z-index: 1000; /* Ensures the header stays on top of other content */
+  position: sticky;
+  top: 0;
+  color: #fff; 
+  z-index: 1000;
 }
 
-.header span
-{
-    color: #424242;
-    font-size: 24px;
-    font-weight: 500;
+.header span {
+  color: #424242;
+  font-size: 24px;
+  font-weight: 500;
 }
 
-.content
-{
-
+.content {
 }
 
-.push_label
-{
-    margin-top: 50px;
+.push_label {
+  margin-top: 50px;
 }
-.push_label textarea
-{
-    width: 100%;
-    height: 6vh; 
-    border: 1px solid #757575;
-    border-radius: 1px;   
+.push_label textarea {
+  width: 100%;
+  height: 20vh;
+  border: 1px solid #757575;
+  border-radius: 12px;
+  padding-left: 10px;
+  padding-top: 10px;
 }
-::placeholder
-{
-      
+.data_table {
+margin-top: 35px;
 }
-
-
-.data_table
-{
-    margin-top: 50px;
+.my_btn {
+  margin-top: 10px;
+  text-align:end;
 }
-
-.my_btn
+.my_btn1
 {
-    margin-top: 10px;
-    text-align: center;
+  /* font-size: 24px !important; */
 }

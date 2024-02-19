@@ -7,7 +7,7 @@ import { useMaterialReactTable } from 'material-react-table';
 import UserDetail from './UserDetail';
 import { FaEye } from "react-icons/fa";
 import { Button } from 'react-bootstrap';
-import {MaterialReactTable} from 'material-react-table';
+import { MaterialReactTable } from 'material-react-table';
 import { token_expire } from 'src/redux/actions/authAction';
 import { useDispatch } from 'react-redux';
 import My_Loader from 'src/components/loader/My_Loader';
@@ -22,21 +22,39 @@ const User = () => {
   const [selectedUser, setSelectedUser] = useState({});
 
   const handleExportData = () => {
+    const currentDate = new Date();
+    const formattedDate = `${currentDate.getDate().toString().padStart(2, '0')}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getFullYear()}`;
     const csv = generateCsv(csvConfig)(data);
-    download(csvConfig)(csv);
+    const fileName = `Users-${formattedDate}.csv`;
+    download(fileName, csv);
+  };
+
+  const download = (fileName, content) => {
+    const blob = new Blob([content], { type: 'text/csv' });
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.download = fileName;
+    link.click();
   };
 
   useEffect(() => {
     get_users_list().then((response) => {
+      console.log(response)
       setIsLoading(false);
       if (response.status === 1) {
         const dataWithIndex = response.data.map((item, index) => ({
           ...item,
+          FirstName: item.FirstName || "N/A",
+          Email: item.Email || "N/A",
+          Mobile: item.Mobile || "N/A",
           index: index + 1,
         }));
         setData(dataWithIndex);
-      }else if(response.status ===4){
+      } else if (response.status === 4) {
         dispatch(token_expire());
+      } else {
+        // When there's no data, set data to NA
+        setData("N/A");
       }
     });
 
@@ -91,6 +109,7 @@ const User = () => {
         id: 'Button',
         header: 'AAA',
         Header: () => <i>Actions</i>,
+        enableSorting: false,
       },
     ],
   );
@@ -109,32 +128,32 @@ const User = () => {
   });
   return (
     <div>
-      {isLoading && 
-      <My_Loader />
+      {isLoading &&
+        <My_Loader />
       }
       {!isLoading &&
-       <div>
-       <div style={{ paddingBottom: '20px', display: 'flex', justifyContent: 'space-between' }}>
-         <div>
-           <span style={{ color: '#424242', fontSize: '24px', fontWeight: '500' }}>
-             Users
-           </span>
-         </div>
-         <div>
-           <Button variant='outline-primary' onClick={handleExportData}>Download</Button>
-         </div>
-       </div>
-       <div>
-       <MaterialReactTable table={table} />
-       </div>
-       <div>
-         <UserDetail
-           close_fun={close_fun}
-           selectedUser={selectedUser}
-           isOpen={isOpen}
-         />
-       </div>
-     </div>
+        <div  style={{backgroundColor:'white', paddingTop:'20px'}}>
+          <div style={{padding:'30px',paddingTop:'10px', display: 'flex', justifyContent: 'space-between' }}>
+            <div>
+              <span style={{ color: '#424242', fontSize: '24px', fontWeight: '500' }}>
+                User Management
+              </span>
+            </div>
+            <div>
+              <Button variant='outline-primary' onClick={handleExportData}>Download CSV</Button>
+            </div>
+          </div>
+          <div style={{padding:'30px',paddingTop:'10px'}}>
+            <MaterialReactTable table={table} />
+          </div>
+          <div>
+            <UserDetail
+              close_fun={close_fun}
+              selectedUser={selectedUser}
+              isOpen={isOpen}
+            />
+          </div>
+        </div>
       }
     </div>
   )

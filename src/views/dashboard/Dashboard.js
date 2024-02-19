@@ -3,19 +3,20 @@ import Widgets from '../widgets/Widgets'
 import { CCard, CCardBody, CCardHeader, CCol, CRow } from '@coreui/react'
 import stylesheet from './dashboard.module.css'
 import Widgets2 from '../widgets/Widgets2'
+import Widgets3 from '../widgets/Widgets3'
 
 const Dashboard = () => {
   return (
     <div className={stylesheet.container}>
       <div>
         <h4 style={{ color: '#424242', fontSize: '24px', fontWeight: '500' }}>
-      Statistics User
+          Statistics List
         </h4>
-        </div>
-        <br /> 
+      </div>
+      <br />
       <CRow>
         <CCol xs>
-          <CCard style={{border:'none', backgroundColor:'#f3f3f3'}} className="mb-4">
+          <CCard style={{ border: 'none', backgroundColor: '#f3f3f3' }} className="mb-4">
             <CCardBody>
               <Widgets />
             </CCardBody>
@@ -26,16 +27,25 @@ const Dashboard = () => {
 
       <CRow>
         <CCol xs>
-          <CCard style={{border:'none',backgroundColor:'#f3f3f3'}} className="mb-4">
-           
+          <CCard style={{ border: 'none', backgroundColor: '#f3f3f3' }} className="mb-4">
             <CCardBody>
               <Widgets2 />
             </CCardBody>
           </CCard>
         </CCol>
       </CRow>
-      </div>
-    
+      <br />
+      <CRow>
+        <CCol xs>
+          <CCard style={{ border: 'none', backgroundColor: '#f3f3f3' }} className="mb-4">
+            <CCardBody>
+              <Widgets3 />
+            </CCardBody>
+          </CCard>
+        </CCol>
+      </CRow>
+    </div>
+
   )
 }
 
