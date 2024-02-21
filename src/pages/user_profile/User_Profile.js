@@ -5,14 +5,14 @@ import profile from '../../assets/images/profile.png'
 import Button from 'react-bootstrap/Button'
 import Swal from 'sweetalert2'
 import Card from 'react-bootstrap/Card'
-import { get_admin_data, update_admin_data, user_details } from 'src/axios/Api'
+import { get_admin_data, update_admin_data } from 'src/axios/Api'
 
 const User_Profile = () => {
 
-  const [user_data, setUser_data] = useState({})
-  const [error2, setError2] = useState(false)
-  const [file, setFile] = useState(null)
-  const [errors, setErrors] = useState({})
+  const [user_data, setUser_data] = useState({});
+  const [error2, setError2] = useState(false);
+  const [file, setFile] = useState(null);
+  const [errors, setErrors] = useState({});
 
   const handleFile = (e) => {
     setFile(e.target.files[0])

@@ -133,3 +133,12 @@ export const reorder_data = async (data) => {
         return response.data;
     });
 };
+
+export const reset_Password = async (data) => {
+    return axios.post(API_URL + "resetPassword",data, {
+        headers: authHeader()
+    }
+    ).then((response) => {
+        return response.data;
+    });
+};

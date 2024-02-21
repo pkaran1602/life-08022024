@@ -18,11 +18,14 @@ import style from './forgot_pass.module.css'
 import { useNavigate } from 'react-router-dom';
 import { forgot_pass, verify_otp } from 'src/axios/Api'
 import Verify_otp from './Verify_otp'
+import { useDispatch } from 'react-redux'
+import { reset_request_Fun } from 'src/redux/actions/authAction'
 
 
 
 const Forgot_pass = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [error, setError] = useState(null);
   const [verify_error, setVerify_error] = useState(null);
@@ -43,9 +46,9 @@ const Forgot_pass = () => {
   const submitFun = (e) => {
     e.preventDefault();
     forgot_pass({ email: email }).then((res) => {
-      if (res.status === 0) {
+      if (res.status === 1) {
         setIsOpen(true);
-      } else if (res.status === 1) {
+      } else if (res.status === 0) {
         setError(res.message);
       }
     });
@@ -60,10 +63,10 @@ const Forgot_pass = () => {
     e.preventDefault();
     verify_otp({ email: email, otp: otp }).then((response) => {
       if (response.status === 1) {
-
+        dispatch(reset_request_Fun())
+        navigate('/reset_password', { state: { email: email } });
       } else if (response.status === 0) {
-        // setVerify_error("The OTP you provided is invalid. Please try again.")
-          navigate('/reset_password', { state: { email: email } });
+       console.log(response.message);
       }
     })
   };

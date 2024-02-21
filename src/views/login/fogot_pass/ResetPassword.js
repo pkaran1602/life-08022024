@@ -6,11 +6,15 @@ import Button from 'react-bootstrap/Button'
 import Swal from 'sweetalert2'
 import Card from 'react-bootstrap/Card'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { reset_Password } from 'src/axios/Api'
+import { useDispatch } from 'react-redux'
+import { reset_success_Fun } from 'src/redux/actions/authAction'
 // import { get_admin_data, update_admin_data, user_details } from 'src/axios/Api'
 
 const ResetPassword  = () => {
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const [errors, setErrors] = useState({})
     const [error2, setError2] = useState(false)
@@ -22,15 +26,29 @@ const ResetPassword  = () => {
     }
     const [data, setData] =  useState({
         email: state.email,
-        new_password : '',
+        password : '',
         confirm_password:''
     });
 
     const submit_fun = (e) => {
         e.preventDefault();
-        if ( data.new_password.length === 0 || data.confirm_password.length === 0) {
+        if ( data.password.length === 0 || data.confirm_password.length === 0) {
           setError2(true)
         }
+        reset_Password(data).then((res)=>{
+          if(res.status ===1)
+          {
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title:"Password has been created successfully",
+              showConfirmButton: false,
+              timer: 1500
+            });
+            dispatch(reset_success_Fun());
+          }
+        })
+      
 
     };
     const handleChange = (e) => {
@@ -39,16 +57,16 @@ const ResetPassword  = () => {
     };
     const validate = (name, value) => {
       switch (name) {
-        case 'new_password':
+        case 'password':
           if (value.length < 6) {
             if (value.length === 0) {
-              delete errors.new_password;
+              delete errors.password;
               setError2(false)
             } else {
-              setErrors({ ...errors, new_password: 'Password should be minimum 6 characters long.' });
+              setErrors({ ...errors, password: 'Password should be minimum 6 characters long.' });
             }
           } else {
-            delete errors.new_password;
+            delete errors.password;
             setErrors(errors);
           }
           break
@@ -60,7 +78,7 @@ const ResetPassword  = () => {
             } else {
               setErrors({ ...errors, confirm_password: 'Password should be minimum 6 characters long.' });
             }
-          } else if (data.new_password !== value) {
+          } else if (data.password !== value) {
             setErrors({ ...errors, confirm_password: 'New Password and Confirm Password does not match.' });
           } else {
             delete errors.confirm_password;
@@ -104,16 +122,16 @@ const ResetPassword  = () => {
                                             width: '100%'
                                         }}
                                         type={ptype}
-                                        name="new_password"
-                                        value={data.new_password}
+                                        name="password"
+                                        value={data.password}
                                         onChange={handleChange}
                                     />
                                 </div>
                                 
                             </div>
-                            {errors && errors.new_password && <p className="text-danger">{errors.new_password}</p>}
+                            {errors && errors.password && <p className="text-danger">{errors.password}</p>}
                     <div>
-                      {error2 && data.new_password.length === 0 ?
+                      {error2 && data.password.length === 0 ?
                         <label style={{ color: 'red' }}>New Password is Required</label>
                         : ""
                       }

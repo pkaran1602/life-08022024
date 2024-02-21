@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT, TOKEN_EXPIRE } from "../types/types";
+import { LOGIN, LOGOUT, RESET_REQUEST, RESET_SUCCESS, TOKEN_EXPIRE } from "../types/types";
 
 export const userLogin = (user_detal) => {
     return {
@@ -15,9 +15,22 @@ export const userLogout = () => {
 };
 
 export const token_expire = () => {
-    console.log("token_expire")
     return {
         type: TOKEN_EXPIRE,
+        data: null
+    };
+};
+
+export const reset_request_Fun = () => {
+    return {
+        type: RESET_REQUEST,
+        data: null
+    };
+};
+
+export const reset_success_Fun = () => {
+    return {
+        type: RESET_SUCCESS,
         data: null
     };
 };
