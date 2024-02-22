@@ -35,7 +35,7 @@ const Verify_otp = (props) => {
                             </Col>
                         </Row>
                         {verify_error &&
-                                <p>ERROR</p>
+                                <p className='text-danger'>Invalid OTP</p>
                             }
                     </form>
                 </Modal.Body>

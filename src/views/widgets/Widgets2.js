@@ -5,12 +5,9 @@ import {
   CWidgetStatsA,
 } from '@coreui/react'
 
-const Widgets2 = () => {
+const Widgets2 = (props) => {
 
-  const [total_user, setTotal_user] = useState(10);
-  const [learner, setLearner] = useState(5);
-  const [open, setOpen] = useState(5);
-
+  const {age_group_count} = props;
 
   return (
     <>
@@ -19,53 +16,37 @@ const Widgets2 = () => {
     </div>
     <br />
     <CRow>
-      <CCol md={6} lg={3} >
+      <CCol md={6} lg={3} className='py-1' >
         <CWidgetStatsA
           className="p-4"
           color="primary"
-          value={
-            <>
-             {total_user}
-            </>
-          }
+          value={age_group_count.age_18_to_24}
           title="18-24"
         />
       </CCol>
-      <CCol sm={6} lg={3}>
+      <CCol sm={6} lg={3} className='py-1'>
         <CWidgetStatsA
           className="p-4"
           color="info"
-          value={
-            <>
-             {learner}
-            </>
-          }
+          value={age_group_count.age_25_to_34}
           title="25-34"
       
         />
       </CCol>
-      <CCol sm={6} lg={3}>
+      <CCol sm={6} lg={3} className='py-1'>
         <CWidgetStatsA
           className="p-4"
           color="warning"
-          value={
-            <>
-             {open}
-            </>
-          }
+          value={age_group_count.age_35_to_45}
           title="35-45"
       
         />
       </CCol>
-      <CCol md={6} lg={3} >
+      <CCol md={6} lg={3} className='py-1' >
         <CWidgetStatsA
           className="p-4"
           color="success"
-          value={
-            <>
-             {total_user}
-            </>
-          }
+          value={age_group_count.age_45_plus}
           title="45+"
         />
       </CCol>

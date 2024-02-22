@@ -20,6 +20,7 @@ import { forgot_pass, verify_otp } from 'src/axios/Api'
 import Verify_otp from './Verify_otp'
 import { useDispatch } from 'react-redux'
 import { reset_request_Fun } from 'src/redux/actions/authAction'
+import Swal from 'sweetalert2'
 
 
 
@@ -47,6 +48,13 @@ const Forgot_pass = () => {
     e.preventDefault();
     forgot_pass({ email: email }).then((res) => {
       if (res.status === 1) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title:"OTP has been sent to your email",
+          showConfirmButton: false,
+          timer: 1500
+        });
         setIsOpen(true);
       } else if (res.status === 0) {
         setError(res.message);
@@ -66,6 +74,7 @@ const Forgot_pass = () => {
         dispatch(reset_request_Fun())
         navigate('/reset_password', { state: { email: email } });
       } else if (response.status === 0) {
+        setVerify_error(response.message);
        console.log(response.message);
       }
     })

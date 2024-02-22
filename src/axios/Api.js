@@ -142,3 +142,12 @@ export const reset_Password = async (data) => {
         return response.data;
     });
 };
+
+export const get_userStatistics = async (data) => {
+    return axios.post(API_URL + "get_userStatistics",data, {
+        headers: authHeader()
+    }
+    ).then((response) => {
+        return response.data;
+    });
+};

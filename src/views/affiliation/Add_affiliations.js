@@ -5,6 +5,7 @@ import style from './affiliation.module.css'
 import profile from '../../assets/images/profile.png'
 import { Container, Row } from 'react-bootstrap';
 
+
 const Add_affiliations = (props) => {
 
   const { close_fun,isOpen, addAffiliation_fun,img,link, handleChange,handleFile } = props

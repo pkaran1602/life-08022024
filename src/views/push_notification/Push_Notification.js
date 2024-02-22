@@ -103,7 +103,7 @@ const Push_Notification = () => {
                       <Button
                         variant='outline-primary'
                         onClick={() => setShowEmojiPicker(!showEmojiPicker)}>
-                        <FaRegFaceSmile style={{fontSize:'24px'}} />
+                        <FaRegFaceSmile style={{fontSize:'22px'}} />
                       </Button>
                     </div>
                     <div className={showEmojiPicker ? 'd-block' : 'd-none'}>
@@ -118,7 +118,6 @@ const Push_Notification = () => {
                 <div className={style.my_btn}>
                   <Button variant='outline-primary' type='submit'>SEND</Button>
                 </div>
-
               </form>
             </div>
           </div>
