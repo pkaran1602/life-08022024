@@ -52,7 +52,7 @@ const Dashboard = () => {
     }
     if (event.target.value === "per_day") {
       let data = { type: "per_day", start_date: selectdate.start_date, end_date: selectdate.end_date };
-      get_userStatics(data);
+      // get_userStatics(data);  
     }
     if (event.target.value === "week") {
       let data = { type: "week", start_date: selectdate.start_date, end_date: selectdate.end_date };
@@ -116,7 +116,7 @@ const Dashboard = () => {
           <div style={{ backgroundColor: '#f3f3f3' }}>
             <CRow>
               <CCol xs>
-                <CCard style={{ border: 'none', backgroundColor: '#f3f3f3' }} className="mb-4 fs-4">
+                <CCard style={{ border: 'none', backgroundColor: '#f3f3f3' }} className="mb-4 ">
                   <CCardBody>
                     <div>
                       <h1 style={{ color: '#424242', fontSize: '26px', fontWeight: '450', }}>Users</h1>
@@ -144,14 +144,14 @@ const Dashboard = () => {
                             
                         </Col>
                         <Col md={4} >
-                          <Button className={stylesheet.filterbtn} style={{width:"70px",height:'6vh', marginTop:'-3px', marginLeft:'15px'}} variant='primary'>Filter</Button>
+                          <Button className={stylesheet.filterbtn}  variant='primary'>Filter</Button>
                         </Col>
                       </Row>
                           </FormControl>
 
                     </div>
                     {show1 &&
-                              <div className='mt-3'>
+                              <div className='mb-2'>
                                 <div>
                                   <label style={{ fontSize: '16px', color: '#757575' }} for='date'>To Date</label>
                                 </div>
@@ -193,7 +193,7 @@ const Dashboard = () => {
             </CRow>
             <CRow>
               <CCol xs>
-                <CCard style={{ border: 'none', backgroundColor: '#f3f3f3' }} className="mb-4 fs-4">
+                <CCard style={{ border: 'none', backgroundColor: '#f3f3f3' }} className="mb-4 ">
                   <CCardBody>
                     <Widgets2
                       age_group_count={user_count} />
@@ -205,7 +205,7 @@ const Dashboard = () => {
           <br />
           <CRow>
             <CCol xs>
-              <CCard style={{ border: 'none', backgroundColor: '#f3f3f3' }} className="mb-4 fs-4">
+              <CCard style={{ border: 'none', backgroundColor: '#f3f3f3' }} className="mb-4 ">
                 <CCardBody>
                   <Widgets3 />
                 </CCardBody>

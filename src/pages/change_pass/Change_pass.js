@@ -111,13 +111,7 @@ const Change_pass  = () => {
                         </span>{' '}
                       </label>
                       <div>
-                        <input
-                          style={{
-                            width:'300px',
-                            border: 'none',
-                            borderBottom: '1px solid #757575',
-                            outline: 'none',
-                          }}
+                        <input className={stylesheet.my_input}
                           type={ptype}
                           name="current_password"
                           value={data.current_password}
@@ -146,12 +140,7 @@ const Change_pass  = () => {
                       </label>
                       <div>
                         <input
-                          style={{
-                            width:'300px',
-                            border: 'none',
-                            borderBottom: '1px solid #757575',
-                            outline: 'none',
-                          }}
+                        className={stylesheet.my_input}
                           type={ptype}
                           name="new_password"
                           value={data.new_password}
@@ -179,12 +168,7 @@ const Change_pass  = () => {
                       </label>
                       <div>
                         <input
-                          style={{
-                            width:'300px',
-                            border: 'none',
-                            borderBottom: '1px solid #757575',
-                            outline: 'none',
-                          }}
+                         className={stylesheet.my_input}
                           type={ptype}
                           name="confirm_password"
                           value={data.confirm_password}

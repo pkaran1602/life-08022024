@@ -83,7 +83,7 @@ const Widgets3 = () => {
       </div>
       <br />
       <CRow>
-        <CCol md={6} lg={3} >
+        <CCol md={6} lg={3} className='fs-4' >
           <CWidgetStatsA
             className="p-4"
             color="primary"
@@ -95,7 +95,7 @@ const Widgets3 = () => {
             title="MALE"
           />
         </CCol>
-        <CCol sm={6} lg={3}>
+        <CCol sm={6} lg={3} className='fs-4'>
           <CWidgetStatsA
             className="p-4"
             color="info"
@@ -107,7 +107,7 @@ const Widgets3 = () => {
             title="FEMALE"
           />
         </CCol>
-        <CCol sm={6} lg={3}>
+        <CCol sm={6} lg={3} className='fs-4'>
           <CWidgetStatsA
             className="p-4"
             color="warning"

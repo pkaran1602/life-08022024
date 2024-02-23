@@ -16,7 +16,7 @@ const Widgets2 = (props) => {
     </div>
     <br />
     <CRow>
-      <CCol md={6} lg={3} className='py-1' >
+      <CCol md={6} lg={3} className='py-1 fs-4'  >
         <CWidgetStatsA
           className="p-4"
           color="primary"
@@ -24,7 +24,7 @@ const Widgets2 = (props) => {
           title="18-24"
         />
       </CCol>
-      <CCol sm={6} lg={3} className='py-1'>
+      <CCol sm={6} lg={3} className='py-1 fs-4'>
         <CWidgetStatsA
           className="p-4"
           color="info"
@@ -33,7 +33,7 @@ const Widgets2 = (props) => {
       
         />
       </CCol>
-      <CCol sm={6} lg={3} className='py-1'>
+      <CCol sm={6} lg={3} className='py-1 fs-4'>
         <CWidgetStatsA
           className="p-4"
           color="warning"
@@ -42,7 +42,7 @@ const Widgets2 = (props) => {
       
         />
       </CCol>
-      <CCol md={6} lg={3} className='py-1' >
+      <CCol md={6} lg={3} className='py-1 fs-4' >
         <CWidgetStatsA
           className="p-4"
           color="success"

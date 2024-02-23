@@ -12,7 +12,7 @@ const Widgets = (props) => {
   return (
     <>
       <CRow>
-        <CCol md={6} lg={3} className='py-1' >
+        <CCol md={6} lg={3} className='py-1 fs-4' >
           <CWidgetStatsA
             className="p-4"
             color="primary"
@@ -20,7 +20,7 @@ const Widgets = (props) => {
             title="MALE"
           />
         </CCol>
-        <CCol sm={6} lg={3} className='py-1'>
+        <CCol sm={6} lg={3} className='py-1 fs-4'>
           <CWidgetStatsA
             className="p-4"
             color="info"
@@ -28,7 +28,7 @@ const Widgets = (props) => {
             title="FEMALE"
           />
         </CCol>
-        <CCol sm={6} lg={3} className='py-1'>
+        <CCol sm={6} lg={3} className='py-1 fs-4'>
           <CWidgetStatsA
             className="p-4"
             color="warning"

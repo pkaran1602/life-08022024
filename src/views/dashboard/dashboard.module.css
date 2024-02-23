@@ -8,11 +8,47 @@
     color: rgb(117, 117, 117) ;
     background-color: rgb(237, 237, 237) ;
     border-radius: 5px ;
-    width: 300px ;
+    width: 250px ;
     height: 5vh ;
     padding: 0 10px ;
     margin-bottom:10px;
 }
+.filterbtn
+{
+  width:70px;
+  height:6vh;
+   margin-top:-3px;
+    margin-left:15px;
+}
+
+
+
+@media screen and (min-width:280px) and (max-width:665px)
+{
+  .macsel
+  {
+    width: 130px !important;
+  height: 5vh !important;
+  }
+  .filterbtn
+  {
+    height: 4.7vh !important;
+    margin:10px -2px !important;
+  }
+}
+@media screen and (min-width:667px) and (max-width:1080px)
+{
+  .macsel
+  {
+    width: 200px !important;
+  height: 5vh !important;
+  }
+  .filterbtn
+  {
+    height: 5vh !important;
+  }
+}
+
 @media only screen and (min-width:1450px)
 {
 
@@ -22,7 +58,7 @@
   }
   .filterbtn
   {
-    height: 4vh !important;
+    height: 4.3vh !important;
   }
   .my_input 
 {
