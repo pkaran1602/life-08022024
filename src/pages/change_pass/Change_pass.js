@@ -20,12 +20,12 @@ const Change_pass  = () => {
   const validate = (name, value) => {
     switch (name) {
       case 'current_password':
-        if (value.length < 6) {
+        if (value.length < 8) {
           if (value.length === 0) {
             delete errors.current_password;
             setError2(false)
           } else {
-            setErrors({ ...errors, current_password: 'Password should be minimum 6 characters long.' });
+            setErrors({ ...errors, current_password: 'Password should be of minimum eight characters' });
           }
         } else {
           delete errors.current_password;
@@ -33,12 +33,12 @@ const Change_pass  = () => {
         }
         break
         case 'new_password':
-          if (value.length < 6) {
+          if (value.length < 8) {
             if (value.length === 0) {
               delete errors.new_password;
               setError2(false)
             } else {
-              setErrors({ ...errors, new_password: 'Password should be minimum 6 characters long.' });
+              setErrors({ ...errors, new_password: 'Password should be of minimum eight characters' });
             }
           } else {
             delete errors.new_password;
@@ -46,12 +46,12 @@ const Change_pass  = () => {
           }
           break
         case 'confirm_password':
-          if (value.length < 6) {
+          if (value.length < 8) {
             if (value.length === 0) {
               delete errors.confirm_password;
               setError2(false)
             } else {
-              setErrors({ ...errors, confirm_password: 'Password should be minimum 6 characters long.' });
+              setErrors({ ...errors, confirm_password: 'Password should be of minimum eight characters' });
             }
           } else if (data.new_password !== value) {
             setErrors({ ...errors, confirm_password: 'New Password and Confirm Password does not match.' });

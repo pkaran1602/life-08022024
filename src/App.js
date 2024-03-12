@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import Forgot_pass from './views/login/fogot_pass/Forgot_pass';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css'
+import 'react-image-crop/dist/ReactCrop.css'
 
 const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'));
 const Login = React.lazy(() => import('./views/login/Login'));
@@ -18,7 +19,7 @@ const loading = (
 
 const App = () => {
   const {user,isRequested_otp} = useSelector((state) => state.userAuth);
-  console.log("isRequested_otp",isRequested_otp);
+ 
   return (
     <Router>
       <Suspense fallback={loading}>

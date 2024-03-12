@@ -35,7 +35,7 @@ const UserDetail = (props) => {
       style={{ display: 'block', position: 'initial' }}
     >
       <Modal show={isOpen} onHide={close_fun} className={stylesheet.my_modal}>
-        <Modal.Header style={{backgroundColor:'skyblue'}} closeButton>
+        <Modal.Header style={{backgroundColor:'rgba(201, 153, 33, 0.733)'}} closeButton>
           <Modal.Title>User Details</Modal.Title>
         </Modal.Header>
         <Modal.Body className={stylesheet.main_body}>
@@ -87,7 +87,7 @@ const UserDetail = (props) => {
                 <Row>
                 <Col>
                 <div className={stylesheet.content_column}>
-                <div className={stylesheet.content_heading}><strong>DOB</strong></div>
+                <div className={stylesheet.content_heading}><strong> Date of birth</strong></div>
                 <div className={stylesheet.content_details}> <p>   {formatDOB(selectedUser.BirthDate ? selectedUser.BirthDate:"N/A")}</p></div>
                 </div>
                 </Col>

@@ -1,0 +1,124 @@
+.container {
+    background-color: white;
+    padding: 30px;
+  }
+  .main_container
+  {
+    margin-left: -15px;
+    margin-bottom: 1px;
+  }
+  .macsel
+{
+  width: 223px;
+  margin-right: 20px;
+}
+
+   .my_input 
+  {
+      border: 0.1px solid rgb(117, 117, 117) ;
+      color: rgb(117, 117, 117) ;
+      background-color:white;
+      border-radius: 5px ;
+      width: 223px ;
+      padding: 0 10px ;
+  }
+ .my_todate
+  {
+    padding-top: 10px;
+    margin-left: -15px;
+  }
+   /*.filterbtn
+  {
+    width:70px;
+    height:6vh;
+     margin-top:-3px;
+      margin-left:15px;
+      } */
+ 
+      /* @media screen and (min-width:401px) and (max-width:759px)
+      {
+        .macsel
+    {
+      width: 170px !important;
+    height: 5vh !important;
+    }
+    .filterbtn
+    {
+      height: 5.5vh !important;
+      margin:10px -2px !important;
+    }
+      }
+  
+  @media screen and (min-width:280px) and (max-width:400px)
+  {
+    .macsel
+    {
+      width: 130px !important;
+    height: 5vh !important;
+    }
+    .filterbtn
+    {
+      height: 5vh !important;
+      margin:10px -2px !important;
+    }
+    .my_input 
+    {
+        border: 0.1px solid rgb(117, 117, 117) ;
+        color: rgb(117, 117, 117) ;
+        background-color: rgb(237, 237, 237) ;
+        border-radius: 5px ;
+        width: 130px ;
+        height: 5vh ;
+        padding: 0 10px ;
+    }
+   
+  }
+  @media screen and (min-width:760px) and (max-width:1080px)
+  {
+    .macsel
+    {
+      width: 200px !important;
+    height: 3.8vh !important;
+    }
+    .filterbtn
+    {
+      height: 4vh !important;
+    }
+  }
+  @media screen and (min-width:1081px) and (max-width:1449px)
+  {
+    .macsel
+    {
+      width: 200px !important;
+    height: 5.3vh !important;
+    }
+    .filterbtn
+    {
+      height: 5.9vh !important;
+    }
+  }
+  
+  @media only screen and (min-width:1450px)
+  {
+  
+    .macsel
+    {
+    height: 4vh !important;
+    }
+    .filterbtn
+    {
+      height: 4.3vh !important;
+    }
+    .my_input 
+  {
+      border: 0.1px solid rgb(117, 117, 117) !important;
+      color: rgb(117, 117, 117) !important;
+      background-color: rgb(237, 237, 237) !important;
+      border-radius: 5px !important;
+      width: 300px !important;
+      height: 3.8vh !important;
+      padding: 0 10px !important;
+      margin-bottom:10px;
+  }
+  }
+  */

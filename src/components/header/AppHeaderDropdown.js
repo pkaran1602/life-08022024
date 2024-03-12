@@ -35,6 +35,10 @@ const AppHeaderDropdown = () => {
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "rgba(201, 153, 33, 0.733)",
+      customClass: {
+        confirmButton: 'custom-swal-button',
+        cancelButton:'custom-swal-button'
+    },
       cancelButtonColor: "#757575",
       confirmButtonText: "Logout"
     }).then((result) => {
@@ -82,6 +86,16 @@ const AppHeaderDropdown = () => {
         <CDropdownItem onClick={logoutFun} style={{ cursor: 'pointer' }}>
           <CIcon icon={cilLockLocked} className="me-2" />
           Logout
+          <style>{`
+                .custom-swal-button {
+                    border: none !important;
+                }
+                .custom-swal-button:hover,
+                .custom-swal-button:focus {
+                    border: none !important;
+                    box-shadow: none !important;
+                }
+            `}</style>
         </CDropdownItem>
       </CDropdownMenu>
     </CDropdown>

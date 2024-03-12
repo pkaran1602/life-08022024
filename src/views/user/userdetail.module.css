@@ -1,11 +1,11 @@
 .main_body
 {
     background-color: whitesmoke;
-    height: 70vh;
+    height: auto;
 }
 .container
 {
-    height: 60vh;
+    height:auto;
     width: 100%;
 }
 .my_modal
@@ -56,6 +56,6 @@
     .main_body
     {
         background-color: whitesmoke;
-        height: 48vh;
+        height: auto;
     }
 }

@@ -236,15 +236,29 @@ background-color:rgba(201, 153, 33, 0.733);
 {
   background-color: #f7f7f7;
 }
+.swal2-confirm {
+  border: none !important;
+}
 
+@media screen and (min-width:280px) and (max-width:500px)
+{
+  .container-lg
+  {
+    --bs-gutter-x: 0rem !important;
+  }
+}
 @media screen and (min-width:1500px) and (max-width:2000px)
 {
   .container-lg
   {
       max-width: 1500px !important;
   }
+  .container-lg
+{
+  --bs-gutter-x: 0rem !important;
+}
   .btn-primary
   {
-    height: 3.4vh;
+    /* height: 3.4vh; */
   }
 }

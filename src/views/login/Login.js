@@ -18,20 +18,25 @@ import { useDispatch } from 'react-redux'
 import { userLogin } from 'src/redux/actions/authAction'
 import { NavLink } from 'react-router-dom'
 import style from './login.module.css'
+import { useSelector } from 'react-redux'
 
 
 
 const Login = () => {
+  const {invalidCred} = useSelector((state) => state.userAuth);
+
   const dispatch = useDispatch()
-  const [user, setUser] = useState({ email: "karan.patel@trilokninfotech.com", password: '12345678' })
+  const [user, setUser] = useState({ email: "lifeofme@yopmail.com", password: '12345678' })
+
 
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value })
   }
 
   const loginFun = (e) => {
-    e.preventDefault()
-    dispatch(userLogin(user))
+    e.preventDefault();
+    dispatch(userLogin(user));
+    console.log(invalidCred)
   }
 
   return (
@@ -82,6 +87,11 @@ const Login = () => {
                             required
                           />
                         </CInputGroup>
+                        {invalidCred &&
+                        <CRow>
+                        <p style={{color:'red',display:'flex', justifyContent:'center', textAlign:'center'}}>Invalid Email/Password</p>
+                        </CRow>
+                        }
                         <CRow>
                           <div className={style.my_btn}>
                             <button type="submit">Login</button>

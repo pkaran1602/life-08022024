@@ -10,6 +10,8 @@ function* loginFun(action) {
     if (res.data.status === 1) {
         localStorage.setItem("user", JSON.stringify(res.data.data))
         yield put({ type: LOGIN_SUCCESS, data: res.data.data });
+    } else if (res.data.status === 0){
+        yield put({ type: INVALID_CREDENTIAL, data: null });
     }
 };
 function* logoutFun() {

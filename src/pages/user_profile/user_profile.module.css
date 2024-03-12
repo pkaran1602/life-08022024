@@ -14,17 +14,19 @@
 .left{
   display: flex;
   padding: 20px;
-  height: 215px;
+  /* height: auto; */
   background-color:white;
   justify-content: center;
 }
 .profile_img{
   display: flex;
   justify-content: center;
+  margin-top: 20px;
 }
 .profile_img img{
   width: 150px;
   cursor: pointer;
+
 }
 
 .image_label{
@@ -34,7 +36,7 @@
 
 .right{
   padding: 20px;
-  height: 215px;
+  height: auto;
   background-color: white;
 }
 

@@ -28,7 +28,7 @@ const User_Profile = () => {
   const validate = (name, value) => {
     switch (name) {
       case "phone":
-        if (value.length < 10 || value.length > 10) {
+        if (value.length < 0 || value.length > 10) {
           setErrors({ ...errors, phone: "Please enter numeric value only in Mobile Number" })
         } else {
           delete errors.phone;
@@ -36,23 +36,29 @@ const User_Profile = () => {
         }
         break;
       case "name":
-        if (value.length < 2) {
-          setErrors({ ...errors, firstname: "Name should be not less than 2 characters" })
-        } else if (value.length > 30) {
-          setErrors({ ...errors, firstname: "Name should be not more than 30 character" })
+        if (value.length ===1) {
+          setErrors({ ...errors, name: "Name should be not less than 2 characters" })
+        } else if (value.length > 50) {
+          setErrors({ ...errors, name: "Name should be not more than 50 character" })
         } else {
-          delete errors.firstname;
+          delete errors.name;
           setErrors(errors);
         }
         break;
       case 'email':
         var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-        if (!value.match(validRegex)) {
+        if (value.length === 0) {
+          // If email field is empty, do not show any error
+          delete errors.email;
+          setErrors(errors);
+        }
+       else if (!value.match(validRegex)) {
           setErrors({
             ...errors,
-            email: 'Please enter a valid email !',
+            email: 'Please enter valid email address',
           })
-        } else {
+        }
+         else {
           delete errors.email
           setErrors(errors)
         }
@@ -66,6 +72,7 @@ const User_Profile = () => {
     e.preventDefault()
     setError2(false)
     if (user_data.name.length === 0 || user_data.email.length === 0 || user_data.phone.length === 0) {
+      setErrors("")
       setError2(true)
     }
     else {
@@ -81,7 +88,7 @@ const User_Profile = () => {
           Swal.fire({
             position: 'center',
             icon: 'success',
-            title: 'Changes Has Been Made',
+            text: 'Changes Has Been Made',
             showConfirmButton: false,
             timer: 1500,
           })
@@ -123,7 +130,7 @@ const User_Profile = () => {
                         </label>
                         <label>
                           <img src={user_data.profile_pic !== "" ? user_data.profile_pic : profile} alt="" width="100px" />
-                          <input accept="image/png" type="file" name="file" onChange={handleFile} hidden />
+                          <input accept="image/png , image/jpeg" type="file" name="file" onChange={handleFile} hidden />
                         </label>
                       </div>
                     </div>
@@ -157,12 +164,12 @@ const User_Profile = () => {
                         />
                       </div>
                     </div>
-                    {errors && errors.firstname && (
+                    {errors && errors.name && (
                       <p className="text-danger">{errors.name}</p>
                     )}
                     <div>
                       {error2 && user_data.name.length === 0 ?
-                        <label style={{ color: 'red' }}>Name is Required</label>
+                        <label style={{ color: 'red' }}>Name is required field</label>
                         : ""
                       }
                     </div>
@@ -195,7 +202,7 @@ const User_Profile = () => {
                     {errors && errors.email && <p className="text-danger">{errors.email}</p>}
                     <div>
                       {error2 && user_data.email.length === 0 ?
-                        <label style={{ color: 'red' }}>Email is Required</label>
+                        <label style={{ color: 'red' }}>Email is required field </label>
                         : ""
                       }
                     </div>
@@ -229,7 +236,7 @@ const User_Profile = () => {
                     {errors && errors.phone && <p className="text-danger">{errors.phone}</p>}
                     <div>
                       {error2 && user_data.phone.length === 0 ?
-                        <label style={{ color: 'red' }}>Contact is Required</label>
+                        <label style={{ color: 'red' }}>Contact is required field</label>
                         : ""
                       }
                     </div>

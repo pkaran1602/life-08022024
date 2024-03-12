@@ -3,8 +3,28 @@
     text-align: center;
     padding-bottom: 25px;
 }
-.profile_img img {
+/* .profile_img img {
     border-radius: 50%;
     width: 100px;
     height: 100px;
-  }
+  } */
+.affiliation_input
+{
+     width: 75%;
+      height: 6vh;
+      border: 1px solid #757575; 
+      border-radius: 7px; 
+      padding: 0 8px;
+}
+
+@media only screen and (min-width:1450px)
+{
+    .affiliation_input
+{
+     width: 75%;
+      height: 4vh;
+      border: 1px solid #757575; 
+      border-radius: 7px; 
+      padding: 0 8px;
+}
+}

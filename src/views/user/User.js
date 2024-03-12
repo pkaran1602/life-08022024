@@ -23,8 +23,16 @@ const User = () => {
 
   const handleExportData = () => {
     const currentDate = new Date();
-    const formattedDate = `${currentDate.getDate().toString().padStart(2, '0')}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getFullYear()}`;
-    const csv = generateCsv(csvConfig)(data);
+    const formattedDate = `${currentDate.getDate().toString().padStart(2, '0')} ${(currentDate.getMonth() + 1).toString().padStart(2, '0')} ${currentDate.getFullYear()}`;
+    const dataWithNAs = data.map(item => ({
+      ...item,
+      FirstName: item.FirstName || "N/A",
+    MiddleName: item.MiddleName || "N/A",
+    LastName: item.LastName || "N/A",
+    Email: item.Email || "N/A",
+    BirthDate: item.BirthDate || "N/A",
+    })).map(({ profile_photo, Gender,index, ...rest }) => rest);
+    const csv = generateCsv(csvConfig)(dataWithNAs);
     const fileName = `Users-${formattedDate}.csv`;
     download(fileName, csv);
   };
@@ -39,14 +47,13 @@ const User = () => {
 
   useEffect(() => {
     get_users_list().then((response) => {
-      console.log(response)
       setIsLoading(false);
       if (response.status === 1) {
         const dataWithIndex = response.data.map((item, index) => ({
           ...item,
           FirstName: item.FirstName || "N/A",
           Email: item.Email || "N/A",
-          Mobile: item.Mobile || "N/A",
+          Mobile: item.Mobile ==='' ? "N/A" : "+61 " + item.Mobile  ,
           index: index + 1,
         }));
         setData(dataWithIndex);
@@ -97,6 +104,7 @@ const User = () => {
         accessorKey: 'Mobile',
         header: 'Mobile',
         size: 200,
+        enableSorting: false,
       },
       {
         accessorFn: (row) =>
@@ -118,6 +126,9 @@ const User = () => {
     fieldSeparator: ',',
     decimalSeparator: '.',
     useKeysAsHeaders: true,
+    useTextDelimiter: true, // Added to handle "N/A" correctly
+    textDelimiter: '"', // Added to handle "N/A" correctly
+    undefinedString: "N/A", // Added to handle "N/A" correctly
   });
   const table = useMaterialReactTable({
     enableColumnActions: false,
