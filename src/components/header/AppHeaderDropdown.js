@@ -31,7 +31,7 @@ const AppHeaderDropdown = () => {
   const logoutFun = () => {
     Swal.fire({
       title: "Life Of Me",
-      text: "Are you sure you want to logout?",
+      text: "Are you sure you want to log out?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "rgba(201, 153, 33, 0.733)",
@@ -46,9 +46,10 @@ const AppHeaderDropdown = () => {
         dispach(userLogout())
         Swal.fire({
           icon: "success",
-          title: "Logged Out!",
+          title:"Logged out",
+          text: "You are successfully logged out.",
           showConfirmButton: false,
-          timer: 800
+          timer: 1200
         });
       }
     });

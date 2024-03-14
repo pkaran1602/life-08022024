@@ -1,7 +1,8 @@
 .container {
   background-color: whitesmoke;
-  padding: 30px;
+  padding: 10px 30px;
 }
+
 .macsel
 {
   width: 223px;
@@ -9,11 +10,12 @@
 }
 .my_input 
 {
-    border: 0.1px solid rgb(117, 117, 117) ;
+    border: 0.1px solid rgb(216, 213, 213) ;
     color: rgb(117, 117, 117) ;
     background-color: white ;
-    border-radius: 2px ;
+    border-radius: 4px ;
     width: 223px;
+    height: 5vh;
     padding: 0 10px ;
     margin-bottom:10px;
 }
@@ -23,15 +25,15 @@
   height:6vh;
     margin-top:-3px;
     margin-left:15px;
-} */
+}  */
 
-/* @media screen and (min-width:280px) and (max-width:400px)
+ @media screen and (min-width:280px) and (max-width:400px)
 {
   .my_input 
   {
-      border: 0.1px solid rgb(117, 117, 117) ;
+    border: 0.1px solid rgb(216, 213, 213) ;
       color: rgb(117, 117, 117) ;
-      background-color: rgb(237, 237, 237) ;
+      background-color: white ;
       border-radius: 5px ;
       width: 150px ;
       height: 5vh ;
@@ -42,41 +44,41 @@
 
 @media screen and (min-width:280px) and (max-width:759px)
 {
-  .macsel
+  /* .macsel
   {
     width: 130px !important;
   height: 5vh !important;
-  }
-  .filterbtn
+  } */
+  /* .filterbtn
   {
     height: 5.1vh !important;
     margin:10px -2px !important;
-  }
+  } */
  
 }
 @media screen and (min-width:760px) and (max-width:1080px)
 {
-  .macsel
+  /* .macsel
   {
     width: 200px !important;
   height: 3.8vh !important;
-  }
-  .filterbtn
+  } */
+  /* .filterbtn
   {
     height: 4vh !important;
-  }
+  } */
 }
 @media screen and (min-width:1081px) and (max-width:1449px)
 {
-  .macsel
+  /* .macsel
   {
     width: 200px !important;
   height: 5.3vh !important;
-  }
-  .filterbtn
+  } */
+  /* .filterbtn
   {
     height: 5.9vh !important;
-  }
+  } */
 }
 
 @media only screen and (min-width:1450px)
@@ -84,44 +86,44 @@
 
   .macsel
   {
-  height: 4vh !important;
+    width: 334px;
   }
-  .filterbtn
+  /* .filterbtn
   {
     height: 4.3vh !important;
-  }
+  } */
   .my_input 
 {
-    border: 0.1px solid rgb(117, 117, 117) !important;
+  border: 0.1px solid rgb(216, 213, 213) !important;
     color: rgb(117, 117, 117) !important;
-    background-color: rgb(237, 237, 237) !important;
+    background-color: white !important;
     border-radius: 5px !important;
-    width: 300px !important;
-    height: 3.8vh !important;
+    width: 340px !important;
+    height: 3.5vh !important;
     padding: 0 10px !important;
     margin-bottom:10px;
 }
-} */
- /* @media screen and (min-width:1451px) and (max-width:2080px)
+} 
+  @media screen and (min-width:1451px) and (max-width:2080px)
 {
 
-  .macsel
+  /* .macsel
   {
   height: 4.5vh !important;
-  }
-  .filterbtn
+  } */
+  /* .filterbtn
   {
     height: 5vh !important;
-  }
+  } */
   .my_input 
 {
-    border: 0.1px solid rgb(117, 117, 117) !important;
+  border: 0.1px solid rgb(216, 213, 213) !important;
     color: rgb(117, 117, 117) !important;
-    background-color: rgb(237, 237, 237) !important;
+    background-color: white !important;
     border-radius: 5px !important;
-    width: 300px !important;
+    width: 334px !important;
     height: 3.8vh !important;
     padding: 0 10px !important;
     margin-bottom:10px;
 }
-} */
+}

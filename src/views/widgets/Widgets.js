@@ -15,7 +15,7 @@ const Widgets = (props) => {
         <CCol md={6} lg={3} className='py-1 fs-4' >
           <CWidgetStatsA
             className="p-4"
-            color="primary"
+            style={{backgroundColor:'rgba(201, 153, 33, 0.733)',color:'white'}}
             value={user_count.male_user}
             title="MALE"
           />
@@ -23,15 +23,23 @@ const Widgets = (props) => {
         <CCol sm={6} lg={3} className='py-1 fs-4'>
           <CWidgetStatsA
             className="p-4"
-            color="info"
+            style={{backgroundColor:'rgba(201, 153, 33, 0.733)',color:'white'}}
             value={user_count.female_user}
             title="FEMALE"
+          />
+        </CCol>
+        <CCol md={6} lg={3} className='py-1 fs-4' >
+          <CWidgetStatsA
+            className="p-4"
+            style={{backgroundColor:'rgba(201, 153, 33, 0.733)',color:'white'}}
+            value={user_count.other_user}
+            title="OTHER"
           />
         </CCol>
         <CCol sm={6} lg={3} className='py-1 fs-4'>
           <CWidgetStatsA
             className="p-4"
-            color="warning"
+            style={{backgroundColor:'rgba(201, 153, 33, 0.733)',color:'white'}}
             value={user_count.total_user}
             title="TOTAL"
           />

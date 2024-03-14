@@ -86,7 +86,7 @@ const Push_Notification = () => {
           <div className={style.main_content}>
             <div className={style.header}>
               <span>
-                Notifications Management
+                Push Notifications
               </span>
             </div>
             <div className={style.content}>

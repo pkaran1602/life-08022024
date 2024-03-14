@@ -37,19 +37,13 @@ const Affiliation_Main = () => {
   const [link, setLink] = useState("");
   const [error, setError] = useState("");
   const [crop, setCrop] = useState();
-  const [crop1, setCrop1] = useState();
-  const [modalOpen, setModalOpen] = useState(false);
+  const [crop1, setCrop1] = useState(); 
   const [file_data, setFile_data] = useState("");
   const [file_data1, setFile_data1] = useState("");
-
-
-
-
+  const [affiliation_errors, setAffiliation_errors] = useState({});
+  const [imgSelected, setImgSelected] = useState(false);
 
   const handleFile = (e) => {
-    // setFile(e.target.files[0]);
-    // const [file] = e.target.files;
-    // setImg(URL.createObjectURL(file));
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -68,6 +62,7 @@ const Affiliation_Main = () => {
         }
       });
       setImg(imageUrl);
+      setImgSelected(true);
     });
     reader.readAsDataURL(file);
     setFile(file);
@@ -108,17 +103,15 @@ const Affiliation_Main = () => {
   const updateAvatar = (imgSrc) => {
     setImg(imgSrc);
     setFile_data(imgSrc);
+    // delete affiliation_errors
+    delete affiliation_errors.file_data;
+    setAffiliation_errors(affiliation_errors);
   };
   const updateAvatar1 = (imgSrc) => {
     setImg1(imgSrc);
     setFile_data1(imgSrc);
     console.log(imgSrc)
   };
-  
-  function closeModal() {
-    setModalOpen(true)
-  };
-
 
   const handleFile1 = (e) => {
     const file = e.target.files?.[0];
@@ -150,7 +143,7 @@ const Affiliation_Main = () => {
       if (response.status === 1) {
         const dataWithIndex = response.data.map((item, index) => ({
           ...item,
-          index: index + 1,                     
+          index: index + 1,
         }));
         setData(dataWithIndex)
       } else if (response.status === 4) {
@@ -158,6 +151,8 @@ const Affiliation_Main = () => {
       }
     })
   };
+
+  
 
   useEffect(() => {
     get_affiliation_data();
@@ -183,6 +178,8 @@ const Affiliation_Main = () => {
 
   const handleChange = (e) => {
     setLink(e.target.value)
+    delete affiliation_errors.link;
+    setAffiliation_errors(affiliation_errors);
   };
 
   const edit_fun = (user_detail) => {
@@ -190,58 +187,62 @@ const Affiliation_Main = () => {
     setAffiliations_data(user_detail)
   };
 
+  const validate = () => {
+    let error = {};
+    if (link === "") {
+      error["link"] = "Please enter url"
+    }
+    if (file_data === "") {
+      error["file_data"] = "Please select file"
+    }
+    return error;
+  };
+
   const addAffiliation_fun = (e) => {
     e.preventDefault();
-    let user_data = {
-      link:link,
-      file_data:file_data
+    const error = validate();
+    setAffiliation_errors(error);
+    if (Object.keys(error).length === 0) {
+      let user_data = {
+        link: link,
+        file_data: file_data
+      }
+      addAffiliation_data(user_data).then((response) => {
+        if (response.status === 1) {
+          setFile_data("");
+          close_fun();
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            text: "Affiliation added successfully.",
+            showConfirmButton: false,
+            timer: 1500
+          });
+          get_affiliation_data();
+        }
+        else if (response.status === 0) {
+         setAffiliation_errors({ ...affiliation_errors, response_error: response.message });
+        }
+      })
     }
-    addAffiliation_data(user_data).then((response) => {
-      if (response.status === 1) {
-        setFile_data("");
-        close_fun();
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "User has been added successfully.",
-          showConfirmButton: false,
-          timer: 1500
-        });
-        get_affiliation_data();
-      }
-       else if (response.status === 0) {
-        Swal.fire({
-          position: "center",
-          icon: "warning",
-          title: "Please fill Required fields.",
-          showConfirmButton: false,
-          timer: 1500
-        });
-      }
-    })
   };
 
   const editAffiliation_fun = (e) => {
     e.preventDefault();
-    // let user_data = {
-    //   link:affiliations_data.link,
-    //   file_data1:file_data1,
-    //   id:affiliations_data.id,
-    //   file1:file1
-    // }
-    var formdata = new FormData();
-    formdata.append("image", file1)
-    formdata.append("link", affiliations_data.link)
-    formdata.append("id", affiliations_data.id)
-    edit_affliation_data(formdata).then((response) => {
-      console.log(response)
+    
+    let user_data = {
+      link: affiliations_data.link,
+      file_data: file_data1,
+      id: affiliations_data.id,
+    }
+    edit_affliation_data(user_data).then((response) => {
       if (response.status === 1) {
         close_fun1();
         Swal.fire({
           position: "center",
           icon: "success",
           title: "Life Of Me",
-          text: "User profile has been updated successfully.",
+          text: "Details have been updated successfully.",
           showConfirmButton: false,
           timer: 1500
         });
@@ -253,14 +254,14 @@ const Affiliation_Main = () => {
   const delete_fun = (data) => {
     Swal.fire({
       title: "Delete?",
-      text: "Are you sure you want to delete?",
+      text: "Are you sure you want to delete this affiliate?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: " rgba(201, 153, 33, 0.733)",
       customClass: {
         confirmButton: 'custom-swal-button',
-        cancelButton:'custom-swal-button'
-    },
+        cancelButton: 'custom-swal-button'
+      },
       cancelButtonColor: "#757575",
       confirmButtonText: "Delete",
     }).then((result) => {
@@ -270,7 +271,7 @@ const Affiliation_Main = () => {
             Swal.fire({
               position: "center",
               icon: "success",
-              title: "User deleted successfully.",
+              text: "Deleted successfully.",
               showConfirmButton: false,
               timer: 2000
             });
@@ -295,9 +296,9 @@ const Affiliation_Main = () => {
         size: 150,
         Cell: tableProps => (
           <img
-            style={{ borderRadius: '7px' }}
+            style={{height:'60px', borderRadius: '30px' }}
             src={tableProps.renderedCellValue}
-            width={60}
+            width={65}
             alt='Logo'
           />
         )
@@ -324,7 +325,7 @@ const Affiliation_Main = () => {
               style={{ color: 'red', fontSize: '24px', cursor: 'pointer' }}
               onClick={() => delete_fun(row)}
             />
-              <style>{`
+            <style>{`
                 .custom-swal-button {
                     border: none !important;
                 }
@@ -411,6 +412,8 @@ const Affiliation_Main = () => {
               onImageLoad={onImageLoad}
               crop={crop}
               setCrop={setCrop}
+              affiliation_errors={affiliation_errors}
+              imgSelected={imgSelected}
             />
           </div>
           <div>

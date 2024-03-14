@@ -19,7 +19,7 @@ const Widgets2 = (props) => {
       <CCol md={6} lg={3} className='py-1 fs-4'  >
         <CWidgetStatsA
           className="p-4"
-          color="primary"
+          style={{backgroundColor:'rgba(201, 153, 33, 0.733)',color:'white'}}
           value={age_group_count.age_18_to_24}
           title="18-24"
         />
@@ -27,7 +27,7 @@ const Widgets2 = (props) => {
       <CCol sm={6} lg={3} className='py-1 fs-4'>
         <CWidgetStatsA
           className="p-4"
-          color="info"
+          style={{backgroundColor:'rgba(201, 153, 33, 0.733)',color:'white'}}
           value={age_group_count.age_25_to_34}
           title="25-34"
       
@@ -36,7 +36,7 @@ const Widgets2 = (props) => {
       <CCol sm={6} lg={3} className='py-1 fs-4'>
         <CWidgetStatsA
           className="p-4"
-          color="warning"
+          style={{backgroundColor:'rgba(201, 153, 33, 0.733)',color:'white'}}
           value={age_group_count.age_35_to_45}
           title="35-45"
       
@@ -45,7 +45,7 @@ const Widgets2 = (props) => {
       <CCol md={6} lg={3} className='py-1 fs-4' >
         <CWidgetStatsA
           className="p-4"
-          color="success"
+          style={{backgroundColor:'rgba(201, 153, 33, 0.733)',color:'white'}}
           value={age_group_count.age_45_plus}
           title="45+"
         />

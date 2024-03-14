@@ -51,9 +51,9 @@ const Forgot_pass = () => {
         Swal.fire({
           position: "center",
           icon: "success",
-          title:"OTP has been sent to your email",
+          text:"OTP has been sent to your email",
           showConfirmButton: false,
-          timer: 1500
+          timer: 2000
         });
         setIsOpen(true);
       } else if (res.status === 0) {

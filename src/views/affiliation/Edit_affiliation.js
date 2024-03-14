@@ -48,8 +48,9 @@ const Edit_affiliations = (props) => {
               <div className={style.profile_img}>
                 <div>
               <label>
-                <img style={{cursor:'grabbing'}} src={img1 ? img1 : affiliations_data.image } width={60} alt="" />
+                <img style={{cursor:'grabbing'}} src={img1 ? img1 : affiliations_data.image } width={65} alt="" />
                 <input
+                accept="image/png , image/jpeg"
                   type="file"
                   name='file'
                   onChange={abc}
@@ -129,11 +130,12 @@ const Edit_affiliations = (props) => {
               </div>
               <div style={{paddingTop:'10px'}}>
                 <input
-                style={{width:'75%',height:'5vh' , border:'1px solid #757575', borderRadius:'7px',padding:'0 8px'}}
+                style={{width:'75%',height:'6vh' , border:'1px solid #757575', borderRadius:'7px',padding:'0 8px'}}
                   type="text"
                   name='link'
                   onChange={handle_change}
                   value={affiliations_data.link}
+                  placeholder='Enter URL'
                 />
               </div>
             </div>

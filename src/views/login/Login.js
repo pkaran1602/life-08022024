@@ -19,6 +19,8 @@ import { userLogin } from 'src/redux/actions/authAction'
 import { NavLink } from 'react-router-dom'
 import style from './login.module.css'
 import { useSelector } from 'react-redux'
+import { FaEyeSlash ,FaEye } from "react-icons/fa";
+
 
 
 
@@ -26,8 +28,23 @@ const Login = () => {
   const {invalidCred} = useSelector((state) => state.userAuth);
 
   const dispatch = useDispatch()
-  const [user, setUser] = useState({ email: "lifeofme@yopmail.com", password: '12345678' })
+  const [eye1, seteye1] = useState(true);
+  const [ptype1, setPtype1] = useState('password')
+  const [user, setUser] = useState({ 
+    email: "", 
+    password: '' 
+  })
 
+  const show_password1 = ()=>{
+    if (ptype1 === "password") {
+      setPtype1("text");
+      seteye1(false);
+    }
+    else {
+      setPtype1("password");
+      seteye1(true);
+    }
+  }
 
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value })
@@ -60,7 +77,7 @@ const Login = () => {
                   <CCard className="p-4">
                     <CCardBody>
                       <CForm onSubmit={loginFun}>
-                        <h2>Login</h2>
+                        <h4>Login</h4>
                         <p className="text-medium-emphasis">Sign In to your account</p>
                         <CInputGroup className="mb-3">
                           <CInputGroupText>
@@ -80,12 +97,20 @@ const Login = () => {
                           </CInputGroupText>
                           <CFormInput
                             placeholder="Password"
-                            type="password"
+                            type={ptype1}
                             name="password"
                             value={user.password}
                             onChange={handleChange}
                             required
+                            style={{ paddingRight: '2.5rem' }} // Adjust padding for the icon to fit
                           />
+                          <div style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)' }}>
+        {eye1 ? (
+          <FaEyeSlash onClick={show_password1} />
+        ) : (
+          <FaEye onClick={show_password1} />
+        )}
+      </div>
                         </CInputGroup>
                         {invalidCred &&
                         <CRow>
@@ -117,3 +142,8 @@ const Login = () => {
 }
 
 export default Login;
+
+
+
+
+

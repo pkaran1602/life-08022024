@@ -151,3 +151,12 @@ export const get_userStatistics = async (data) => {
         return response.data;
     });
 };
+export const get_wishCertificateStatistics = async (data) => {
+    return axios.post(API_URL + "get_wishCertificateStatistics",data, {
+        headers: authHeader()
+    }
+    ).then((response) => {
+        return response.data;
+    });
+};
+

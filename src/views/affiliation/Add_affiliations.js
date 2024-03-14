@@ -17,10 +17,12 @@ const Add_affiliations = (props) => {
 
   const imgRef = useRef(null);
   const previewCanvasRef = useRef(null);
-  
-  const [cropDone, setCropDone] = useState(false);
 
-  const { close_fun, isOpen, addAffiliation_fun, img, link, crop, setCrop, handleChange, handleFile, updateAvatar, onImageLoad,} = props
+  const [cropDone, setCropDone] = useState(false);
+ 
+
+  const { close_fun, isOpen, addAffiliation_fun, img, link, crop, 
+    setCrop, handleChange, handleFile, updateAvatar, onImageLoad, affiliation_errors,imgSelected,handleCloseModal,handleShowModal} = props
 
   const abc = (e)=>{
     handleFile(e);
@@ -28,6 +30,7 @@ const Add_affiliations = (props) => {
       setCropDone(false);
     }
   }
+
 
   return (
     <div
@@ -48,20 +51,20 @@ const Add_affiliations = (props) => {
                     <div className={style.profile_img}>
                       <div>
                         <label>
-                          <img style={{ cursor: 'grabbing' }} src={img ? img : profile} width={60} alt="" />
+                          <img style={{ cursor: 'grabbing' }} src={img ? img : profile} width={65} alt="" />
                           <input
                             className="block w-full text-sm text-slate-500 file:mr-4 file:py-1 file:px-2 file:rounded-full file:border-0 file:text-xs file:bg-gray-700 file:text-sky-300 hover:file:bg-gray-600"
-                            accept="image/png"
+                            accept="image/png , image/jpeg"
                             type="file"
                             name='file'
                             onChange={abc}
                             hidden
                           />
+                           {imgSelected ? null : <p>Please select your image</p>}
                         </label>
                         {img && (
                           <>
                           <div 
-                          // className="flex flex-col items-center"
                           style={{width:'100px !important' , height:'250px !important'}}
                           >
                             {!cropDone && (
@@ -122,7 +125,11 @@ const Add_affiliations = (props) => {
                             />
                         )}
                       </div>
+                      
                     </div>
+                    {affiliation_errors?.file_data &&
+                      <p className='my_error'>LOGO is required.</p>
+                      }
                   </Row>
                   <Row>
                     <div style={{ paddingTop: '20px' }}>
@@ -135,12 +142,22 @@ const Add_affiliations = (props) => {
                           name='link'
                           onChange={handleChange}
                           value={link}
+                          placeholder='Enter URL'
                         />
                       </div>
                     </div>
+                    {affiliation_errors?.link &&
+                      <p className='my_error'>Web URL is required.</p>
+                      }
+                       {link && !/^https?:\/\/?x\.com/i.test(affiliation_errors?.link) && (
+                      <p className='my_error'>Only URLs from www.x.com domain are allowed.</p>
+                    )}
                   </Row>
                 </div>
               </Container>
+              {affiliation_errors?.response_error &&
+                      <p className='my_error'>{affiliation_errors?.response_error}</p>
+                      }
               <div style={{ marginTop: '20px' }}>
                 <Button variant="secondary" type='submit'>
                   Add Affiliation
@@ -150,6 +167,14 @@ const Add_affiliations = (props) => {
           </div>
         </Modal.Body>
       </Modal>
+      {img !== profile &&(
+      <div>
+          <Modal>
+            <Modal.Header>Hello</Modal.Header>
+            <Modal.Body>HEllo</Modal.Body>
+          </Modal>
+      </div>
+      )}
     </div>
   )
 }

@@ -17,18 +17,11 @@ import Form from 'react-bootstrap/Form';
 const Dashboard = () => {
 
   const [isLoading, setIsLoading] = useState(true);
-  const [selected_value, setSelected_value] = useState("total")
-  const [user_count, setUser_count] = useState({
-    total_user: 0,
-    male_user: 0,
-    female_user: 0,
-    age_18_to_24: 0,
-    age_25_to_34: 0,
-    age_35_to_45: 0,
-    age_45_plus: 0
-  });
+  const [user_count, setUser_count] = useState({});
+  const [wish_count, setWish_count] = useState({});
   const [show, setShow] = useState(false)
   const [show1, setShow1] = useState(false)
+  const [type, setType] = useState("total")
   const [selectdate, setSelectdate] = useState({
     start_date: "",
     end_date: "",
@@ -36,48 +29,41 @@ const Dashboard = () => {
 
   const get_userStatics = (data) => {
     get_userStatistics(data).then((response) => {
+      console.log(response)
       setIsLoading(false);
       if (response.status === 1) {
-        setUser_count(response.data);   
+        setUser_count(response.data.users_count);   
+        setWish_count(response.data.wish_count);   
+
       }
     })
   };
 
   const handleChange = (event) => {
-    setSelected_value(event.target.value);
-    console.log(event.target.value)
     if (event.target.value === "total") {
-      let data = { type: "total", start_date: selectdate.start_date, end_date: selectdate.end_date };
-      get_userStatics(data)
+      setType("total");
     }
     if (event.target.value === "per_day") {
-      let data = { type: "per_day", start_date: selectdate.start_date, end_date: selectdate.end_date };
-      get_userStatics(data);  
+      setType("per_day");
     }
     if (event.target.value === "week") {
-      let data = { type: "week", start_date: selectdate.start_date, end_date: selectdate.end_date };
-      get_userStatics(data);
+      setType("week");
     }
     if (event.target.value === "month") {
-      let data = { type: "month", start_date: selectdate.start_date, end_date: selectdate.end_date };
-      get_userStatics(data);   
+      setType("month");  
     }
     if (event.target.value === "quarter") {
-      let data = { type: "quarter", start_date: selectdate.start_date, end_date: selectdate.end_date };
-      get_userStatics(data);
+      setType("quarter");
     }
     if (event.target.value === "year") {
-      let data = { type: "year", start_date: selectdate.start_date, end_date: selectdate.end_date };
-      get_userStatics(data);
+      setType("year");
     }
-    if (event.target.value === "date") {
-      let data = { type: "date", start_date: selectdate.start_date, end_date: selectdate.end_date };
-      get_userStatics(data);
+    if (event.target.value === "custom_date") {
+      setType("custom_date");
       setShow(true)
       setShow1(false)
-    } else if (event.target.value === "date1") {
-      let data = { type: "date1", start_date: selectdate.start_date, end_date: selectdate.end_date };
-      // get_userStatics(data);
+    } else if (event.target.value === "to_date") {
+      setType("to_date")
       setShow1(true)
       setShow(false)
     } else {
@@ -86,12 +72,18 @@ const Dashboard = () => {
     }
   };
 
+  const filter_btn = ()=>{
+    let data = { type: type, start_date: selectdate.start_date, end_date: selectdate.end_date };
+    get_userStatics(data);
+    console.log(data)
+  }
+
   const date = () => {
     setShow(!show)
   };
 
   const handlechange_date = (e) => {
-    setSelectdate(e.target.value)
+    setSelectdate({...selectdate , [e.target.name]:e.target.value})
   };
 
   useEffect(() => {
@@ -107,8 +99,8 @@ const Dashboard = () => {
       }
       {!isLoading &&
         <div className={stylesheet.container}>
-          <div>
-            <h4 style={{ color: '#424242', fontSize: '24px', fontWeight: '500' }}>
+          <div className={stylesheet.heading}>
+            <h4 style={{ color: '#424242', fontSize: '26px', fontWeight: '500',padding:"15px 0"}}>
               Statistics List
             </h4>
           </div>
@@ -118,53 +110,52 @@ const Dashboard = () => {
                 <CCard style={{ border: 'none', backgroundColor: 'white', boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px"}} className="mb-4 ">
                   <CCardBody>
                     <div>
-                      <h1 style={{ color: '#424242', fontSize: '26px', fontWeight: '450', }}>Users</h1>
+                      <h1 style={{ color: '#424242', fontSize: '24px', fontWeight: '450', }}>Users</h1>
                     </div>
                     <div className='my-4'>
                           <form className='d-flex align-items-center justify-content-start'>
                             <div className={stylesheet.macsel}>
                             <Form.Select size="md" 
-                              // style={{width:"250px",height:'5vh'}}
-                              value={selected_value}
+                              value={type}
                               onChange={handleChange}
                               displayEmpty
                               inputProps={{ 'aria-label': 'Without label' }}
                             >
-                              <option style={{ fontSize: '15px', color: '#757575' }} value="total"> Total</option>
-                              <option style={{ fontSize: '15px', color: '#757575' }} value="per_day"> Per day</option>
-                              <option style={{ fontSize: '15px', color: '#757575' }} value="week">Week</option>
-                              <option style={{ fontSize: '15px', color: '#757575' }} value="month">Month</option>
-                              <option style={{ fontSize: '15px', color: '#757575' }} value="quarter">Quarter</option>
-                              <option style={{ fontSize: '15px', color: '#757575' }} value="year">Year</option>
-                              <option style={{ fontSize: '15px', color: '#757575' }} value="date1">To date</option>
-                              <option style={{ fontSize: '15px', color: '#757575' }} value="date"> Custom date A-B</option>
+                              <option style={{ fontSize: '15px', color: '#757575' }} value="total"> All</option>
+                              <option style={{ fontSize: '15px', color: '#757575' }} value="per_day">Today</option>
+                              <option style={{ fontSize: '15px', color: '#757575' }} value="week">Weekly</option>
+                              <option style={{ fontSize: '15px', color: '#757575' }} value="month">Monthly</option>
+                              <option style={{ fontSize: '15px', color: '#757575' }} value="quarter">Quarterly</option>
+                              <option style={{ fontSize: '15px', color: '#757575' }} value="year">Yearly</option>
+                              <option style={{ fontSize: '15px', color: '#757575' }} value="custom_date"> Custom date A-B</option>
+                              <option style={{ fontSize: '15px', color: '#757575' }} value="to_date">To date</option>
                             </Form.Select>
                             </div>    
                             <div>
-                          <Button className={stylesheet.filterbtn}  variant='primary'>Filter</Button>              
+                          <Button className={stylesheet.filterbtn} onClick={filter_btn}  variant='primary'>Filter</Button>              
                               </div>               
                           </form>
                     </div>
                     {show1 &&
                               <div className='mb-2'>
                                 <div>
-                                  <label style={{ fontSize: '16px', color: '#757575' }} for='date'>To Date</label>
+                                  <label style={{ fontSize: '16px', color: '#757575' }} for='start_date'>To Date</label>
                                 </div>
                                 <div >
-                                  <input className={stylesheet.my_input} type="date" name='date' value={selectdate.end_date} onChange={handlechange_date} />
+                                  <input className={stylesheet.my_input} type="date" name='start_date' value={selectdate.start_date} onChange={handlechange_date} />
                                 </div>
                               </div>
                             }
                     {show &&
                       <div style={{ width: '100%' }}>
                         <Row >
-                          <Col md={4}>
+                          <Col md={3}>
                             <div>
                               <div>
                                 <label style={{ fontSize: '16px', color: '#757575' }} for='date'>Start Date</label>
                               </div>
                               <div>
-                                <input className={stylesheet.my_input} type="date" name='date' value={selectdate.start_date} onChange={handlechange_date} />
+                                <input className={stylesheet.my_input} type="date" name='start_date' value={selectdate.start_date} onChange={handlechange_date} />
                               </div>
                             </div>
                           </Col>
@@ -172,7 +163,7 @@ const Dashboard = () => {
                             <div>
                               <label style={{ fontSize: '16px', color: '#757575' }} for='date'>End Date</label>
                               <div>
-                              <input className={stylesheet.my_input} type="date" name='date' value={selectdate.end_date} onChange={handlechange_date} />
+                              <input className={stylesheet.my_input} style={{marginRight:'20px !important'}} type="date" name='end_date' value={selectdate.end_date} onChange={handlechange_date} />
                               </div>
                             </div>
                           </Col>
@@ -202,7 +193,9 @@ const Dashboard = () => {
             <CCol xs>
               <CCard style={{ border: 'none', backgroundColor: 'white', boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }} className="mb-4 ">
                 <CCardBody>
-                  <Widgets3 />
+                  <Widgets3 
+                  wish_count={wish_count}
+                  />
                 </CCardBody>
               </CCard>
             </CCol>
