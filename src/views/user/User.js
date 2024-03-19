@@ -11,6 +11,7 @@ import { MaterialReactTable } from 'material-react-table';
 import { token_expire } from 'src/redux/actions/authAction';
 import { useDispatch } from 'react-redux';
 import My_Loader from 'src/components/loader/My_Loader';
+import { ContactSupportOutlined } from '@mui/icons-material';
 
 const User = () => {
 
@@ -24,16 +25,20 @@ const User = () => {
   const handleExportData = () => {
     const currentDate = new Date();
     const formattedDate = `${currentDate.getDate().toString().padStart(2, '0')}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getFullYear()}`;
-    const dataWithNAs = data.map(item => ({
-      ...item,
-      FirstName: item.FirstName || "N/A",
-    MiddleName: item.MiddleName || "N/A",
-    LastName: item.LastName || "N/A",
-    Email: item.Email || "N/A",
-    BirthDate: item.BirthDate || "N/A",
-    })).map(({ profile_photo, Gender,index, ...rest }) => rest);
+
+    const dataWithNAs = data.map((item,index) => {
+      return{
+        "SN":index+1,
+        "Name":item.Name,
+        "Email":item.Email,
+        "Phone":item.Mobile,
+        "Date Of Birth":item.Birthdate,
+        "Gender":item.Gender,
+        "Registered On": item.Register_date
+      }
+    })
     const csv = generateCsv(csvConfig)(dataWithNAs);
-    const fileName = `Users-${formattedDate}.csv`;
+    const fileName = `Users-${formattedDate}.CSV`;
     download(fileName, csv);
   };
 
@@ -47,11 +52,12 @@ const User = () => {
 
   useEffect(() => {
     get_users_list().then((response) => {
+      console.log(response)
       setIsLoading(false);
       if (response.status === 1) {
         const dataWithIndex = response.data.map((item, index) => ({
           ...item,
-          FirstName: item.FirstName || "N/A",
+          Name: item.Name || "N/A",
           Email: item.Email || "N/A",
           Mobile: item.Mobile ==='' ? "N/A" : "+61 " + item.Mobile  ,
           index: index + 1,
@@ -91,7 +97,7 @@ const User = () => {
 
       },
       {
-        accessorKey: 'FirstName',
+        accessorKey: 'Name',
         header: 'Name',
         size: 150,
       },
@@ -107,6 +113,13 @@ const User = () => {
         enableSorting: false,
       },
       {
+        accessorKey: 'Register_date',
+        header: 'Registered On',
+        size: 200,
+        enableSorting: false,
+      },
+      
+      {
         accessorFn: (row) =>
           <>
             <FaEye
@@ -116,7 +129,7 @@ const User = () => {
           </>,
         id: 'Button',
         header: 'AAA',
-        Header: () => <i>Actions</i>,
+        Header: () => <span>Actions</span>,
         enableSorting: false,
       },
     ],
@@ -147,7 +160,7 @@ const User = () => {
           <div style={{padding:'30px',paddingTop:'10px', display: 'flex', justifyContent: 'space-between' }}>
             <div>
               <span style={{ color: '#424242', fontSize: '24px', fontWeight: '500' }}>
-                User Management
+                Users
               </span>
             </div>
             <div>

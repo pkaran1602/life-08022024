@@ -17,7 +17,7 @@ const Widgets3 = (props) => {
   return (
     <>
       <div>
-        <h1 style={{color:'#424242',fontSize:'26px',fontWeight:'450',}}>Wish certificates created</h1>
+        <h1 style={{color:'#424242',fontSize:'26px',fontWeight:'450',}}>Wish Certificates Created</h1>
       </div>
       <div>
       <CRow >
@@ -26,7 +26,7 @@ const Widgets3 = (props) => {
             className="p-4"
             style={{backgroundColor:'rgba(201, 153, 33, 0.733)',color:'white'}}
             value={wish_count.total_count}
-            title="TOTAL"
+            title="CERTIFICATES"
           />
         </CCol>
       </CRow>

@@ -19,7 +19,7 @@ const Notification_table = (props) => {
       },
       {
         accessorKey: 'message',
-        header: 'Notification',
+        header: 'Notification Text',
         size: 150,
       },
       {

@@ -20,7 +20,7 @@
 }
 .my_profile img
 {
-    width: 120px;
+    width: 80px;
     border-radius: 7px;
 }
 .my_details
@@ -36,6 +36,13 @@
    /* align-items: end; */
     padding: 8px 0;
     border-bottom: 0.5px solid #d8cfcf;
+}
+.content_columns
+{
+    display: flex;
+    padding: 8px 0;
+
+
 }
 .content_column p
 {

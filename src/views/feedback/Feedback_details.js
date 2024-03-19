@@ -71,6 +71,14 @@ const Feedback_details = (props) => {
                 <Row>
                 <Col>
                 <div className={stylesheet.content_column}>
+                <div className={stylesheet.content_heading}><strong>Device Type</strong></div>
+                <div className={stylesheet.content_details}> <p>   {selectedUser.device_type ? selectedUser.device_type :"N/A"}</p></div>
+                </div>
+                </Col>
+                </Row>
+                <Row>
+                <Col>
+                <div className={stylesheet.content_column}>
                 <div className={stylesheet.content_heading}><strong>Version Code</strong></div>
                 <div className={stylesheet.content_details} style={{whiteSpace:"pre-line"}}> <p>   {selectedUser.app_version ? selectedUser.app_version:"N/A"}</p></div>
                 </div>
@@ -92,17 +100,10 @@ const Feedback_details = (props) => {
                 </div>
                 </Col>
                 </Row>
+               
                 <Row>
                 <Col>
-                <div className={stylesheet.content_column}>
-                <div className={stylesheet.content_heading}><strong>Device Type</strong></div>
-                <div className={stylesheet.content_details}> <p>   {selectedUser.device_type ? selectedUser.device_type :"N/A"}</p></div>
-                </div>
-                </Col>
-                </Row>
-                <Row>
-                <Col>
-                <div className={stylesheet.content_column}>
+                <div className={stylesheet.content_columns}>
                 <div className={stylesheet.content_heading}><strong>Submitted On</strong></div>
                 <div className={stylesheet.content_details}> <p>   {selectedUser.date ? selectedUser.date :"N/A"}</p></div>
                 </div>

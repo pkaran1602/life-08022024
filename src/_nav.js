@@ -15,25 +15,25 @@ const _nav = [
   {
     component: CNavItem,
     name: 'Users',
-    to: '/user',
+    to: '/users',
     icon: <FaUsers style={{marginRight:'7px',fontWeight:'bold',fontSize:'22px'}} />,
   },
   {
     component: CNavItem,
     name: 'Affiliations',
-    to: '/affiliation',
+    to: '/affiliations',
     icon:<BsBuildingsFill style={{marginRight:'7px',fontWeight:'bold',fontSize:'22px'}} />,
   },
   {
     component: CNavItem,
     name: 'Feedbacks',
-    to: '/feedback',
+    to: '/feedbacks',
     icon:<MdOutlineFeedback style={{marginRight:'7px',fontWeight:'bold',fontSize:'22px'}} />,
   },
   {
     component: CNavItem,
     name: 'Push Notifications',
-    to: '/push_notification',
+    to: '/push_notifications',
     icon: <MdOutlineNotificationsActive style={{marginRight:'7px',fontWeight:'bold',fontSize:'22px'}}/>,
   },
 ]

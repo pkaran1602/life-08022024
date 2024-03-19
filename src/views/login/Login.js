@@ -29,7 +29,9 @@ const Login = () => {
 
   const dispatch = useDispatch()
   const [eye1, seteye1] = useState(true);
+  const [errors, setErrors] = useState({});
   const [ptype1, setPtype1] = useState('password')
+  const [loginAttempted, setLoginAttempted] = useState(false);
   const [user, setUser] = useState({ 
     email: "", 
     password: '' 
@@ -47,13 +49,71 @@ const Login = () => {
   }
 
   const handleChange = (e) => {
+    setLoginAttempted(false);
+    validate(e.target.name, e.target.value)
     setUser({ ...user, [e.target.name]: e.target.value })
   }
-
-  const loginFun = (e) => {
+  const validate = (name, value) => {
+    switch (name) {
+      case 'email':
+        var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+        if (value.length === 0) {
+          // If email field is empty, do not show any error
+          delete errors.email;
+          setErrors(errors);
+        }
+       else if (!value.match(validRegex)) {
+          setErrors({
+            ...errors,
+            email: 'Please enter valid email address',
+          })
+        }
+         else {
+          delete errors.email
+          setErrors(errors)
+        }
+        break
+        case 'password':
+          if (value.length === 0) {
+            // If password length is 0, remove all errors
+            delete errors.password;
+            setErrors(errors);
+          }
+        //  else if (value.length < 8) {
+        //     setErrors({ ...errors, password: 'Password should be of minimum eight characters.' });
+        //   }
+        //   else if(value.length > 12){
+        //     setErrors({ ...errors, password: 'Password should be of minimum twelve characters.' });
+        //   }
+           else {
+            delete errors.password;
+            setErrors(errors);
+          }
+          break
+          default:
+            break
+    }
+  }
+  const validate_fun =async ()=>{
+    let error = errors;
+    if(user.email.length === 0){
+      error["email"] ="Email is required."
+      setErrors({ ...errors, email: 'Please enter valid email address' });
+    }
+    if(user.password === ""){
+      error["password"] ="Password is required."
+      setErrors({ ...errors, password: 'Password should be of minimum eight characters.' });
+    }
+    return error;
+  }
+  const loginFun = async(e) => {
     e.preventDefault();
+    const error = await validate_fun();
+    setErrors(error);
+    setLoginAttempted(true);
+    if (Object.keys(error).length === 0) {
     dispatch(userLogin(user));
-    console.log(invalidCred)
+    }
   }
 
   return (
@@ -79,7 +139,8 @@ const Login = () => {
                       <CForm onSubmit={loginFun}>
                         <h4>Login</h4>
                         <p className="text-medium-emphasis">Sign In to your account</p>
-                        <CInputGroup className="mb-3">
+                        <div className='mb-3'>
+                        <CInputGroup  >
                           <CInputGroupText>
                             <CIcon icon={cilUser} />
                           </CInputGroupText>
@@ -88,10 +149,16 @@ const Login = () => {
                             name="email"
                             value={user.email}
                             onChange={handleChange}
-                            required
+                            // required
                           />
                         </CInputGroup>
-                        <CInputGroup className="mb-4">
+                        {errors && errors.email && (
+                        <p style={{marginBottom:"0"}} className="text-danger">{errors.email}</p>
+                      )}
+                        </div>
+                        
+                      <div className='mb-3'>
+                        <CInputGroup  >
                           <CInputGroupText>
                             <CIcon icon={cilLockLocked} />
                           </CInputGroupText>
@@ -101,7 +168,7 @@ const Login = () => {
                             name="password"
                             value={user.password}
                             onChange={handleChange}
-                            required
+                            // required
                             style={{ paddingRight: '2.5rem' }} // Adjust padding for the icon to fit
                           />
                           <div style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)' }}>
@@ -112,22 +179,27 @@ const Login = () => {
         )}
       </div>
                         </CInputGroup>
-                        {invalidCred &&
-                        <CRow>
-                        <p style={{color:'red',display:'flex', justifyContent:'center', textAlign:'center'}}>Invalid Email/Password</p>
+                        {errors && errors.password && (
+                        <p style={{marginBottom:"0"}} className="text-danger">{errors.password}</p>
+                      )}
+                        </div>
+                       {loginAttempted && invalidCred && user.email && user.password && (// Render only if login attempted and invalid credentials
+                          <CRow>
+                            <p className='text-danger' style={{display:'flex', justifyContent:'flex-start'}}>Invalid Email/Password</p>
+                          </CRow>
+                        )}
+                        <CRow  >
+                          <div className={style.reset_link}>
+                            <NavLink to="/forget_password" >Forgot Password?</NavLink>
+                          </div>
                         </CRow>
-                        }
+                        
                         <CRow>
                           <div className={style.my_btn}>
                             <button type="submit">Login</button>
                           </div>
                         </CRow>
                         <br />
-                        <CRow  >
-                          <div className={style.reset_link}>
-                            <NavLink to="/forget_password" >Forgot Password?</NavLink>
-                          </div>
-                        </CRow>
                       </CForm>
                     </CCardBody>
                   </CCard>

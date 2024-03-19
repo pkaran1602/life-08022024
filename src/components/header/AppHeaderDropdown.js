@@ -31,7 +31,7 @@ const AppHeaderDropdown = () => {
   const logoutFun = () => {
     Swal.fire({
       title: "Life Of Me",
-      text: "Are you sure you want to log out?",
+      text: "Are you sure you want to logout?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "rgba(201, 153, 33, 0.733)",
@@ -44,13 +44,6 @@ const AppHeaderDropdown = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         dispach(userLogout())
-        Swal.fire({
-          icon: "success",
-          title:"Logged out",
-          text: "You are successfully logged out.",
-          showConfirmButton: false,
-          timer: 1200
-        });
       }
     });
   };
@@ -67,7 +60,7 @@ const AppHeaderDropdown = () => {
   return (
     <CDropdown className='my_nav' variant="nav-item">
       <CDropdownToggle placement="bottom-end" className="py-0 profile_img" caret={false}>
-        <CAvatar className='profile_img'   src={user_data.profile_pic} size="md" />
+        <CAvatar    src={user_data.profile_pic} size="md" />
       </CDropdownToggle>
       <CDropdownMenu className="pt-0 " placement="bottom-end">
         <CDropdownHeader className="bg-light fw-semibold py-2">Admin</CDropdownHeader>
@@ -77,7 +70,7 @@ const AppHeaderDropdown = () => {
           Admin Profile   
         </CDropdownItem>
         </NavLink>
-          <NavLink style={{textDecoration:'none', color:'rgba(44, 56, 74, 0.95)'}} to='/change_pass'>
+          <NavLink style={{textDecoration:'none', color:'rgba(44, 56, 74, 0.95)'}} to='/change_password'>
         <CDropdownItem>
           <CIcon icon={cilSettings} className="me-2" />
           Change Password

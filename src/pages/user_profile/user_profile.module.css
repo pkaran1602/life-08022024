@@ -19,14 +19,15 @@
   justify-content: center;
 }
 .profile_img{
-  display: flex;
-  justify-content: center;
-  /* margin-top: 20px; */
+    display: flex;
+    justify-content: start;
+  margin: 20px 0;
 }
 .profile_img img{
+  margin-top: 10px;
   height: 130px;
   cursor: pointer;
-  border-radius: 70px;
+  border-radius: 4px;
 
 }
 
@@ -37,6 +38,7 @@
 
 .right{
   padding: 20px;
+  padding-right: 30px;
   height: auto;
   background-color: white;
 }

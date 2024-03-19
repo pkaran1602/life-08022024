@@ -12,7 +12,7 @@ const Widgets2 = (props) => {
   return (
     <>
     <div>
-      <h1 style={{color:'#424242',fontSize:'26px',fontWeight:'450',}}>Users per age group</h1>
+      <h1 style={{color:'#424242',fontSize:'26px',fontWeight:'450',}}>Users Per Age Group</h1>
     </div>
     <br />
     <CRow>

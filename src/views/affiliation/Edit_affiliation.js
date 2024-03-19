@@ -17,12 +17,14 @@ const Edit_affiliations = (props) => {
 
   const imgRef = useRef(null);
   const previewCanvasRef = useRef(null);
-  
+
+  const [isModal, setIsModal] = useState(false);
   const [cropDone, setCropDone] = useState(false);
 
-  const { close_fun1, isOpen1, editAffiliation_fun,crop1,setCrop1,affiliations_data,img1,updateAvatar1,onImageLoad1, handle_change,handleFile1 } = props
+  const { close_fun1, isOpen1, editAffiliation_fun,crop1,setCrop1,affiliations_data,img1,updateAvatar1,affiliation_errors1,onImageLoad1, handle_change,handleFile1 } = props
  
   const abc = (e)=>{
+    setIsModal(true)
     handleFile1(e);
     if(cropDone === true){
       setCropDone(false);
@@ -44,11 +46,11 @@ const Edit_affiliations = (props) => {
             <Container>
             <div>
               <Row>
-                <h4>LOGO</h4>
+              <label style={{ fontSize: '22px', fontWeight: '400' }}>Logo</label>
               <div className={style.profile_img}>
                 <div>
               <label>
-                <img style={{cursor:'grabbing'}} src={img1 ? img1 : affiliations_data.image } width={65} alt="" />
+                <img style={{cursor:'grabbing'}} src={img1 ? img1 : affiliations_data.image } width={75} alt="" />
                 <input
                 accept="image/png , image/jpeg"
                   type="file"
@@ -57,17 +59,57 @@ const Edit_affiliations = (props) => {
                   hidden
                 />
               </label>
-              {img1 && (
+            
+            </div>
+            </div>
+            </Row>
+            <Row>
+            <div style={{paddingTop:'20px'}}>
+              <div>
+                <label style={{fontSize:'22px',fontWeight:'400'}} htmlFor="link">Web URL</label>
+              </div>
+              <div style={{paddingTop:'10px'}}>
+                <input
+                style={{width:'75%',height:'6vh' , border:'1px solid #757575', borderRadius:'7px',padding:'0 8px'}}
+                  type="text"
+                  name='link'
+                  onChange={handle_change}
+                  value={affiliations_data.link}
+                  
+                />
+              </div>
+            </div>
+            {affiliation_errors1?.link &&
+                      <p  className='text-danger'>{affiliation_errors1.link}</p>
+                      }
+            </Row>
+            </div>
+            </Container>
+            <div style={{marginTop:'20px'}}>
+            <Button variant="secondary" type='submit'>
+            Update
+          </Button>
+          </div>
+            </form>
+          </div>
+        </Modal.Body>
+      </Modal>
+      <div>
+      <Modal  backdrop="static" // Prevent closing on outside click
+        keyboard={false} show={isModal} onHide={()=>setIsModal(false)}>
+          <Modal.Header closeButton>Crop profile picture</Modal.Header>
+            <Modal.Body>
+            {img1 && (
                           <>
                           <div 
                           // className="flex flex-col items-center"
-                          style={{width:'100px !important' , height:'250px !important'}}
+                          style={{width:'100%',textAlign:"center"}}
                           >
                             {!cropDone && (
                             <ReactCrop
                               crop={crop1}
                               onChange={(pixelCrop, percentCrop) => setCrop1(percentCrop)}
-                              circularCrop
+                              // circularCrop
                               keepSelection
                               aspect={ASPECT_RATIO}
                               minWidth={MIN_DIMENSION}
@@ -76,13 +118,13 @@ const Edit_affiliations = (props) => {
                                 ref={imgRef}
                                 src={img1}
                                 alt="Upload"
-                                style={{ width:'350px', height:'350px' }}
+                                style={{ height:'250px' }}
                                 onLoad={onImageLoad1}
                               />
                             </ReactCrop>
                             )}
                           </div>
-                          <div>
+                          <div style={{width:'100%',textAlign:"center"}}>
                             {!cropDone && ( // Render the button only if crop is not done
                               <Button
                                 onClick={() => {
@@ -97,7 +139,8 @@ const Edit_affiliations = (props) => {
                                   );
                                   const dataUrl = previewCanvasRef.current.toDataURL("image/jpeg");          
                                   updateAvatar1(dataUrl);
-                                  setCropDone(true); // Set cropDone to true after cropping
+                                  setCropDone(true);
+                                  setIsModal(false) ; 
                                 }}
                               >
                                 Crop Image
@@ -120,37 +163,9 @@ const Edit_affiliations = (props) => {
                             }}
                             />
                         )}
-            </div>
-            </div>
-            </Row>
-            <Row>
-            <div style={{paddingTop:'20px'}}>
-              <div>
-                <label style={{fontSize:'20px',fontWeight:'500'}} htmlFor="link">Web URL</label>
-              </div>
-              <div style={{paddingTop:'10px'}}>
-                <input
-                style={{width:'75%',height:'6vh' , border:'1px solid #757575', borderRadius:'7px',padding:'0 8px'}}
-                  type="text"
-                  name='link'
-                  onChange={handle_change}
-                  value={affiliations_data.link}
-                  placeholder='Enter URL'
-                />
-              </div>
-            </div>
-            </Row>
-            </div>
-            </Container>
-            <div style={{marginTop:'20px'}}>
-            <Button variant="secondary" type='submit'>
-            Update
-          </Button>
-          </div>
-            </form>
-          </div>
-        </Modal.Body>
-      </Modal>
+            </Modal.Body>
+          </Modal>
+      </div>
     </div>
   );
 }

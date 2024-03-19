@@ -13,6 +13,7 @@ import ReactCrop, {
   makeAspectCrop,
 } from "react-image-crop";
 import Modal from 'react-bootstrap/Modal';
+import My_Loader from 'src/components/loader/My_Loader'
 
 
 const ASPECT_RATIO = 1;
@@ -38,12 +39,14 @@ const User_Profile = () => {
   const previewCanvasRef = useRef(null);
   const [error, setError] = useState("");
 
-
+  
   const [cropDone, setCropDone] = useState(false);
   const [img, setImg] = useState(null);
   const [affiliation_errors, setAffiliation_errors] = useState({});
   const [file_data, setFile_data] = useState("");
   const [crop, setCrop] = useState();
+  const [imgSelected, setImgSelected] = useState(false);
+  const [isloading, setisLoading] = useState(false)
 
 
   const abc = (e)=>{
@@ -72,6 +75,7 @@ const User_Profile = () => {
         }
       });
       setImg(imageUrl);
+      setImgSelected(true);
     });
     reader.readAsDataURL(file);
     setFile(file);
@@ -97,28 +101,13 @@ const User_Profile = () => {
     setCrop(centeredCrop);
   };
 
-
-  
   const updateAvatar = (imgSrc) => {
-    console.log(imgSrc)
+    setUser_data({ ...user_data, profile_pic: imgSrc });
     setImg(imgSrc);
     setFile_data(imgSrc);
     delete affiliation_errors.file_data;
     setAffiliation_errors(affiliation_errors);
   };
-
-
-
-
-  // const handleFile = (e) => {
-  //   setFile(e.target.files[0])
-  //   const [file] = e.target.files
-  //   setUser_data({ ...user_data, ["profile_pic"]: URL.createObjectURL(file) })
-  //   if (user_data.profile_pic !== profile) {
-  //     setShowModal(true);
-  //   }
-    
-  // };
 
   const handleChange = (e) => {
     validate(e.target.name, e.target.value)
@@ -128,10 +117,16 @@ const User_Profile = () => {
   const validate = (name, value) => {
     switch (name) {
       case "name":
-        if (value.length ===1) {
-          setErrors({ ...errors, name: "Name should be not less than 2 characters" })
+        if (value.length === 0) {
+          setErrors({});
+        }
+       else if (!/^[a-zA-Z]+$/.test(value)) {
+          setErrors({ ...errors, name: "Name should contain only alphabets" });
+        }
+        else if (value.length <2) {
+          setErrors({ ...errors, name: "Name should not be less than 2 characters" })
         } else if (value.length > 50) {
-          setErrors({ ...errors, name: "Name should be not more than 50 character" })
+          setErrors({ ...errors, name: "Name should not be more than 50 character" })
         } else {
           delete errors.name;
           setErrors(errors);
@@ -141,7 +136,14 @@ const User_Profile = () => {
         if (value.length === 0) {
           delete errors.phone;
           setErrors(errors);
-      } else if (!/^\d+$/.test(value)) {
+        }
+       else if (value.length < 8) {
+          setErrors({ ...errors, phone: 'Phone Number should be of minimum eight characters.' });
+        }
+        else if(value.length > 12){
+          setErrors({ ...errors, phone: 'Phone Number should be of maximun twelve characters.' });
+        }
+       else if (!/^\d+$/.test(value)) {
           setErrors({ ...errors, phone: "Please enter numeric value only in Phone Number" });
       }else {
           delete errors.phone;
@@ -177,8 +179,8 @@ const User_Profile = () => {
       setErrors({ ...errors, name: 'Name should be of minimum 2 characters.' });
     }
     if(user_data.phone.length === 0){
-      error["phone"] ="Phone number is required."
-      setErrors({ ...errors, phone: 'Please enter numeric value only in Phone number' });
+      error["phone"] ="Phone Number is required."
+      setErrors({ ...errors, phone: 'Please enter numeric value only in Phone Number' });
     }
     if(user_data.email.length === 0){
       error["email"] ="Email is required."
@@ -190,33 +192,25 @@ const User_Profile = () => {
 
   const submit_fun =async (e) => {
     e.preventDefault()
-    // setError2(false)
     const error = await validate_fun();
     setErrors(error);
-    // if (user_data.name.length === 0 || user_data.email.length === 0 || user_data.phone.length === 0) {
-    //   setErrors("")
-    //   setError2(true)
-    // }
     if(Object.keys(errors).length ===0){
-      var formdata = new FormData();
-      formdata.append("profile_pic", file)
-      formdata.append("id", user_data.id)
-      formdata.append("name", user_data.name)
-      formdata.append("email", user_data.email)
-      formdata.append("phone", user_data.phone)
-      update_admin_data(formdata).then((response) => {
+      let Myuser_data = {
+        id : user_data.id,
+        name : user_data.name,
+        email : user_data.email,
+        phone : user_data.phone,
+        file_data : file_data
+      }
+      setisLoading(true);
+      update_admin_data(Myuser_data).then((response) => {
         if (response.status === 1) {
-          // user_profile();
-          Swal.fire({
-            position: 'center',
-            icon: 'success',
-            text: 'User profile has been updated successfully.',
-            showConfirmButton: false,
-            timer: 2000,
-          })
+        setisLoading(false);
+         
           window.location.reload();
         } else{
           console.log("error")
+          setisLoading(false);
         }
       });
     }
@@ -235,12 +229,15 @@ const User_Profile = () => {
   }, []);
 
   return (
+    <div>
+{isloading ? <My_Loader /> :
+  
     <div className={stylesheet.container}>
       <Card className={stylesheet.card}>
         <Card.Header className={stylesheet.card_header}>
           <div className='d-flex justify-content-between'>
             <div>
-            <h5>Update profile details</h5>
+            <h5>Update Profile Details</h5>
             </div>
             <div>
               <p style={{fontSize:'12px',paddingRight:'10px'}}><span className='text-danger'>*</span> Indicates required field</p>
@@ -248,30 +245,29 @@ const User_Profile = () => {
             </div> </Card.Header>
         <Card.Body >
           <form onSubmit={submit_fun}>
-            <Row>
-              <Col md={4}>
-                <div className={stylesheet.left}>
-                  <div>
+            <div className='row justify-content-center align-items-center'>
+                <div className="col-md-3">
+                 
                     <div className={stylesheet.profile_img}>
 
                       <div>
-                        <label className={stylesheet.image_label}>
-                          Upload picture.
-                          <span className="text-danger" style={{ fontSize: '20px' }}>
+                        <label className={stylesheet.image_label} style={{ fontSize: '14px', color: '#757575' }}>
+                          Profile Picture
+                          <span className="text-danger" style={{ fontSize: '20px',marginTop:"-7px"}}>
                             *
                           </span>
                         </label>
                         <label>
                           <img src={user_data.profile_pic !== "" ? user_data.profile_pic : profile} alt="" width="130px" />
-                          <input accept="image/png , image/jpeg" type="file" name="file"  onChange={abc } hidden />
+                          <input accept="image/png , image/jpeg,image/webp" type="file" name="file"  onChange={abc } hidden />
+                          {/* {!imgSelected ? null : <p>Please select your image</p>} */}
                         </label>
                       </div>
-                    </div>
+                   
                   </div>
                 </div>
-              </Col>
-              <Col md={8}>
-                <div className={stylesheet.right}>
+              
+                <div className="col-md-7">
                   <div>
                     <div>
                       <label for="name" style={{ fontSize: '14px', color: '#757575' }}>
@@ -282,12 +278,13 @@ const User_Profile = () => {
                       </label>
                       <div>
                         <input
-                          style={{
-                            border: 'none',
-                            borderBottom: '1px solid #757575',
-                            outline: 'none',
-                            width: '80%'
-                          }}
+                        className='form-control'
+                          // style={{
+                          //   border: 'none',
+                          //   borderBottom: '1px solid #757575',
+                          //   outline: 'none',
+                          //   width: '80%'
+                          // }}
                           type="text"
                           name="name"
                           value={user_data.name}
@@ -317,12 +314,13 @@ const User_Profile = () => {
                       </label>
                       <div>
                         <input
-                          style={{
-                            border: 'none',
-                            borderBottom: '1px solid #757575',
-                            outline: 'none',
-                            width: '80%'
-                          }}
+                         className='form-control'
+                          // style={{
+                          //   border: 'none',
+                          //   borderBottom: '1px solid #757575',
+                          //   outline: 'none',
+                          //   width: '80%'
+                          // }}
 
                           type="email"
                           name="email"
@@ -351,13 +349,13 @@ const User_Profile = () => {
                       </label>
                       <div>
                         <input
-
-                          style={{
-                            border: 'none',
-                            borderBottom: '1px solid #757575',
-                            outline: 'none',
-                            width: '80%'
-                          }}
+                          className='form-control'
+                          // style={{
+                          //   border: 'none',
+                          //   borderBottom: '1px solid #757575',
+                          //   outline: 'none',
+                          //   width: '80%'
+                          // }}
                           type="tel"
                           name="phone"
                           value={user_data.phone}
@@ -374,30 +372,30 @@ const User_Profile = () => {
                     </div>
                   </div>
                 </div>
-              </Col>
-            </Row>
+                </div>
             <div className={stylesheet.update_btn}>
-              <Button type='submit'>Save changes</Button>
+              <Button type='submit'>Save Changes</Button>
             </div>
           </form>
         </Card.Body>
       </Card>
       {user_data.profile_pic !== profile &&(
       <div>
-      <Modal style={{}} centered show={showModal} onHide={handleCloseModal}>
-      <Modal.Header closeButton>Crop Image</Modal.Header>
-      <Modal.Body style={{height:'70vh'}}>
+      <Modal backdrop="static" // Prevent closing on outside click
+        keyboard={false} centered show={showModal} onHide={handleCloseModal}>
+      <Modal.Header closeButton>Crop profile picture</Modal.Header>
+      <Modal.Body>
         {img && (
                           <>
                           <div 
-                          style={{width:'100px !important' , height:'250px !important'}}
+                          style={{width:'100%',textAlign:"center"}}
                           >
                             {!cropDone && (
                             <ReactCrop
                             // style={{width:'200px', height:'200px'}}
                               crop={crop}
                               onChange={(pixelCrop, percentCrop) => setCrop(percentCrop)}
-                              circularCrop
+                              // circularCrop
                               keepSelection
                               aspect={ASPECT_RATIO}
                               minWidth={MIN_DIMENSION}
@@ -406,20 +404,20 @@ const User_Profile = () => {
                                 ref={imgRef}
                                 src={img}
                                 alt="Upload"
-                                style={{ width:'350px', height:'350px' }}
+                                style={{ height:'250px'}}
                                 onLoad={onImageLoad}
                               />
                             </ReactCrop>
                             )}
                           </div>
-                          <div>
-                            {!cropDone && ( // Render the button only if crop is not done
+                          <div style={{width:'100%',textAlign:"center"}}>
+                            {!cropDone && ( 
                               <Button
-                              style={{margin:"7px 150px"}}
+                              
                                 onClick={() => {
                                   setCanvasPreview(
-                                    imgRef.current, // HTMLImageElement
-                                    previewCanvasRef.current, // HTMLCanvasElement
+                                    imgRef.current, 
+                                    previewCanvasRef.current, 
                                     convertToPixelCrop(
                                       crop,
                                       imgRef.current.width,
@@ -428,7 +426,8 @@ const User_Profile = () => {
                                   );
                                   const dataUrl = previewCanvasRef.current.toDataURL("image/jpeg");          
                                   updateAvatar(dataUrl);
-                                  setCropDone(true); // Set cropDone to true after cropping
+                                  setCropDone(true); 
+                                  handleCloseModal()
                                 }}
                               >
                                 Crop Image
@@ -455,6 +454,8 @@ const User_Profile = () => {
       </Modal>
       </div>
 )}
+    </div>
+  }
     </div>
   )
 }

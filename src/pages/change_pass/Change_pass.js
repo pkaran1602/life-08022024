@@ -25,22 +25,32 @@ const Change_pass  = () => {
   const validate = (name, value) => {
     switch (name) {
       case 'current_password':
+        if (value.length === 0) {
+          // Clear all errors when password length is 0
+          setErrors({});
+        }
+        else
         if (value.length < 8) {
           setErrors({ ...errors, current_password: 'Password should be of minimum eight characters.' });
         }
         else if(value.length > 12){
-          setErrors({ ...errors, current_password: 'Password should be of minimum twelve characters.' });
+          setErrors({ ...errors, current_password: 'Password should be of maximum twelve characters.' });
         } else {
           delete errors.current_password;
           setErrors(errors);
         }
         break
         case 'new_password':
+          if (value.length === 0) {
+            // Clear all errors when password length is 0
+            setErrors({});
+          }
+          else
           if (value.length < 8) {
             setErrors({ ...errors, new_password: 'Password should be of minimum eight characters.' });
           }
           else if(value.length > 12){
-            setErrors({ ...errors, new_password: 'Password should be of minimum twelve characters.' });
+            setErrors({ ...errors, new_password: 'Password should be of maximum twelve characters.' });
           }
            else {
             delete errors.new_password;
@@ -48,14 +58,19 @@ const Change_pass  = () => {
           }
           break
         case 'confirm_password':
+          if (value.length === 0) {
+            // Clear all errors when password length is 0
+            setErrors({});
+          }
+          else
           if (value.length < 8) {
             setErrors({ ...errors, confirm_password: 'Password should be of minimum eight characters.' });
           }
           else if(value.length > 12){
-            setErrors({ ...errors, confirm_password: 'Password should be of minimum twelve characters.' });
+            setErrors({ ...errors, confirm_password: 'Password should be of maximum twelve characters.' });
           }
            else if (data.new_password !== value) {
-            setErrors({ ...errors, confirm_password: 'New Password and Confirm Password does not match.' });
+            setErrors({ ...errors, confirm_password: 'New password and Confirm password does not match.' });
           } 
           else {
             delete errors.confirm_password;
@@ -130,7 +145,7 @@ const Change_pass  = () => {
             text: 'Password has been changed successfully.',
             icon: 'success',
             showConfirmButton: false,
-            timer: 1200,
+            timer: 2000,
             
           })
           setData({ current_password: '', new_password: '', confirm_password: '' })
@@ -139,7 +154,7 @@ const Change_pass  = () => {
             text: "Current password is invalid.",
             icon: 'warning',
             showConfirmButton: false,
-            timer: 1200,
+            timer: 2000,
           })
         }
       })
@@ -155,7 +170,7 @@ const Change_pass  = () => {
         <Card.Header className={stylesheet.card_header}> 
         <div className='d-flex justify-content-between'>
             <div>
-            <h5>CHANGE PASSWORD</h5>
+            <h5>Change Password</h5>
             </div>
             <div>
             <p style={{fontSize:'12px',paddingRight:'10px'}}><span className='text-danger'>*</span> Indicates required field</p>
@@ -175,21 +190,23 @@ const Change_pass  = () => {
                           *
                         </span>{' '}
                       </label>
-                      <div>
-                        <input className={stylesheet.my_input}
+                      <div className={stylesheet.hide}>
+                        <input 
+                        className="form-control"
+                        // className={stylesheet.my_input}
                           type={ptype1}
                           name="current_password"
                           value={data.current_password}
                           onChange={handleChange}
                         />
-                       
+                       <div className={stylesheet.hideEye}>
               {eye1 &&
                  <FaEyeSlash style={{marginLeft:"-13px"}} onClick={show_password1} />
               }
               {!eye1 &&
                 <FaEye style={{marginLeft:"-13px"}} onClick={show_password1} />
               }
-    
+    </div>
                       </div>  
                       </div>
                       {errors && errors.current_password && (
@@ -207,23 +224,28 @@ const Change_pass  = () => {
                           *
                         </span>{' '}
                       </label>
-                      <div>
+                      <div className={stylesheet.hide}>
                         <input
-                        className={stylesheet.my_input}
+                        className="form-control"
+                        // className={stylesheet.my_input}
                           type={ptype2}
                           name="new_password"
                           value={data.new_password}
                           onChange={handleChange}
                         />
+                        <div className={stylesheet.hideEye}>
                           {eye2 &&
                  <FaEyeSlash style={{marginLeft:"-13px"}} onClick={show_password2} />
               }
               {!eye2 &&
                 <FaEye style={{marginLeft:"-13px"}} onClick={show_password2} />
               }
+              </div>
                       </div>
                     </div>
-                    {errors && errors.new_password && <p className="text-danger">{errors.new_password}</p>}
+                    {errors && errors.new_password && (
+                      <p className="text-danger">{errors.new_password}</p>
+                    )}
                     <div>
                     </div>
                     <div>
@@ -237,20 +259,23 @@ const Change_pass  = () => {
                           *
                         </span>
                       </label> 
-                        <div>
+                        <div className={stylesheet.hide}>
                         <input
-                         className={stylesheet.my_input}
+                        className="form-control"
+                        //  className={stylesheet.my_input}
                           type={ptype3}
                           name="confirm_password"
                           value={data.confirm_password}
                           onChange={handleChange}
-                        />                      
+                        />           
+                         <div className={stylesheet.hideEye}>         
                           {eye3 &&
                  <FaEyeSlash style={{marginLeft:"-13px"}} onClick={show_password3} />
               }
               {!eye3 &&
                 <FaEye style={{marginLeft:"-13px"}} onClick={show_password3} />
               }
+              </div>  
              
                       </div>
                     </div>
@@ -265,7 +290,7 @@ const Change_pass  = () => {
               </Col>
             </Row>
             <div className={stylesheet.update_btn}>
-              <Button type='submit'>Save changes</Button>
+              <Button type='submit'>Save Changes</Button>
             </div>
           </form>
         </Card.Body>

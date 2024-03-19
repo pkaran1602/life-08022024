@@ -197,6 +197,13 @@
 {
 background-color:rgba(201, 153, 33, 0.733);
 }
+.sidebar.sidebar-fixed {
+  background-color: #dedede !important;
+}
+
+.sidebar-nav .nav-link {
+  color: #000 !important;
+}
 
 .sidebar-nav .nav-link.active
 {
@@ -232,6 +239,7 @@ background-color:rgba(201, 153, 33, 0.733);
   text-decoration: none;
   background-color:  rgba(201, 153, 33, 0.733) !important;
 }
+
 .my_nav:hover                   
 {
   background-color: #f7f7f7;
@@ -244,7 +252,13 @@ background-color:rgba(201, 153, 33, 0.733);
   font-weight: 470;
   color: red;
 }
-
+.avatar-img{
+  border-radius: 5% !important;
+}
+/* .modal-dialog {
+  max-width: 50%;
+  margin: 4rem auto;
+} */
 @media screen and (min-width:280px) and (max-width:500px)
 {
   .container-lg

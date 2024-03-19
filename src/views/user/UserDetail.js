@@ -41,33 +41,18 @@ const UserDetail = (props) => {
         <Modal.Body className={stylesheet.main_body}>
           <div className={stylesheet.container}>
             <div className={stylesheet.my_profile}>
-              <img src={selectedUser.profile_photo === "" ? img1 : selectedUser.profile_photo} />
+              <img src={selectedUser.Profile_Photo === "" ? img1 : selectedUser.Profile_Photo} />
             </div>
             <div className={stylesheet.my_details}>
               <Row>
               <Col>
                 <div className={stylesheet.content_column} >
-                <div className={stylesheet.content_heading} ><strong>First name</strong></div>
-                <div className={stylesheet.content_details}> <p>   {selectedUser.FirstName ? selectedUser.FirstName:"N/A"}</p></div>
+                <div className={stylesheet.content_heading} ><strong>Name</strong></div>
+                <div className={stylesheet.content_details}> <p>   {selectedUser.Name ? selectedUser.Name:"N/A"}</p></div>
                 </div>
                 </Col>
                 </Row>
-                <Row>
-                <Col>
-                <div className={stylesheet.content_column}>
-                <div className={stylesheet.content_heading}><strong>Middle name</strong></div>
-                <div className={stylesheet.content_details}> <p>   {selectedUser.MiddleName ? selectedUser.MiddleName :"N/A"}</p></div>
-                </div>
-                </Col>
-                </Row>
-                <Row>
-                <Col>
-                <div className={stylesheet.content_column}>
-                <div className={stylesheet.content_heading}><strong>Last name</strong></div>
-                <div className={stylesheet.content_details}> <p>   {selectedUser.LastName ?selectedUser.LastName:"N/A"}</p></div>
-                </div>
-                </Col>
-                </Row>
+
                 <Row>
                 <Col>
                 <div className={stylesheet.content_column}>
@@ -87,11 +72,27 @@ const UserDetail = (props) => {
                 <Row>
                 <Col>
                 <div className={stylesheet.content_column}>
-                <div className={stylesheet.content_heading}><strong> Date of birth</strong></div>
-                <div className={stylesheet.content_details}> <p>   {formatDOB(selectedUser.BirthDate ? selectedUser.BirthDate:"N/A")}</p></div>
+                <div className={stylesheet.content_heading}><strong> Date Of Birth</strong></div>
+                <div className={stylesheet.content_details}> <p>   {formatDOB(selectedUser.Birthdate ? selectedUser.Birthdate:"N/A")}</p></div>
                 </div>
                 </Col>
               </Row>
+              <Row>
+                <Col>
+                <div className={stylesheet.content_column}>
+                <div className={stylesheet.content_heading}><strong>Gender</strong></div>
+                <div className={stylesheet.content_details}> <p>   {selectedUser.Gender ? selectedUser.Gender :"N/A"}</p></div>
+                </div>
+                </Col>
+                </Row>
+              <Row>
+                <Col>
+                <div className={stylesheet.content_columns}>
+                <div className={stylesheet.content_heading}><strong>Registered On</strong></div>
+                <div className={stylesheet.content_details}> <p>   {selectedUser.Register_date ? selectedUser.Register_date :"N/A"}</p></div>
+                </div>
+                </Col>
+                </Row>
             </div>
           </div>
         </Modal.Body>

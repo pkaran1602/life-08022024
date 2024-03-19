@@ -16,12 +16,12 @@ const AppContent = () => {
       <Suspense>
         <Routes>
           <Route path="/dashboard" element={<Dashboard/>} />
-          <Route path="/user" element={<User/>} />
-          <Route path="/affiliation" element={<Affiliation_Main/>} />
-          <Route path="/feedback" element={<Feedback/>} />
-          <Route path="/push_notification" element={<Push_Notification/>} />
+          <Route path="/users" element={<User/>} />
+          <Route path="/affiliations" element={<Affiliation_Main/>} />
+          <Route path="/feedbacks" element={<Feedback/>} />
+          <Route path="/push_notifications" element={<Push_Notification/>} />
           <Route exact path="/my_profile"  element={<Profile />} />
-          <Route path="/change_pass"  element={<Password />} />
+          <Route path="/change_password"  element={<Password />} />
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>
       </Suspense>

@@ -21,11 +21,44 @@ const Push_Notification = () => {
   const [notification_list, setNotification_list] = useState([])
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [currentEmoji, setCurrentEmoji] = useState(null);
+  const [notificationError, setNotificationError] = useState('');
+  const [notificationError1, setNotificationError1] = useState('');
+  const [wordCount, setWordCount] = useState(0); // State to hold word count
+
+
+  const WordCounter = ({ count }) => {
+    return <div style={{color:'red'}}>{count}/200</div>;
+  };
+
+  const validate = (name, value) => {
+    switch (name) {
+      case "notification_msg":
+        if (value.length === 0) {
+          setNotificationError({});
+        }
+         else if (value.length > 200) {
+          setNotificationError({ ...notificationError, notification_msg: "Name should not be more than 50 character" })
+        } else {
+          delete notificationError.notification_msg;
+          setNotificationError(notificationError);
+        }
+        break;
+      default:
+        break
+    }
+  };
 
 
   const handle_change = (e) => {
-    setNotification_msg(e.target.value)
-  };
+    const inputValue = e.target.value;
+    if (inputValue.length <= 200) {
+      setNotification_msg(inputValue);
+      setNotificationError('');
+      setWordCount(inputValue.length); // Update word count
+    } else {
+      setNotificationError('Notification should not exceed 200 characters');
+    }
+};
 
   const handleEmojiSelect = (emoji) => {
     setCurrentEmoji(emoji.native);
@@ -35,20 +68,25 @@ const Push_Notification = () => {
 
   const formatDateTime = (dateTimeString) => {
     const dateTimeObj = new Date(dateTimeString);
-    const options = { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+    const options = { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', };
     return dateTimeObj.toLocaleString('en-IN', options).replace(/-/g, ' ').replace(',', '');
   };
 
   const submit_form = (e) => {
     e.preventDefault();
+    if (notification_msg.trim() === '') {
+      setNotificationError('Notification text is required');
+      return;
+    }
     send_pust_notification({ notification_msg: notification_msg }).then((response) => {
+    
       if (response.status === 1) {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Notification has been sent",
+          text: "Notification has been sent successfully",
           showConfirmButton: false,
-          timer: 1500
+          timer: 2000
         });
         push_notification_details()
         setNotification_msg("")
@@ -93,11 +131,22 @@ const Push_Notification = () => {
               <form onSubmit={submit_form}>
                 <div className={style.push_label}>
                   <label htmlFor='notification'></label>
-                  <textarea placeholder='Type Here..'
+                  <textarea 
+                  maxLength={200}
                     type="text"
-                    required name='notification'
+                    // required name='notification'
                     value={notification_msg}
                     onChange={handle_change} />
+                    <div style={{display:'flex', justifyContent:'space-between'}}>
+                      <div>
+
+                     {notificationError && <div className='text-danger'>{notificationError}</div>}
+                      </div>
+                      <div>
+
+                     <WordCounter count={wordCount} />
+                      </div>
+                     </div>
                   <div>
                     <div className={style.my_btn1}>
                       <Button
@@ -113,10 +162,10 @@ const Push_Notification = () => {
                         onEmojiSelect={handleEmojiSelect}
                       />
                     </div>
-                  </div>
+                  </div>  
                 </div>
                 <div className={style.my_btn}>
-                  <Button variant='outline-primary' type='submit'>SEND</Button>
+                  <Button variant='outline-primary' type='submit'>Send</Button>
                 </div>
               </form>
             </div>

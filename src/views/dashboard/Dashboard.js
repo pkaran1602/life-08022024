@@ -101,7 +101,7 @@ const Dashboard = () => {
         <div className={stylesheet.container}>
           <div className={stylesheet.heading}>
             <h4 style={{ color: '#424242', fontSize: '26px', fontWeight: '500',padding:"15px 0"}}>
-              Statistics List
+              Statistics
             </h4>
           </div>
           <div >
@@ -123,9 +123,9 @@ const Dashboard = () => {
                             >
                               <option style={{ fontSize: '15px', color: '#757575' }} value="total"> All</option>
                               <option style={{ fontSize: '15px', color: '#757575' }} value="per_day">Today</option>
-                              <option style={{ fontSize: '15px', color: '#757575' }} value="week">Weekly</option>
-                              <option style={{ fontSize: '15px', color: '#757575' }} value="month">Monthly</option>
-                              <option style={{ fontSize: '15px', color: '#757575' }} value="quarter">Quarterly</option>
+                              <option style={{ fontSize: '15px', color: '#757575' }} value="week">Week</option>
+                              <option style={{ fontSize: '15px', color: '#757575' }} value="month">Month</option>
+                              <option style={{ fontSize: '15px', color: '#757575' }} value="quarter">Quarter</option>
                               <option style={{ fontSize: '15px', color: '#757575' }} value="year">Yearly</option>
                               <option style={{ fontSize: '15px', color: '#757575' }} value="custom_date"> Custom date A-B</option>
                               <option style={{ fontSize: '15px', color: '#757575' }} value="to_date">To date</option>
@@ -138,32 +138,36 @@ const Dashboard = () => {
                     </div>
                     {show1 &&
                               <div className='mb-2'>
+                                <Row>
+                                  <Col md={3}>
                                 <div>
                                   <label style={{ fontSize: '16px', color: '#757575' }} for='start_date'>To Date</label>
                                 </div>
                                 <div >
-                                  <input className={stylesheet.my_input} type="date" name='start_date' value={selectdate.start_date} onChange={handlechange_date} />
+                                  <input className='form-control'  type="date" name='start_date' value={selectdate.start_date} onChange={handlechange_date} />
                                 </div>
+                                </Col>
+                                </Row>
                               </div>
                             }
                     {show &&
                       <div style={{ width: '100%' }}>
-                        <Row >
+                        <Row className='pb-2'>
                           <Col md={3}>
                             <div>
                               <div>
                                 <label style={{ fontSize: '16px', color: '#757575' }} for='date'>Start Date</label>
                               </div>
                               <div>
-                                <input className={stylesheet.my_input} type="date" name='start_date' value={selectdate.start_date} onChange={handlechange_date} />
+                                <input className="form-control" type="date" name='start_date' value={selectdate.start_date} onChange={handlechange_date} />
                               </div>
                             </div>
                           </Col>
-                          <Col md={4}>
+                          <Col md={3}>
                             <div>
                               <label style={{ fontSize: '16px', color: '#757575' }} for='date'>End Date</label>
                               <div>
-                              <input className={stylesheet.my_input} style={{marginRight:'20px !important'}} type="date" name='end_date' value={selectdate.end_date} onChange={handlechange_date} />
+                              <input className="form-control" style={{marginRight:'20px !important'}} type="date" name='end_date' value={selectdate.end_date} onChange={handlechange_date} />
                               </div>
                             </div>
                           </Col>
@@ -191,8 +195,8 @@ const Dashboard = () => {
           <br />
           <CRow>
             <CCol xs>
-              <CCard style={{ border: 'none', backgroundColor: 'white', boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }} className="mb-4 ">
-                <CCardBody>
+              <CCard style={{ border: 'none',backgroundColor: 'white', boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",marginTop:"-20px" }} className="mb-4 ">
+                <CCardBody >
                   <Widgets3 
                   wish_count={wish_count}
                   />

@@ -68,7 +68,7 @@ const Feedback = () => {
       },
       {
         accessorKey: 'feedback',
-        header: 'Feedback',
+        header: 'Feedback Text',
         size: 300,
       },
       {
@@ -86,7 +86,7 @@ const Feedback = () => {
           </>,
         id: 'Button',
         header: 'AAA',
-        Header: () => <i>Actions</i>,
+        Header: () => <span>Actions</span>,
         enableSorting: false,
       },
     ],

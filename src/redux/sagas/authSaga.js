@@ -25,7 +25,7 @@ function* token_expireFun() {
     Swal.fire({
         position: "center",
         icon: "warning",
-        title: "Your session has been expired, please login again.",
+        text: "Your session has been expired, please login again.",
         showConfirmButton: false,
         timer: 2000
       });

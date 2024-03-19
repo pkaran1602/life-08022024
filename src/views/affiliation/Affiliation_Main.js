@@ -41,7 +41,9 @@ const Affiliation_Main = () => {
   const [file_data, setFile_data] = useState("");
   const [file_data1, setFile_data1] = useState("");
   const [affiliation_errors, setAffiliation_errors] = useState({});
+  const [affiliation_errors1, setAffiliation_errors1] = useState({});
   const [imgSelected, setImgSelected] = useState(false);
+
 
   const handleFile = (e) => {
     const file = e.target.files?.[0];
@@ -173,13 +175,77 @@ const Affiliation_Main = () => {
   };
 
   const handle_change = (e) => {
-    setAffiliations_data({ ...affiliations_data, [e.target.name]: e.target.value })
+    const { name, value } = e.target;
+    if (name === 'link') {
+      // Validate link format: www.xxx.com
+      const urlPattern = /^www\.[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/;
+      if (!value.trim()) {
+        // If the link is empty, remove any existing error message
+        setAffiliation_errors1({});
+      } else if (value.trim().length < 11) {
+        // If the link is less than 11 characters or does not match the format, set an error message
+        setAffiliation_errors1({ ...affiliation_errors1, [name]: "Web URL must be at least 11 characters long." });
+      }
+      else if (!urlPattern.test(value)) {
+        // If the link is less than 11 characters or does not match the format, set an error message
+        setAffiliation_errors1({ ...affiliation_errors1, [name]: "Web URL must be in this format www.xxx.com" });
+      } 
+      else {
+        // Otherwise, remove any existing error message
+        const { link, ...restErrors } = affiliation_errors1;
+        setAffiliation_errors1(restErrors);
+      }
+    }
+    // Update the affiliations_data state
+    setAffiliations_data({ ...affiliations_data, [name]: value });
   };
+  
+
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   if (name === 'link') {
+  //     if (value.trim().length < 11 && value.trim().length > 0) {
+  //       // If the length of the URL is less than 11 characters but not empty,
+  //       // set the error message accordingly
+  //       setAffiliation_errors({ ...affiliation_errors, [name]: "URL must be at least 11 characters long" });
+  //     } else {
+  //       // Otherwise, remove the error message if it exists
+  //       const { link, ...restErrors } = affiliation_errors;
+  //       setAffiliation_errors(restErrors);
+  //     }
+  //   } else {
+  //     // If the value is empty, remove all errors
+  //     if (value.trim().length === 0) {
+  //       setAffiliation_errors({});
+  //     }
+  //   }
+  //   // Update the link state
+  //   setLink(value);
+  // };
+
 
   const handleChange = (e) => {
-    setLink(e.target.value)
-    delete affiliation_errors.link;
-    setAffiliation_errors(affiliation_errors);
+    const { name, value } = e.target;
+    if (name === 'link') {
+      const urlPattern = /^www\.[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/;
+      if (!value.trim()) {
+        setAffiliation_errors({ ...affiliation_errors, [name]: "" });
+      } else if (value.trim().length < 11) {
+        setAffiliation_errors({ ...affiliation_errors, [name]: "URL must be at least 11 characters long." });
+      }
+      else if (!urlPattern.test(value)) {   
+        setAffiliation_errors({ ...affiliation_errors, [name]: "Web URL must be in this format www.xxx.com." });
+      }  
+      else {     
+        const { link, ...restErrors } = affiliation_errors;
+        setAffiliation_errors(restErrors);
+      }
+    } else {  
+      if (!value.trim()) {
+        setAffiliation_errors({});
+      }
+    }
+    setLink(value);
   };
 
   const edit_fun = (user_detail) => {
@@ -189,12 +255,33 @@ const Affiliation_Main = () => {
 
   const validate = () => {
     let error = {};
-    if (link === "") {
-      error["link"] = "Please enter url"
+    if (!link.trim()) {
+      error["link"] = "Web URL is required.";
+    } else if (link.trim().length < 11) {
+      error["link"] = "Web URL must be at least 11 characters long.";
     }
+    else if (!/^www\.[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/.test(link)) {
+      error["link"] = "Web URL must be in this format www.xxx.com";
+    }
+    
     if (file_data === "") {
       error["file_data"] = "Please select file"
     }
+    return error;
+  };
+  const validate1 = () => {
+    let error = {};
+    const { link } = affiliations_data;
+    const urlPattern = /^www\.[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/;
+    if (!link.trim()) {
+      error["link"] = "Web URL is required.";
+    } else if (link.trim().length < 11) {
+      error["link"] = "URL must be at least 11 characters long.";
+    }
+    else if ( !urlPattern.test(link) ) {
+      error["link"] = "URL must be in this format www.xxx.com";
+    }
+   
     return error;
   };
 
@@ -214,9 +301,9 @@ const Affiliation_Main = () => {
           Swal.fire({
             position: "center",
             icon: "success",
-            text: "Affiliation added successfully.",
+            text: "Affiliation has been added successfully.",
             showConfirmButton: false,
-            timer: 1500
+            timer: 2000
           });
           get_affiliation_data();
         }
@@ -229,28 +316,30 @@ const Affiliation_Main = () => {
 
   const editAffiliation_fun = (e) => {
     e.preventDefault();
-    
-    let user_data = {
-      link: affiliations_data.link,
-      file_data: file_data1,
-      id: affiliations_data.id,
-    }
-    edit_affliation_data(user_data).then((response) => {
-      if (response.status === 1) {
-        close_fun1();
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Life Of Me",
-          text: "Details have been updated successfully.",
-          showConfirmButton: false,
-          timer: 1500
-        });
-        get_affiliation_data();
+    const error = validate1();
+    setAffiliation_errors1(error);
+    if (Object.keys(error).length === 0) {
+      let user_data = {
+        link: affiliations_data.link,
+        file_data: file_data1,
+        id: affiliations_data.id,
       }
-    })
+      edit_affliation_data(user_data).then((response) => {
+        if (response.status === 1) {
+          close_fun1();
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Life Of Me",
+            text: "Affiliate has been updated successfully.",
+            showConfirmButton: false,
+            timer: 2000
+          });
+          get_affiliation_data();
+        }
+      })
+    }
   };
-
   const delete_fun = (data) => {
     Swal.fire({
       title: "Delete?",
@@ -271,7 +360,7 @@ const Affiliation_Main = () => {
             Swal.fire({
               position: "center",
               icon: "success",
-              text: "Deleted successfully.",
+              text: "Affiliation has been deleted successfully.",
               showConfirmButton: false,
               timer: 2000
             });
@@ -296,9 +385,9 @@ const Affiliation_Main = () => {
         size: 150,
         Cell: tableProps => (
           <img
-            style={{height:'60px', borderRadius: '30px' }}
+            style={{height:'55px', borderRadius: '4px' }}
             src={tableProps.renderedCellValue}
-            width={65}
+            width={60}
             alt='Logo'
           />
         )
@@ -429,6 +518,7 @@ const Affiliation_Main = () => {
               onImageLoad1={onImageLoad1}
               crop1={crop1}
               setCrop1={setCrop1}
+              affiliation_errors1={affiliation_errors1}
             />
           </div>
         </div>
