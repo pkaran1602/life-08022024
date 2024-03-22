@@ -31,18 +31,23 @@ const Affiliation_Main = () => {
   const [isOpen1, setIsOpen1] = useState(false);
   const [affiliations_data, setAffiliations_data] = useState({})
   const [img, setImg] = useState(null);
+  const [profile_img, setProfile_img] = useState(null);
   const [file, setFile] = useState(null);
   const [file1, setFile1] = useState(null);
   const [img1, setImg1] = useState(null);
+  const [profile_img1, setProfile_img1] = useState(null);
   const [link, setLink] = useState("");
   const [error, setError] = useState("");
   const [crop, setCrop] = useState();
-  const [crop1, setCrop1] = useState(); 
+  const [crop1, setCrop1] = useState();
   const [file_data, setFile_data] = useState("");
   const [file_data1, setFile_data1] = useState("");
   const [affiliation_errors, setAffiliation_errors] = useState({});
   const [affiliation_errors1, setAffiliation_errors1] = useState({});
   const [imgSelected, setImgSelected] = useState(false);
+
+
+  /********* ADD AFFILIATION *********/
 
 
   const handleFile = (e) => {
@@ -86,6 +91,20 @@ const Affiliation_Main = () => {
     const centeredCrop = centerCrop(crop, width, height);
     setCrop(centeredCrop);
   };
+  const updateAvatar = (imgSrc) => {
+    setProfile_img(imgSrc)
+    setImg(imgSrc);
+    setFile_data(imgSrc);
+    delete affiliation_errors.file_data;
+    setAffiliation_errors(affiliation_errors);
+  };
+
+
+
+  /************ EDIT AFFILIATION **********/
+
+
+
   const onImageLoad1 = (e) => {
     const { width, height } = e.currentTarget;
     const cropWidthInPercent = (MIN_DIMENSION / width) * 100;
@@ -102,14 +121,9 @@ const Affiliation_Main = () => {
     const centeredCrop = centerCrop(crop, width, height);
     setCrop1(centeredCrop);
   };
-  const updateAvatar = (imgSrc) => {
-    setImg(imgSrc);
-    setFile_data(imgSrc);
-    // delete affiliation_errors
-    delete affiliation_errors.file_data;
-    setAffiliation_errors(affiliation_errors);
-  };
+
   const updateAvatar1 = (imgSrc) => {
+    setProfile_img1(imgSrc)
     setImg1(imgSrc);
     setFile_data1(imgSrc);
     console.log(imgSrc)
@@ -139,6 +153,11 @@ const Affiliation_Main = () => {
     setFile1(file);
   };
 
+
+
+  /************ API ***********/
+
+
   const get_affiliation_data = () => {
     get_affiliation_list().then((response) => {
       setIsLoading(false);
@@ -152,137 +171,6 @@ const Affiliation_Main = () => {
         dispatch(token_expire());
       }
     })
-  };
-
-  
-
-  useEffect(() => {
-    get_affiliation_data();
-  }, []);
-
-  const open_add_fun = () => {
-    setIsOpen(true)
-    setLink("")
-  };
-
-  const close_fun = () => {
-    setIsOpen(false);
-    setImg(null)
-  };
-  const close_fun1 = () => {
-    setIsOpen1(false);
-    setImg1(null)
-  };
-
-  const handle_change = (e) => {
-    const { name, value } = e.target;
-    if (name === 'link') {
-      // Validate link format: www.xxx.com
-      const urlPattern = /^www\.[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/;
-      if (!value.trim()) {
-        // If the link is empty, remove any existing error message
-        setAffiliation_errors1({});
-      } else if (value.trim().length < 11) {
-        // If the link is less than 11 characters or does not match the format, set an error message
-        setAffiliation_errors1({ ...affiliation_errors1, [name]: "Web URL must be at least 11 characters long." });
-      }
-      else if (!urlPattern.test(value)) {
-        // If the link is less than 11 characters or does not match the format, set an error message
-        setAffiliation_errors1({ ...affiliation_errors1, [name]: "Web URL must be in this format www.xxx.com" });
-      } 
-      else {
-        // Otherwise, remove any existing error message
-        const { link, ...restErrors } = affiliation_errors1;
-        setAffiliation_errors1(restErrors);
-      }
-    }
-    // Update the affiliations_data state
-    setAffiliations_data({ ...affiliations_data, [name]: value });
-  };
-  
-
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   if (name === 'link') {
-  //     if (value.trim().length < 11 && value.trim().length > 0) {
-  //       // If the length of the URL is less than 11 characters but not empty,
-  //       // set the error message accordingly
-  //       setAffiliation_errors({ ...affiliation_errors, [name]: "URL must be at least 11 characters long" });
-  //     } else {
-  //       // Otherwise, remove the error message if it exists
-  //       const { link, ...restErrors } = affiliation_errors;
-  //       setAffiliation_errors(restErrors);
-  //     }
-  //   } else {
-  //     // If the value is empty, remove all errors
-  //     if (value.trim().length === 0) {
-  //       setAffiliation_errors({});
-  //     }
-  //   }
-  //   // Update the link state
-  //   setLink(value);
-  // };
-
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    if (name === 'link') {
-      const urlPattern = /^www\.[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/;
-      if (!value.trim()) {
-        setAffiliation_errors({ ...affiliation_errors, [name]: "" });
-      } else if (value.trim().length < 11) {
-        setAffiliation_errors({ ...affiliation_errors, [name]: "URL must be at least 11 characters long." });
-      }
-      else if (!urlPattern.test(value)) {   
-        setAffiliation_errors({ ...affiliation_errors, [name]: "Web URL must be in this format www.xxx.com." });
-      }  
-      else {     
-        const { link, ...restErrors } = affiliation_errors;
-        setAffiliation_errors(restErrors);
-      }
-    } else {  
-      if (!value.trim()) {
-        setAffiliation_errors({});
-      }
-    }
-    setLink(value);
-  };
-
-  const edit_fun = (user_detail) => {
-    setIsOpen1(true);
-    setAffiliations_data(user_detail)
-  };
-
-  const validate = () => {
-    let error = {};
-    if (!link.trim()) {
-      error["link"] = "Web URL is required.";
-    } else if (link.trim().length < 11) {
-      error["link"] = "Web URL must be at least 11 characters long.";
-    }
-    else if (!/^www\.[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/.test(link)) {
-      error["link"] = "Web URL must be in this format www.xxx.com";
-    }
-    
-    if (file_data === "") {
-      error["file_data"] = "Please select file"
-    }
-    return error;
-  };
-  const validate1 = () => {
-    let error = {};
-    const { link } = affiliations_data;
-    const urlPattern = /^www\.[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/;
-    if (!link.trim()) {
-      error["link"] = "Web URL is required.";
-    } else if (link.trim().length < 11) {
-      error["link"] = "URL must be at least 11 characters long.";
-    }
-    else if ( !urlPattern.test(link) ) {
-      error["link"] = "URL must be in this format www.xxx.com";
-    }
-   
-    return error;
   };
 
   const addAffiliation_fun = (e) => {
@@ -308,7 +196,10 @@ const Affiliation_Main = () => {
           get_affiliation_data();
         }
         else if (response.status === 0) {
-         setAffiliation_errors({ ...affiliation_errors, response_error: response.message });
+          setAffiliation_errors({ ...affiliation_errors, response_error: response.message });
+        }
+        else if (response.status === 4) {
+          dispatch(token_expire());
         }
       })
     }
@@ -326,6 +217,7 @@ const Affiliation_Main = () => {
       }
       edit_affliation_data(user_data).then((response) => {
         if (response.status === 1) {
+          setFile_data1("")
           close_fun1();
           Swal.fire({
             position: "center",
@@ -337,9 +229,13 @@ const Affiliation_Main = () => {
           });
           get_affiliation_data();
         }
+        else if (response.status === 4) {
+          dispatch(token_expire());
+        }
       })
     }
   };
+
   const delete_fun = (data) => {
     Swal.fire({
       title: "Delete?",
@@ -366,9 +262,110 @@ const Affiliation_Main = () => {
             });
             get_affiliation_data()
           }
+          else if (response.status === 4) {
+            dispatch(token_expire());
+          }
         })
       }
     });
+  };
+
+
+  /*********** VALIDATION ***********/
+
+
+  const handle_change = (e) => {
+    const { name, value } = e.target;
+    if (name === 'link') {
+        if (!value.trim()) {
+            setAffiliation_errors1({});
+        } else if (value.trim().length < 11) {
+            setAffiliation_errors1({ ...affiliation_errors1, [name]: "Web URL must be at least 11 characters long." });
+        } else if (!/^https:\/\/.+/i.test(value.trim())) {
+            setAffiliation_errors1({ ...affiliation_errors1, [name]: "Invalid URL. Please enter a URL starting with 'https://'." });
+        } else {
+            const { link, ...restErrors } = affiliation_errors1;
+            setAffiliation_errors1(restErrors);
+        }
+    }
+    setAffiliations_data({ ...affiliations_data, [name]: value });
+};
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === 'link') {
+      if (!value.trim()) {
+        setAffiliation_errors({ ...affiliation_errors, [name]: "" });
+      } else if (value.trim().length < 11) {
+        setAffiliation_errors({ ...affiliation_errors, [name]: "Web URL must be at least 11 characters long." });
+      }
+      else if (!/^https:\/\/.+/i.test(value.trim())) {
+        setAffiliation_errors({ ...affiliation_errors, [name]: "Invalid URL. Please enter a URL starting with 'https://'." });
+    }
+      else {
+        const { link, ...restErrors } = affiliation_errors;
+        setAffiliation_errors(restErrors);
+      }
+    } else {
+      if (!value.trim()) {
+        setAffiliation_errors({});
+      }
+    }
+    setLink(value);
+  };
+
+  const validate = () => {
+    let error = {};
+    if (!link.trim()) {
+      error["link"] = "Web URL is required.";
+    } else if (link.trim().length < 11) {
+      error["link"] = "Web URL must be at least 11 characters long.";
+    }  else if (!/^https:\/\/.+/i.test(link.trim())) {
+      error["link"] = "Invalid URL. Please enter a URL starting with 'https://'.";
+  }
+    if (file_data === "") {
+      error["file_data"] = "Please select file"
+    }
+    return error;
+  };
+  const validate1 = () => {
+    let error = {};
+    const { link } = affiliations_data;
+    if (!link.trim()) {
+        error["link"] = "Web URL is required.";
+    } else if (link.trim().length < 11) {
+        error["link"] = "Web URL must be at least 11 characters long.";
+    } else if (!/^https:\/\/.+/i.test(link.trim())) {
+        error["link"] = "Invalid URL. Please enter a URL starting with 'https://'.";
+    }
+    return error;
+};
+
+
+  const edit_fun = (user_detail) => {
+    setIsOpen1(true);
+    setAffiliations_data(user_detail)
+  };
+
+  useEffect(() => {
+    get_affiliation_data();
+  }, []);
+
+  const open_add_fun = () => {
+    setIsOpen(true)
+    setLink("")
+  };
+
+  const close_fun = () => {
+    setIsOpen(false);
+    setImg(null);
+    setProfile_img(null);
+  };
+
+  const close_fun1 = () => {
+    setIsOpen1(false);
+    setImg1(null);
+    setProfile_img1(null);
   };
 
 
@@ -376,21 +373,24 @@ const Affiliation_Main = () => {
     () => [
       {
         accessorKey: 'index',
-        header: 'SN',
-        size: 25,
+        header: 'ID',
+        size: 15,
       },
       {
         accessorKey: 'image',
         header: 'Logo',
-        size: 150,
+        size: 50,
         Cell: tableProps => (
+          <a href={tableProps.renderedCellValue} target='_blank'>
           <img
-            style={{height:'55px', borderRadius: '4px' }}
+            style={{ height: '55px', borderRadius: '4px' }}
             src={tableProps.renderedCellValue}
             width={60}
             alt='Logo'
           />
-        )
+          </a>
+        ),
+        enableColumnFilter: false,
       },
       {
         accessorKey: 'link',
@@ -406,14 +406,14 @@ const Affiliation_Main = () => {
       {
         accessorFn: (row) =>
           <>
-            <MdModeEditOutline
-              style={{ color: '#078FD7', marginRight: '15px', fontSize: '24px', cursor: 'pointer' }}
+            <Button
+              style={{ color: 'black', marginRight: "10px" }}
               onClick={() => edit_fun(row)}
-            />
-            <MdDelete
-              style={{ color: 'red', fontSize: '24px', cursor: 'pointer' }}
+            >Edit</Button>
+            <Button
+              style={{ color: 'black', }}
               onClick={() => delete_fun(row)}
-            />
+            >Delete</Button>
             <style>{`
                 .custom-swal-button {
                     border: none !important;
@@ -427,7 +427,9 @@ const Affiliation_Main = () => {
           </>,
         id: 'Button',
         header: 'AAA',
-        Header: () => <p>Actions</p>,
+        Header: () => <p style={{ marginLeft: "35px" }}>Actions</p>,
+        enableColumnFilter: false,
+        size: 100,
       },
     ],
     [],
@@ -503,6 +505,7 @@ const Affiliation_Main = () => {
               setCrop={setCrop}
               affiliation_errors={affiliation_errors}
               imgSelected={imgSelected}
+              profile_img={profile_img}
             />
           </div>
           <div>
@@ -519,6 +522,8 @@ const Affiliation_Main = () => {
               crop1={crop1}
               setCrop1={setCrop1}
               affiliation_errors1={affiliation_errors1}
+              profile_img1={profile_img1}
+
             />
           </div>
         </div>

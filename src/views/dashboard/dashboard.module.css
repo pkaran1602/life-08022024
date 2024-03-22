@@ -1,5 +1,5 @@
 .container {
-  background-color: whitesmoke;
+  background-color: white;
   padding: 10px 30px;
 }
 
@@ -86,7 +86,7 @@
 
   .macsel
   {
-    width: 334px;
+    width: 350px;
   }
   /* .filterbtn
   {
@@ -106,15 +106,6 @@
 } 
   @media screen and (min-width:1451px) and (max-width:2080px)
 {
-
-  /* .macsel
-  {
-  height: 4.5vh !important;
-  } */
-  /* .filterbtn
-  {
-    height: 5vh !important;
-  } */
   .my_input 
 {
   border: 0.1px solid rgb(216, 213, 213) !important;
@@ -125,5 +116,9 @@
     height: 3.8vh !important;
     padding: 0 10px !important;
     margin-bottom:10px;
+}
+.dashboard_widgets
+{
+  width: 75% !important;
 }
 }

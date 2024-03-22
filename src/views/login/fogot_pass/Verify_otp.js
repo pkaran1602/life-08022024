@@ -44,15 +44,20 @@ const Verify_otp = (props) => {
                                 <p style={{marginTop:'5px'}} className='text-danger'>{verify_error}</p>
                             }
                         <Row className='my-0'>
+                        <Col>
+                        <div style={{paddingTop:'15px'}} >
+                                    <NavLink  style={{textDecoration:'none'}} onClick={resend_otp}>Send Again</NavLink>
+                                </div>
+                                </Col>
+                                <Col >
                         <div style={{display:'flex',justifyContent:'flex-end' , paddingRight:'70px',paddingTop:'15px',}}>
                             <NavLink style={{textDecoration:'none'}} to="/login" >Back to Login</NavLink>
                           </div>
+                          </Col>
                         </Row>
-                        <Col style={{display:'flex', justifyContent:'start'}}>
-                                <div>
-                                    <NavLink  style={{textDecoration:'none'}} onClick={resend_otp}>Send Again</NavLink>
-                                </div>
-                            </Col>
+                       
+                               
+                            
                     </form>
                 </Modal.Body>
             </Modal>

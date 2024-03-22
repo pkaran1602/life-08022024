@@ -12,36 +12,38 @@ const Widgets = (props) => {
   return (
     <>
       <CRow>
-        <CCol md={6} lg={3} className='py-1 fs-4' >
+        <CCol md={6} lg={3} className='py-1 fs-3 dashboard_widgets' >
+          <div className=''>
           <CWidgetStatsA
-            className="p-4"
-            style={{backgroundColor:'rgba(201, 153, 33, 0.733)',color:'white'}}
-            value={user_count.male_user}
-            title="MALE"
+            className="p-2 d-flex card-text-center justify-content-center text-center"
+            style={{backgroundColor:"#CBB989"}}
+            title={user_count.male_user}
+            value="Male"
+          />
+          </div>
+        </CCol>
+        <CCol sm={6} lg={3} className='py-1 fs-3 dashboard_widgets'>
+          <CWidgetStatsA
+            className="p-2 d-flex card-text-center justify-content-center text-center"
+            style={{backgroundColor:"#CBB989"}}
+            title={user_count.female_user}
+            value="Female"
           />
         </CCol>
-        <CCol sm={6} lg={3} className='py-1 fs-4'>
+        <CCol md={6} lg={3} className='py-1 fs-3 dashboard_widgets' >
           <CWidgetStatsA
-            className="p-4"
-            style={{backgroundColor:'rgba(201, 153, 33, 0.733)',color:'white'}}
-            value={user_count.female_user}
-            title="FEMALE"
+            className="p-2 d-flex card-text-center justify-content-center text-center"
+            style={{backgroundColor:"#CBB989"}}
+            title={user_count.other_user}
+            value="Other"
           />
         </CCol>
-        <CCol md={6} lg={3} className='py-1 fs-4' >
+        <CCol sm={6} lg={3} className='py-1 fs-3 dashboard_widgets'>
           <CWidgetStatsA
-            className="p-4"
-            style={{backgroundColor:'rgba(201, 153, 33, 0.733)',color:'white'}}
-            value={user_count.other_user}
-            title="OTHER"
-          />
-        </CCol>
-        <CCol sm={6} lg={3} className='py-1 fs-4'>
-          <CWidgetStatsA
-            className="p-4"
-            style={{backgroundColor:'rgba(201, 153, 33, 0.733)',color:'white'}}
-            value={user_count.total_user}
-            title="TOTAL"
+            className="p-2 d-flex card-text-center justify-content-center text-center"
+            style={{backgroundColor:"#CBB989"}}
+            title={user_count.total_user}
+            value="Total"
           />
         </CCol>
       </CRow>

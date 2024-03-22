@@ -19,7 +19,7 @@ import { useNavigate } from 'react-router-dom';
 import { forgot_pass, verify_otp } from 'src/axios/Api'
 import Verify_otp from './Verify_otp'
 import { useDispatch } from 'react-redux'
-import { reset_request_Fun } from 'src/redux/actions/authAction'
+import { reset_request_Fun, token_expire } from 'src/redux/actions/authAction'
 import Swal from 'sweetalert2'
 
 
@@ -102,6 +102,9 @@ const Forgot_pass = () => {
           email: res.message,
         })
       }
+      else if (res.status === 4) {
+        dispatch(token_expire());
+      }
     });
   };
 }
@@ -130,6 +133,9 @@ const Forgot_pass = () => {
           email: res.message,
         })
       }
+      else if (res.status === 4) {
+        dispatch(token_expire());
+      }
     })
   }
       
@@ -149,6 +155,9 @@ const Forgot_pass = () => {
        else if (response.status === 0) {
         setVerify_error(response.message);
        console.log(response.message);
+      }
+      else if (response.status === 4) {
+        dispatch(token_expire());
       }
     })
   }
@@ -174,7 +183,7 @@ const Forgot_pass = () => {
                     <CCardBody>
                       <CForm onSubmit={submitFun}>
                         <h4>Reset Password</h4>
-                        <p className="text-medium-emphasis">A one-time-password(OTP)will be sent to your registered email address for verification</p>
+                        <p className="text-medium-emphasis">A one-time-password(OTP) will be sent to your registered email address for verification.</p>
                         <CInputGroup className="mb-3">
                           <CInputGroupText>
                             <CIcon icon={cilUser} />

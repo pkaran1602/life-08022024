@@ -129,7 +129,7 @@ const Login = () => {
                   <CCard className={style.left_div}>
                     <CCardBody className="text-center">
                       <div className={style.my_logo}>
-                        <h2>Life of Me</h2>
+                        <h2>Life Of Me</h2>
                         <img src={app_logo} />
                       </div>
                     </CCardBody>

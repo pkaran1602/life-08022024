@@ -42,6 +42,8 @@ const User = () => {
     download(fileName, csv);
   };
 
+  
+
   const download = (fileName, content) => {
     const blob = new Blob([content], { type: 'text/csv' });
     const link = document.createElement('a');
@@ -52,14 +54,14 @@ const User = () => {
 
   useEffect(() => {
     get_users_list().then((response) => {
-      console.log(response)
+     
       setIsLoading(false);
       if (response.status === 1) {
         const dataWithIndex = response.data.map((item, index) => ({
           ...item,
           Name: item.Name || "N/A",
           Email: item.Email || "N/A",
-          Mobile: item.Mobile ==='' ? "N/A" : "+61 " + item.Mobile  ,
+          Mobile: item.Mobile ==='' ? "N/A" :( "+61 " + item.Mobile ).replace(/\D/g, '').replace(/(\d{2})(\d{3})(\d{3})/, '+$1 $2 $3 '),
           index: index + 1,
         }));
         setData(dataWithIndex);
@@ -91,7 +93,7 @@ const User = () => {
     () => [
       {
         accessorKey: 'index',
-        header: 'SN',
+        header: 'ID',
         size: 50,
         // cell: row=>(user_id())
 
@@ -108,29 +110,31 @@ const User = () => {
       },
       {
         accessorKey: 'Mobile',
-        header: 'Mobile',
+        header: 'Phone',
         size: 200,
-        enableSorting: false,
+        // enableSorting: false,
       },
       {
         accessorKey: 'Register_date',
         header: 'Registered On',
         size: 200,
-        enableSorting: false,
+        // enableSorting: false,
       },
       
       {
         accessorFn: (row) =>
           <>
-            <FaEye
-              style={{ color: '#078FD7', fontSize: '20px', cursor: 'pointer' }}
+            <Button
+              style={{ color: "black"}}
               onClick={() => view_fun(row)}
-            />
+            >View</Button>
           </>,
         id: 'Button',
         header: 'AAA',
         Header: () => <span>Actions</span>,
         enableSorting: false,
+        enableColumnFilter :false,
+        size: 100,
       },
     ],
   );

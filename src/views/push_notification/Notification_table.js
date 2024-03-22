@@ -1,3 +1,4 @@
+import React from 'react';
 import { useMemo } from 'react';
 import {
   MaterialReactTable,
@@ -10,22 +11,27 @@ const Notification_table = (props) => {
 
     const {data} = props
 
+    
+
   const columns = useMemo(
     () => [
       {
         accessorKey: 'index',
-        header: 'SN ',
-        size: 50,
+        header: 'ID ',
+        size: 5,
       },
       {
         accessorKey: 'message',
-        header: 'Notification Text',
-        size: 150,
+        header: 'Message',
+        size: 250, 
+        enableSorting: false,
+
       },
+      
       {
         accessorKey: 'createdAt',
         header: 'Sent On',
-        size: 200,
+        size: 50,
       },
     ],
     [],
@@ -34,11 +40,12 @@ const Notification_table = (props) => {
   
 
   const table = useMaterialReactTable({
+    columns,
+    data, 
     enableColumnActions: false,
     enableFullScreenToggle: false,
     enableDensityToggle:false,
-    columns,
-    data, 
+   
   });
 
   return <MaterialReactTable table={table} />;

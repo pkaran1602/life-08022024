@@ -63,8 +63,8 @@ const Feedback_details = (props) => {
                 <Row>
                 <Col>
                 <div className={stylesheet.content_column}>
-                <div className={stylesheet.content_heading}><strong>Feedback Text</strong></div>
-                <div className={stylesheet.content_details}> <p>   {selectedUser.feedback ?selectedUser.feedback:"N/A"}</p></div>
+                <div className={stylesheet.content_heading}><strong>Message</strong></div>
+                <div className={stylesheet.content_details} style={{whiteSpace:"pre-line"}}> <p>   {selectedUser.feedback ?selectedUser.feedback:"N/A"}</p></div>
                 </div>
                 </Col>
                 </Row>
@@ -79,8 +79,16 @@ const Feedback_details = (props) => {
                 <Row>
                 <Col>
                 <div className={stylesheet.content_column}>
-                <div className={stylesheet.content_heading}><strong>Version Code</strong></div>
-                <div className={stylesheet.content_details} style={{whiteSpace:"pre-line"}}> <p>   {selectedUser.app_version ? selectedUser.app_version:"N/A"}</p></div>
+                <div className={stylesheet.content_heading}><strong>App Version</strong></div>
+                <div className={stylesheet.content_details}> <p>   {selectedUser.app_version ? selectedUser.app_version:"N/A"}</p></div>
+                </div>
+                </Col>
+                </Row>
+                <Row>
+                <Col>
+                <div className={stylesheet.content_column}>
+                <div className={stylesheet.content_heading}><strong>OS Version </strong></div>
+                <div className={stylesheet.content_details}> <p>   {selectedUser.os_version ? selectedUser.os_version:"N/A"}</p></div>
                 </div>
                 </Col>
                 </Row>

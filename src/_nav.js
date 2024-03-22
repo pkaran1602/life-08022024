@@ -4,6 +4,8 @@ import { IoSpeedometerOutline } from "react-icons/io5";
 import { FaUsers } from "react-icons/fa";
 import { BsBuildingsFill } from "react-icons/bs";
 import { MdOutlineFeedback,MdOutlineNotificationsActive } from "react-icons/md";
+import { PiUsersThreeLight } from "react-icons/pi"
+import { BsBuildings } from "react-icons/bs";
 
 const _nav = [
   {
@@ -16,13 +18,13 @@ const _nav = [
     component: CNavItem,
     name: 'Users',
     to: '/users',
-    icon: <FaUsers style={{marginRight:'7px',fontWeight:'bold',fontSize:'22px'}} />,
+    icon: <PiUsersThreeLight style={{marginRight:'7px',fontWeight:'bold',fontSize:'22px'}} />,
   },
   {
     component: CNavItem,
     name: 'Affiliations',
     to: '/affiliations',
-    icon:<BsBuildingsFill style={{marginRight:'7px',fontWeight:'bold',fontSize:'22px'}} />,
+    icon:<BsBuildings style={{marginRight:'7px',fontWeight:'bold',fontSize:'22px'}} />,
   },
   {
     component: CNavItem,

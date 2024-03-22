@@ -9,6 +9,8 @@ import { useDispatch } from 'react-redux';
 import My_Loader from 'src/components/loader/My_Loader';
 import { FaEye } from "react-icons/fa";
 import Feedback_details from './Feedback_details';
+import { Button } from 'react-bootstrap';
+
 
 
 const Feedback = () => {
@@ -53,41 +55,45 @@ const Feedback = () => {
     () => [
       {
         accessorKey: 'index',
-        header: 'SN',
-        size: 50,
+        header: 'ID',
+        size: 25,
       },
       {
         accessorKey: 'name',
         header: 'Name',
-        size: 150,
+        size: 100,
       },
       {
         accessorKey: 'email',
         header: 'Email',
-        size: 50,
+        size: 100,
       },
       {
         accessorKey: 'feedback',
-        header: 'Feedback Text',
-        size: 300,
+        header: 'Message',
+        size: 280,
+        enableSorting: false,
+
       },
       {
         accessorKey: 'date',
         header: 'Submitted On',
-        size: 200,
+        size: 50,
       },
       {
         accessorFn: (row) =>
           <>
-            <FaEye
-              style={{ color: '#078FD7', fontSize: '20px', cursor: 'pointer' }}
+            <Button
+              style={{ color: "black"}}
               onClick={() => view_fun(row)}
-            />
+            >View</Button>
           </>,
         id: 'Button',
-        header: 'AAA',
+        header: 'Action',
         Header: () => <span>Actions</span>,
         enableSorting: false,
+        enableColumnFilter :false,
+        size: 50,
       },
     ],
     [],
@@ -100,6 +106,7 @@ const Feedback = () => {
     enableColumnActions: false,
     enableFullScreenToggle: false,
     enableDensityToggle: false,
+    
   });
 
   return (

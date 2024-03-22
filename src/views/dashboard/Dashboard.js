@@ -12,10 +12,13 @@ import { Button, Col, Row } from 'react-bootstrap';
 import style from '../widgets/widgets.module.css';
 import My_Loader from 'src/components/loader/My_Loader';
 import Form from 'react-bootstrap/Form';
+import { token_expire } from 'src/redux/actions/authAction';
+import { useDispatch } from 'react-redux';
 
 
 const Dashboard = () => {
 
+  const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
   const [user_count, setUser_count] = useState({});
   const [wish_count, setWish_count] = useState({});
@@ -32,9 +35,12 @@ const Dashboard = () => {
       console.log(response)
       setIsLoading(false);
       if (response.status === 1) {
-        setUser_count(response.data.users_count);   
-        setWish_count(response.data.wish_count);   
+        setUser_count(response.data.users_count);
+        setWish_count(response.data.wish_count);
 
+      }
+      else if (response.status === 4) {
+        dispatch(token_expire());
       }
     })
   };
@@ -50,7 +56,7 @@ const Dashboard = () => {
       setType("week");
     }
     if (event.target.value === "month") {
-      setType("month");  
+      setType("month");
     }
     if (event.target.value === "quarter") {
       setType("quarter");
@@ -72,7 +78,7 @@ const Dashboard = () => {
     }
   };
 
-  const filter_btn = ()=>{
+  const filter_btn = () => {
     let data = { type: type, start_date: selectdate.start_date, end_date: selectdate.end_date };
     get_userStatics(data);
     console.log(data)
@@ -83,7 +89,7 @@ const Dashboard = () => {
   };
 
   const handlechange_date = (e) => {
-    setSelectdate({...selectdate , [e.target.name]:e.target.value})
+    setSelectdate({ ...selectdate, [e.target.name]: e.target.value })
   };
 
   useEffect(() => {
@@ -100,80 +106,90 @@ const Dashboard = () => {
       {!isLoading &&
         <div className={stylesheet.container}>
           <div className={stylesheet.heading}>
-            <h4 style={{ color: '#424242', fontSize: '26px', fontWeight: '500',padding:"15px 0"}}>
+            <h4 style={{ color: '#424242', fontSize: '26px', fontWeight: '500', padding: "15px 0",marginBottom:'-30px' }}>
               Statistics
             </h4>
           </div>
+          <div className='my-4'>
+            <form className='d-flex align-items-center justify-content-start' style={{marginBottom:'-10px'}}>
+              <div className={stylesheet.macsel}>
+                <Form.Select size="md"
+                  value={type}
+                  onChange={handleChange}
+                  displayEmpty
+                  inputProps={{ 'aria-label': 'Without label' }}
+                >
+                  <option style={{ fontSize: '15px', color: '#757575' }} value="total"> All</option>
+                  <option style={{ fontSize: '15px', color: '#757575' }} value="per_day">Today</option>
+                  <option style={{ fontSize: '15px', color: '#757575' }} value="week">Week</option>
+                  <option style={{ fontSize: '15px', color: '#757575' }} value="month">Month</option>
+                  <option style={{ fontSize: '15px', color: '#757575' }} value="quarter">Quarter</option>
+                  <option style={{ fontSize: '15px', color: '#757575' }} value="year">Yearly</option>
+                  <option style={{ fontSize: '15px', color: '#757575' }} value="custom_date"> Custom date A-B</option>
+                  <option style={{ fontSize: '15px', color: '#757575' }} value="to_date">To date</option>
+                </Form.Select>
+              </div>
+              <div>
+                <Button className={stylesheet.filterbtn} onClick={filter_btn} variant='primary'>Filter</Button>
+              </div>
+            </form>
+          </div>
+          {show1 &&
+            <div className='mb-3'>
+              <Row>
+                <Col md={3}>
+                  <div>
+                    <label style={{ fontSize: '16px', color: '#757575' }} for='start_date'>To Date</label>
+                  </div>
+                  <div >
+                    <input className='form-control' type="date" name='start_date' value={selectdate.start_date} onChange={handlechange_date} max={new Date().toISOString().split('T')[0]} />
+                  </div>
+                </Col>
+              </Row>
+            </div>
+          }
+          {show &&
+            <div style={{ width: '100%' }}>
+              <Row className='pb-3'>
+                <Col md={3}>
+                  <div>
+                    <div>
+                      <label style={{ fontSize: '16px', color: '#757575' }} for='date'>Start Date</label>
+                    </div>
+                    <div>
+                      <input className="form-control" type="date" id='start_date' name='start_date' value={selectdate.start_date} onChange={handlechange_date} max={new Date().toISOString().split('T')[0]} />
+                    </div>
+                  </div>
+                </Col>
+                <Col md={3}>
+                  <div>
+                    <label style={{ fontSize: '16px', color: '#757575' }} for='date'>End Date</label>
+                    <div>
+                      <input className="form-control" style={{ marginRight: '20px !important' }} type="date" id='end_date' name='end_date' value={selectdate.end_date} onChange={handlechange_date} min={selectdate.start_date} max={new Date().toISOString().split('T')[0]} />
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+            </div>
+          }
           <div >
-            <CRow>
+          <CRow>
+              <CCol style={{marginBottom:'-15px'}} xs>
+                <CCard style={{ border: 'none', backgroundColor: 'white', boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }} className="mb-4 ">
+                  <CCardBody>
+                    <Widgets2  className="cen"
+                      age_group_count={user_count} />
+                  </CCardBody>
+                </CCard>
+              </CCol>
+            </CRow>
+            <CRow className='mb-1'>
               <CCol xs>
-                <CCard style={{ border: 'none', backgroundColor: 'white', boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px"}} className="mb-4 ">
+                <CCard style={{ border: 'none', backgroundColor: 'white', boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }} className="mb-4 ">
                   <CCardBody>
                     <div>
-                      <h1 style={{ color: '#424242', fontSize: '24px', fontWeight: '450', }}>Users</h1>
+                      <h1 style={{ color: '#424242', fontSize: '22px', fontWeight: '450', }}>Users</h1>
                     </div>
-                    <div className='my-4'>
-                          <form className='d-flex align-items-center justify-content-start'>
-                            <div className={stylesheet.macsel}>
-                            <Form.Select size="md" 
-                              value={type}
-                              onChange={handleChange}
-                              displayEmpty
-                              inputProps={{ 'aria-label': 'Without label' }}
-                            >
-                              <option style={{ fontSize: '15px', color: '#757575' }} value="total"> All</option>
-                              <option style={{ fontSize: '15px', color: '#757575' }} value="per_day">Today</option>
-                              <option style={{ fontSize: '15px', color: '#757575' }} value="week">Week</option>
-                              <option style={{ fontSize: '15px', color: '#757575' }} value="month">Month</option>
-                              <option style={{ fontSize: '15px', color: '#757575' }} value="quarter">Quarter</option>
-                              <option style={{ fontSize: '15px', color: '#757575' }} value="year">Yearly</option>
-                              <option style={{ fontSize: '15px', color: '#757575' }} value="custom_date"> Custom date A-B</option>
-                              <option style={{ fontSize: '15px', color: '#757575' }} value="to_date">To date</option>
-                            </Form.Select>
-                            </div>    
-                            <div>
-                          <Button className={stylesheet.filterbtn} onClick={filter_btn}  variant='primary'>Filter</Button>              
-                              </div>               
-                          </form>
-                    </div>
-                    {show1 &&
-                              <div className='mb-2'>
-                                <Row>
-                                  <Col md={3}>
-                                <div>
-                                  <label style={{ fontSize: '16px', color: '#757575' }} for='start_date'>To Date</label>
-                                </div>
-                                <div >
-                                  <input className='form-control'  type="date" name='start_date' value={selectdate.start_date} onChange={handlechange_date} />
-                                </div>
-                                </Col>
-                                </Row>
-                              </div>
-                            }
-                    {show &&
-                      <div style={{ width: '100%' }}>
-                        <Row className='pb-2'>
-                          <Col md={3}>
-                            <div>
-                              <div>
-                                <label style={{ fontSize: '16px', color: '#757575' }} for='date'>Start Date</label>
-                              </div>
-                              <div>
-                                <input className="form-control" type="date" name='start_date' value={selectdate.start_date} onChange={handlechange_date} />
-                              </div>
-                            </div>
-                          </Col>
-                          <Col md={3}>
-                            <div>
-                              <label style={{ fontSize: '16px', color: '#757575' }} for='date'>End Date</label>
-                              <div>
-                              <input className="form-control" style={{marginRight:'20px !important'}} type="date" name='end_date' value={selectdate.end_date} onChange={handlechange_date} />
-                              </div>
-                            </div>
-                          </Col>
-                        </Row>
-                      </div>
-                    }
                     <Widgets
                       user_count={user_count}
                     />
@@ -181,24 +197,14 @@ const Dashboard = () => {
                 </CCard>
               </CCol>
             </CRow>
-            <CRow>
-              <CCol xs>
-                <CCard style={{border: 'none', backgroundColor: 'white', boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }} className="mb-4 ">
-                  <CCardBody>
-                    <Widgets2
-                      age_group_count={user_count} />
-                  </CCardBody>
-                </CCard>
-              </CCol>
-            </CRow>
+           
           </div>
-          <br />
-          <CRow>
+          <CRow className='mb-1'>
             <CCol xs>
-              <CCard style={{ border: 'none',backgroundColor: 'white', boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",marginTop:"-20px" }} className="mb-4 ">
+              <CCard style={{ border: 'none', backgroundColor: 'white', boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px", marginTop: "-20px" }} className="mb-4 ">
                 <CCardBody >
-                  <Widgets3 
-                  wish_count={wish_count}
+                  <Widgets3
+                    wish_count={wish_count}
                   />
                 </CCardBody>
               </CCard>

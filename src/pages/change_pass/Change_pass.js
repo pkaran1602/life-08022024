@@ -6,9 +6,12 @@ import Card from 'react-bootstrap/Card'
 import { change_password } from 'src/axios/Api'
 import stylesheet from './change_pass.module.css';
 import { FaEyeSlash ,FaEye } from "react-icons/fa";
+import { token_expire } from 'src/redux/actions/authAction'
+import { useDispatch } from 'react-redux'
 
 const Change_pass  = () => {
 
+  const dispatch = useDispatch();
   const [eye1, seteye1] = useState(true);
   const [eye2, seteye2] = useState(true);
   const [eye3, seteye3] = useState(true);
@@ -22,63 +25,132 @@ const Change_pass  = () => {
     confirm_password: '',
   });
 
+  // const validate = (name, value) => {
+  //   switch (name) {
+  //     case 'current_password':
+  //       if (value.length === 0) {
+  //         // Clear all errors when password length is 0
+  //         setErrors({});
+  //       }
+  //       else
+  //       if (value.length < 8) {
+  //         setErrors({ ...errors, current_password: 'Password should be of minimum eight characters.' });
+  //       }
+  //       else if(value.length > 20){
+  //         setErrors({ ...errors, current_password: 'Password should be of maximum twenty characters.' });
+  //       } else {
+  //         delete errors.current_password;
+  //         setErrors(errors);
+  //       }
+  //       break
+  //       case 'new_password':
+  //         if (value.length === 0) {
+  //           // Clear all errors when password length is 0
+  //           setErrors({});
+  //         }
+  //         else
+  //         if (value.length < 8) {
+  //           setErrors({ ...errors, new_password: 'Password should be of minimum eight characters.' });
+  //         }
+  //         else if(value.length > 20){
+  //           setErrors({ ...errors, new_password: 'Password should be of maximum twenty characters.' });
+  //         }
+  //         else if (data.confirm_password !== value) {
+  //           setErrors({ ...errors, new_password: 'New password and Confirm password does not match.' });
+  //         } 
+  //          else {
+  //           delete errors.new_password;
+  //           setErrors(errors);
+  //         }
+  //         break
+  //       case 'confirm_password':
+  //         if (value.length === 0) {
+  //           // Clear all errors when password length is 0
+  //           setErrors({});
+  //         }
+  //         else
+  //         if (value.length < 8) {
+  //           setErrors({ ...errors, confirm_password: 'Password should be of minimum eight characters.' });
+  //         }
+  //         else if(value.length > 20){
+  //           setErrors({ ...errors, confirm_password: 'Password should be of maximum twenty characters.' });
+  //         }
+  //          else if (data.new_password !== value) {
+  //           setErrors({ ...errors, confirm_password: 'New password and Confirm password does not match.' });
+  //         } 
+  //         else {
+  //           delete errors.confirm_password;
+  //           setErrors(errors);
+  //         }
+  //         break
+  //   }
+  // };
+
   const validate = (name, value) => {
     switch (name) {
       case 'current_password':
         if (value.length === 0) {
           // Clear all errors when password length is 0
           setErrors({});
-        }
-        else
-        if (value.length < 8) {
+        } else if (value.length < 8) {
           setErrors({ ...errors, current_password: 'Password should be of minimum eight characters.' });
-        }
-        else if(value.length > 12){
-          setErrors({ ...errors, current_password: 'Password should be of maximum twelve characters.' });
+        } else if (value.length > 20) {
+          setErrors({ ...errors, current_password: 'Password should be of maximum twenty characters.' });
         } else {
           delete errors.current_password;
           setErrors(errors);
         }
-        break
-        case 'new_password':
-          if (value.length === 0) {
-            // Clear all errors when password length is 0
-            setErrors({});
-          }
-          else
-          if (value.length < 8) {
-            setErrors({ ...errors, new_password: 'Password should be of minimum eight characters.' });
-          }
-          else if(value.length > 12){
-            setErrors({ ...errors, new_password: 'Password should be of maximum twelve characters.' });
-          }
-           else {
-            delete errors.new_password;
-            setErrors(errors);
-          }
-          break
-        case 'confirm_password':
-          if (value.length === 0) {
-            // Clear all errors when password length is 0
-            setErrors({});
-          }
-          else
-          if (value.length < 8) {
-            setErrors({ ...errors, confirm_password: 'Password should be of minimum eight characters.' });
-          }
-          else if(value.length > 12){
-            setErrors({ ...errors, confirm_password: 'Password should be of maximum twelve characters.' });
-          }
-           else if (data.new_password !== value) {
-            setErrors({ ...errors, confirm_password: 'New password and Confirm password does not match.' });
-          } 
+        break;
+  
+      case 'new_password':
+        if (value.length === 0) {
+          // Clear all errors when password length is 0
+          setErrors({});
+        } else if (value.length < 8) {
+          setErrors({ ...errors, new_password: 'Password should be of minimum eight characters.' });
+        } else if (value.length > 20) {
+          setErrors({ ...errors, new_password: 'Password should be of maximum twenty characters.' });
+        } else if (data.confirm_password.length>0 && data.confirm_password !== value) {
+          setErrors({ ...errors, new_password: 'New password and Confirm password does not match.' });
+        }
+        else if(data.confirm_password === value){
+          delete errors.new_password;
+          delete errors.confirm_password;
+          setErrors(errors);
+        }
           else {
-            delete errors.confirm_password;
-            setErrors(errors);
-          }
-          break
+          delete errors.new_password;
+          setErrors(errors);
+        }
+        break;
+  
+      case 'confirm_password':
+        if (value.length === 0) {
+          // Clear all errors when password length is 0
+          setErrors({});
+        } else if (value.length < 8) {
+          setErrors({ ...errors, confirm_password: 'Password should be of minimum eight characters.' });
+        } else if (value.length > 20) {
+          setErrors({ ...errors, confirm_password: 'Password should be of maximum twenty characters.' });
+        } else if (data.new_password.length>0 && data.new_password !== value) {
+          setErrors({ ...errors, confirm_password: 'New password and Confirm password does not match.' });
+        }
+        else if(data.new_password === value){
+          delete errors.confirm_password;
+          delete errors.new_password;
+          setErrors(errors);
+        } 
+        else {
+          delete errors.confirm_password;
+          setErrors(errors);
+        }
+        break;
+  
+      default:
+        break;
     }
   };
+
 
   const show_password1 = ()=>{
     if (ptype1 === "password") {
@@ -157,6 +229,9 @@ const Change_pass  = () => {
             timer: 2000,
           })
         }
+        else if (response.status === 4) {
+          dispatch(token_expire());
+        }
       })
     }
     else{
@@ -170,7 +245,7 @@ const Change_pass  = () => {
         <Card.Header className={stylesheet.card_header}> 
         <div className='d-flex justify-content-between'>
             <div>
-            <h5>Change Password</h5>
+            <h5 style={{margin:'5px'}}>Change Password</h5>
             </div>
             <div>
             <p style={{fontSize:'12px',paddingRight:'10px'}}><span className='text-danger'>*</span> Indicates required field</p>
@@ -290,7 +365,7 @@ const Change_pass  = () => {
               </Col>
             </Row>
             <div className={stylesheet.update_btn}>
-              <Button type='submit'>Save Changes</Button>
+              <Button type='submit'>Change Password</Button>
             </div>
           </form>
         </Card.Body>

@@ -17,16 +17,16 @@ const Widgets3 = (props) => {
   return (
     <>
       <div>
-        <h1 style={{color:'#424242',fontSize:'26px',fontWeight:'450',}}>Wish Certificates Created</h1>
+        <h1 style={{color:'#424242',fontSize:'22px',fontWeight:'450',}}>Total Wish Certificates Generated</h1>
       </div>
       <div>
       <CRow >
-        <CCol sm={6} lg={3}className='py-1 fs-4'  >
+        <CCol sm={6} lg={3}className='py-1 fs-3 dashboard_widgets'  >
           <CWidgetStatsA
-            className="p-4"
-            style={{backgroundColor:'rgba(201, 153, 33, 0.733)',color:'white'}}
-            value={wish_count.total_count}
-            title="CERTIFICATES"
+            className="p-2 d-flex card-text-center justify-content-center text-center"
+            style={{backgroundColor:"#CBB989"}}
+            title={wish_count.total_count}
+            value="Certificates"
           />
         </CCol>
       </CRow>

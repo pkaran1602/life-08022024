@@ -25,9 +25,9 @@ const Push_Notification = () => {
   const [notificationError1, setNotificationError1] = useState('');
   const [wordCount, setWordCount] = useState(0); // State to hold word count
 
-
   const WordCounter = ({ count }) => {
-    return <div style={{color:'red'}}>{count}/200</div>;
+    const emojiCount = (notification_msg.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g) || []).length; // Count emojis
+    return <div style={{color:'red'}}>{count + emojiCount}/150</div>;
   };
 
   const validate = (name, value) => {
@@ -68,14 +68,14 @@ const Push_Notification = () => {
 
   const formatDateTime = (dateTimeString) => {
     const dateTimeObj = new Date(dateTimeString);
-    const options = { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', };
+    const options = { day: '2-digit', month: 'short', year: 'numeric', };
     return dateTimeObj.toLocaleString('en-IN', options).replace(/-/g, ' ').replace(',', '');
   };
 
   const submit_form = (e) => {
     e.preventDefault();
     if (notification_msg.trim() === '') {
-      setNotificationError('Notification text is required');
+      setNotificationError('Notification Text is required');
       return;
     }
     send_pust_notification({ notification_msg: notification_msg }).then((response) => {
@@ -90,6 +90,8 @@ const Push_Notification = () => {
         });
         push_notification_details()
         setNotification_msg("")
+      }else if (response.status === 4) {
+        dispatch(token_expire());
       }
     })
   };
@@ -132,7 +134,8 @@ const Push_Notification = () => {
                 <div className={style.push_label}>
                   <label htmlFor='notification'></label>
                   <textarea 
-                  maxLength={200}
+                  style={{resize:'none'}}
+                  maxLength={150}
                     type="text"
                     // required name='notification'
                     value={notification_msg}
@@ -147,25 +150,26 @@ const Push_Notification = () => {
                      <WordCounter count={wordCount} />
                       </div>
                      </div>
-                  <div>
+                  <div className={style.main_button}>
                     <div className={style.my_btn1}>
                       <Button
                         variant='outline-primary'
                         onClick={() => setShowEmojiPicker(!showEmojiPicker)}>
-                        <FaRegFaceSmile style={{fontSize:'22px'}} />
+                        <FaRegFaceSmile style={{fontSize:'25px'}} />
                       </Button>
-                    </div>
                     <div className={showEmojiPicker ? 'd-block' : 'd-none'}>
                       <Picker
                         data={data}
-                        previewPosition="none"
+                        // previewPosition="none"
                         onEmojiSelect={handleEmojiSelect}
                       />
                     </div>
-                  </div>  
-                </div>
+                    </div>
                 <div className={style.my_btn}>
                   <Button variant='outline-primary' type='submit'>Send</Button>
+                </div>
+                   
+                  </div>  
                 </div>
               </form>
             </div>

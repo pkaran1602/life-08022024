@@ -14,6 +14,8 @@ import ReactCrop, {
 } from "react-image-crop";
 import Modal from 'react-bootstrap/Modal';
 import My_Loader from 'src/components/loader/My_Loader'
+import { useDispatch } from 'react-redux'
+import { token_expire } from 'src/redux/actions/authAction'
 
 
 const ASPECT_RATIO = 1;
@@ -22,6 +24,7 @@ const MIN_DIMENSION = 150;
 
 const User_Profile = () => {
 
+  const dispatch = useDispatch();
   const [user_data, setUser_data] = useState({});
   const [error2, setError2] = useState(false);
   const [file, setFile] = useState(null);
@@ -110,8 +113,33 @@ const User_Profile = () => {
   };
 
   const handleChange = (e) => {
+    console.log(e.target.name)
     validate(e.target.name, e.target.value)
-    setUser_data({ ...user_data, [e.target.name]: e.target.value })
+    const { name, value } = e.target;
+    if (name === "phone") {
+      let phoneDetail = value.trim(); // Trim any whitespace
+  
+      // Check if the trimmed phone number is empty or just '+61'
+      if (phoneDetail === "" || phoneDetail === "+61") {
+        phoneDetail = ""; // If so, set it to an empty string
+      } else if (!phoneDetail.startsWith('+61')) {
+        phoneDetail = '+61' + phoneDetail; // Prepend '+61' only if not already there
+      }
+  
+      setUser_data({ ...user_data, [name]: phoneDetail });
+    } else {
+      setUser_data({ ...user_data, [name]: value });
+    }
+    // if(e.target.name === "phone" ){
+    //   let phone_detail = e.target.value
+    //   if (phone_detail !== "") {
+    //     phone_detail ='+61' +phone_detail
+    //   }
+    //   setUser_data({ ...user_data, ["phone"]: phone_detail })  
+    // }else{
+    //   setUser_data({ ...user_data, [e.target.name]: e.target.value })
+
+    // }
   };
 
   const validate = (name, value) => {
@@ -120,7 +148,7 @@ const User_Profile = () => {
         if (value.length === 0) {
           setErrors({});
         }
-       else if (!/^[a-zA-Z]+$/.test(value)) {
+       else if (!/^[a-zA-Z\s\p{L}]+$/u.test(value)) {
           setErrors({ ...errors, name: "Name should contain only alphabets" });
         }
         else if (value.length <2) {
@@ -143,31 +171,27 @@ const User_Profile = () => {
         else if(value.length > 12){
           setErrors({ ...errors, phone: 'Phone Number should be of maximun twelve characters.' });
         }
-       else if (!/^\d+$/.test(value)) {
-          setErrors({ ...errors, phone: "Please enter numeric value only in Phone Number" });
-      }else {
+     else {
           delete errors.phone;
           setErrors(errors);
         }
         break;
-      case 'email':
-        var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-        if (value.length === 0) {
-          // If email field is empty, do not show any error
-          delete errors.email;
-          setErrors(errors);
-        }
-       else if (!value.match(validRegex)) {
-          setErrors({
-            ...errors,
-            email: 'Please enter valid email address',
-          })
-        }
-         else {
-          delete errors.email
-          setErrors(errors)
-        }
-        break
+        case 'email':
+          var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*\.com$/
+          if (value.length === 0) {
+            // If email field is empty, do not show any error
+            delete errors.email;
+            setErrors(errors);
+          } else if (!value.match(validRegex)) {
+            setErrors({
+              ...errors,
+              email: 'Please enter a valid email address',
+            })
+          } else {
+            delete errors.email
+            setErrors(errors)
+          }
+          break
       default:
         break
     }
@@ -208,10 +232,13 @@ const User_Profile = () => {
         setisLoading(false);
          
           window.location.reload();
-        } else{
-          console.log("error")
+        } else if (response.status === 4) {
+          dispatch(token_expire());
+        }
+         else{
           setisLoading(false);
         }
+       
       });
     }
   };
@@ -220,6 +247,9 @@ const User_Profile = () => {
     get_admin_data().then((res) => {
       if (res.status === 1) {
         setUser_data(res.data)
+      }
+      else if (res.status === 4) {
+        dispatch(token_expire());
       }
     })
   };
@@ -237,7 +267,7 @@ const User_Profile = () => {
         <Card.Header className={stylesheet.card_header}>
           <div className='d-flex justify-content-between'>
             <div>
-            <h5>Update Profile Details</h5>
+            <h5 style={{margin:'5px'}}>Update Profile Details</h5>
             </div>
             <div>
               <p style={{fontSize:'12px',paddingRight:'10px'}}><span className='text-danger'>*</span> Indicates required field</p>
@@ -258,7 +288,7 @@ const User_Profile = () => {
                           </span>
                         </label>
                         <label>
-                          <img src={user_data.profile_pic !== "" ? user_data.profile_pic : profile} alt="" width="130px" />
+                          <img src={user_data.profile_pic !== "" ? user_data.profile_pic : profile} title='Select Profile Picture' alt="" width="130px" />
                           <input accept="image/png , image/jpeg,image/webp" type="file" name="file"  onChange={abc } hidden />
                           {/* {!imgSelected ? null : <p>Please select your image</p>} */}
                         </label>
@@ -356,7 +386,7 @@ const User_Profile = () => {
                           //   outline: 'none',
                           //   width: '80%'
                           // }}
-                          type="tel"
+                          type="text"
                           name="phone"
                           value={user_data.phone}
                           onChange={handleChange}
@@ -374,7 +404,7 @@ const User_Profile = () => {
                 </div>
                 </div>
             <div className={stylesheet.update_btn}>
-              <Button type='submit'>Save Changes</Button>
+              <Button type='submit'>Update</Button>
             </div>
           </form>
         </Card.Body>

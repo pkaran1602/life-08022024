@@ -63,7 +63,7 @@ const AppHeaderDropdown = () => {
         <CAvatar    src={user_data.profile_pic} size="md" />
       </CDropdownToggle>
       <CDropdownMenu className="pt-0 " placement="bottom-end">
-        <CDropdownHeader className="bg-light fw-semibold py-2">Admin</CDropdownHeader>
+        <CDropdownHeader className="bg-light fw-semibold py-2"></CDropdownHeader>
         <NavLink style={{textDecoration:'none', color:'rgba(44, 56, 74, 0.95)'}} to='/my_profile'>
         <CDropdownItem >
           <CIcon icon={cilUser} className="me-2" />         

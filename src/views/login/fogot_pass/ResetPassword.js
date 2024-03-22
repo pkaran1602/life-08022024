@@ -294,7 +294,7 @@ const ResetPassword = () => {
             Swal.fire({
               position: "center",
               icon: "success",
-              text: "Password has been created successfully",
+              text: "Password has been updated.",
               showConfirmButton: false,
               timer: 2000
             });
@@ -319,9 +319,18 @@ const ResetPassword = () => {
           else if (value.length < 8) {
             setErrors({ ...errors, password: 'Password should be of minimum eight characters.' });
           }
-          else if (value.length > 12) {
-            setErrors({ ...errors, password: 'Password should be of maximum twelve characters.' });
-          } else {
+          else if (value.length > 20) {
+            setErrors({ ...errors, password: 'Password should be of maximum twenty characters.' });
+          }
+          else if (data.confirm_password.length>0 && data.confirm_password !== value) {
+            setErrors({ ...errors, password: 'New password and Confirm password does not match.' });
+          }
+          else if(data.confirm_password === value){
+            delete errors.password;
+            delete errors.confirm_password;
+            setErrors(errors);
+          }
+           else {
             delete errors.password;
             setErrors(errors);
           }
@@ -334,11 +343,16 @@ const ResetPassword = () => {
           else if (value.length < 8) {
             setErrors({ ...errors, confirm_password: 'Password should be of minimum eight characters.' });
           }
-          else if (value.length > 12) {
-            setErrors({ ...errors, confirm_password: 'Password should be of maximum twelve characters.' });
+          else if (value.length > 20) {
+            setErrors({ ...errors, confirm_password: 'Password should be of maximum twenty characters.' });
           }
-          else if (data.password !== value) {
+          else if (data.password.length>0 && data.password !== value) {
             setErrors({ ...errors, confirm_password: 'New password and Confirm password does not match.' });
+          }
+          else if(data.password === value){
+            delete errors.confirm_password;
+            delete errors.password;
+            setErrors(errors);
           } 
           else {
             delete errors.confirm_password;
