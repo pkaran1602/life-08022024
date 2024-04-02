@@ -21,10 +21,10 @@ const Widgets3 = (props) => {
       </div>
       <div>
       <CRow >
-        <CCol sm={6} lg={3}className='py-1 fs-3 dashboard_widgets'  >
+        <CCol sm={6} lg={3}className='py-1 fs-3 dashboard_widgets dashboard_box'  >
           <CWidgetStatsA
-            className="p-2 d-flex card-text-center justify-content-center text-center"
-            style={{backgroundColor:"#CBB989"}}
+            className="p-2"
+            style={{backgroundColor:"#CBB989",fontSize:"26px",fontWeight:"600"}}
             title={wish_count.total_count}
             value="Certificates"
           />

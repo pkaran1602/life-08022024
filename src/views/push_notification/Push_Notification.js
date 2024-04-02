@@ -25,10 +25,10 @@ const Push_Notification = () => {
   const [notificationError1, setNotificationError1] = useState('');
   const [wordCount, setWordCount] = useState(0); // State to hold word count
 
-  const WordCounter = ({ count }) => {
-    const emojiCount = (notification_msg.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g) || []).length; // Count emojis
-    return <div style={{color:'red'}}>{count + emojiCount}/150</div>;
-  };
+  // const WordCounter = ({ count }) => {
+  //   const emojiCount = (notification_msg.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g) || []).length; // Count emojis
+  //   return <div style={{color:'red'}}>{count + emojiCount}/150</div>;
+  // };
 
   const validate = (name, value) => {
     switch (name) {
@@ -61,9 +61,15 @@ const Push_Notification = () => {
 };
 
   const handleEmojiSelect = (emoji) => {
-    setCurrentEmoji(emoji.native);
-    setNotification_msg(notification_msg + emoji.native);
-    setShowEmojiPicker(!showEmojiPicker)
+    if (notification_msg.length + emoji.native.length <= 200) {
+      setCurrentEmoji(emoji.native);
+      setNotification_msg(notification_msg + emoji.native);
+      setShowEmojiPicker(false); // Close emoji picker after selecting
+    } else {
+      // Notify the user that the maximum character limit has been reached
+      setNotificationError1('Cannot add emoji, maximum character limit reached');
+      setShowEmojiPicker(false); // Close emoji picker
+    }
   };
 
   const formatDateTime = (dateTimeString) => {
@@ -90,6 +96,7 @@ const Push_Notification = () => {
         });
         push_notification_details()
         setNotification_msg("")
+        setWordCount(0);
       }else if (response.status === 4) {
         dispatch(token_expire());
       }
@@ -146,8 +153,8 @@ const Push_Notification = () => {
                      {notificationError && <div className='text-danger'>{notificationError}</div>}
                       </div>
                       <div>
-
-                     <WordCounter count={wordCount} />
+                        <p className='text-danger'>Max Length 200 Words</p>
+                     {/* <WordCounter count={wordCount} /> */}
                       </div>
                      </div>
                   <div className={style.main_button}>
@@ -162,7 +169,7 @@ const Push_Notification = () => {
                         data={data}
                         // previewPosition="none"
                         onEmojiSelect={handleEmojiSelect}
-                      />
+                      />          
                     </div>
                     </div>
                 <div className={style.my_btn}>

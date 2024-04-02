@@ -38,7 +38,7 @@ const User = () => {
       }
     })
     const csv = generateCsv(csvConfig)(dataWithNAs);
-    const fileName = `Users-${formattedDate}.CSV`;
+    const fileName = `UsersList-${formattedDate}.CSV`;
     download(fileName, csv);
   };
 
@@ -130,7 +130,7 @@ const User = () => {
             >View</Button>
           </>,
         id: 'Button',
-        header: 'AAA',
+        header: 'Actions',
         Header: () => <span>Actions</span>,
         enableSorting: false,
         enableColumnFilter :false,
@@ -153,6 +153,12 @@ const User = () => {
     enableDensityToggle: false,
     columns,
     data,
+    muiTablePaperProps: {
+      sx: {
+        borderRadius: '8px',
+         boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
+      },
+    },
   });
   return (
     <div>
@@ -168,7 +174,7 @@ const User = () => {
               </span>
             </div>
             <div>
-              <Button variant='outline-primary' onClick={handleExportData}>Download CSV</Button>
+              <Button variant='outline-primary' onClick={handleExportData}>Export CSV</Button>
             </div>
           </div>
           <div style={{padding:'30px',paddingTop:'10px'}}>

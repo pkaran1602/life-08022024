@@ -35,14 +35,15 @@ const UserDetail = (props) => {
       style={{ display: 'block', position: 'initial' }}
     >
       <Modal show={isOpen} onHide={close_fun} className={stylesheet.my_modal}>
-        <Modal.Header style={{backgroundColor:'rgba(201, 153, 33, 0.733)'}} closeButton>
+        <Modal.Header style={{backgroundColor:'#CBB989'}} closeButton>
           <Modal.Title>User Details</Modal.Title>
         </Modal.Header>
         <Modal.Body className={stylesheet.main_body}>
           <div className={stylesheet.container}>
             <div className={stylesheet.my_profile}>
-              <img src={selectedUser.Profile_Photo === "" ? img1 : selectedUser.Profile_Photo} />
+              <img src={selectedUser.Profile_Photo === "" ? img1 : selectedUser.Profile_Photo} alt='user-pic' />
             </div>
+              {/* <p style={{ display:"flex",justifyContent:"center", fontSize: "13px",color:"black", fontWeight: "500"  }}>Profile Picture</p> */}
             <div className={stylesheet.my_details}>
               <Row>
               <Col>

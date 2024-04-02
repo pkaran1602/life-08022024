@@ -11,7 +11,10 @@
   color: #fff; 
   z-index: 1000;
 }
-
+.header
+{
+  margin-bottom: -25px !important;
+}
 .header span {
   color: #424242;
   font-size: 24px;

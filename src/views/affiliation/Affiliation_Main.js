@@ -23,6 +23,7 @@ const MIN_DIMENSION = 150;
 
 const Affiliation_Main = () => {
 
+  const fileInputRef1 = useRef(null);
   const dispatch = useDispatch();
 
   const [isLoading, setIsLoading] = useState(true);
@@ -242,7 +243,7 @@ const Affiliation_Main = () => {
       text: "Are you sure you want to delete this affiliate?",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: " rgba(201, 153, 33, 0.733)",
+      confirmButtonColor: " #CBB989",
       customClass: {
         confirmButton: 'custom-swal-button',
         cancelButton: 'custom-swal-button'
@@ -276,50 +277,56 @@ const Affiliation_Main = () => {
 
   const handle_change = (e) => {
     const { name, value } = e.target;
+    let updatedValue = value;
     if (name === 'link') {
         if (!value.trim()) {
             setAffiliation_errors1({});
-        } else if (value.trim().length < 11) {
-            setAffiliation_errors1({ ...affiliation_errors1, [name]: "Web URL must be at least 11 characters long." });
+        } else if (value.trim().length < 8) {
+            setAffiliation_errors1({ ...affiliation_errors1, [name]: "Web URL must be at least 8 characters long." });
         } else if (!/^https:\/\/.+/i.test(value.trim())) {
-            setAffiliation_errors1({ ...affiliation_errors1, [name]: "Invalid URL. Please enter a URL starting with 'https://'." });
+            // If "https://" is not present, prepend it to the link
+            updatedValue = 'https://' + value.trim();
         } else {
             const { link, ...restErrors } = affiliation_errors1;
             setAffiliation_errors1(restErrors);
         }
     }
-    setAffiliations_data({ ...affiliations_data, [name]: value });
+    setAffiliations_data({ ...affiliations_data, [name]: updatedValue });
 };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    if (name === 'link') {
-      if (!value.trim()) {
-        setAffiliation_errors({ ...affiliation_errors, [name]: "" });
-      } else if (value.trim().length < 11) {
-        setAffiliation_errors({ ...affiliation_errors, [name]: "Web URL must be at least 11 characters long." });
-      }
-      else if (!/^https:\/\/.+/i.test(value.trim())) {
-        setAffiliation_errors({ ...affiliation_errors, [name]: "Invalid URL. Please enter a URL starting with 'https://'." });
-    }
-      else {
-        const { link, ...restErrors } = affiliation_errors;
-        setAffiliation_errors(restErrors);
-      }
+
+const handleChange = (e) => {
+  const { name, value } = e.target;
+  let updatedValue = value;
+
+  if (name === 'link') {
+    if (!value.trim()) {
+      setAffiliation_errors({ ...affiliation_errors, [name]: "" });
+    } else if (value.trim().length < 8) {
+      setAffiliation_errors({ ...affiliation_errors, [name]: "Web URL must be at least 8 characters long." });
+    } else if (!/^https:\/\/.+/i.test(value.trim())) {
+      // If "https://" is not present, prepend it to the link
+      updatedValue = 'https://' + value.trim();
     } else {
-      if (!value.trim()) {
-        setAffiliation_errors({});
-      }
+      const { link, ...restErrors } = affiliation_errors;
+      setAffiliation_errors(restErrors);
     }
-    setLink(value);
-  };
+  } else {
+    if (!value.trim()) {
+      setAffiliation_errors({});
+    }
+  }
+
+  setLink(updatedValue);
+};
+
 
   const validate = () => {
     let error = {};
     if (!link.trim()) {
       error["link"] = "Web URL is required.";
-    } else if (link.trim().length < 11) {
-      error["link"] = "Web URL must be at least 11 characters long.";
+    } else if (link.trim().length < 8) {
+      error["link"] = "Web URL must be at least 8 characters long.";
     }  else if (!/^https:\/\/.+/i.test(link.trim())) {
       error["link"] = "Invalid URL. Please enter a URL starting with 'https://'.";
   }
@@ -333,8 +340,8 @@ const Affiliation_Main = () => {
     const { link } = affiliations_data;
     if (!link.trim()) {
         error["link"] = "Web URL is required.";
-    } else if (link.trim().length < 11) {
-        error["link"] = "Web URL must be at least 11 characters long.";
+    } else if (link.trim().length < 8) {
+        error["link"] = "Web URL must be at least 8 characters long.";
     } else if (!/^https:\/\/.+/i.test(link.trim())) {
         error["link"] = "Invalid URL. Please enter a URL starting with 'https://'.";
     }
@@ -388,7 +395,7 @@ const Affiliation_Main = () => {
             width={60}
             alt='Logo'
           />
-          </a>
+           </a>
         ),
         enableColumnFilter: false,
       },
@@ -407,7 +414,7 @@ const Affiliation_Main = () => {
         accessorFn: (row) =>
           <>
             <Button
-              style={{ color: 'black', marginRight: "10px" }}
+              style={{ color: 'black', marginRight: "10px", marginTop: "3px",  marginBottom: "3px"  }}
               onClick={() => edit_fun(row)}
             >Edit</Button>
             <Button
@@ -426,7 +433,7 @@ const Affiliation_Main = () => {
             `}</style>
           </>,
         id: 'Button',
-        header: 'AAA',
+        header: 'Actions',
         Header: () => <p style={{ marginLeft: "35px" }}>Actions</p>,
         enableColumnFilter: false,
         size: 100,
@@ -445,6 +452,12 @@ const Affiliation_Main = () => {
     data,
     enableRowOrdering: true,
     enableSorting: false,
+    muiTablePaperProps: {
+      sx: {
+        borderRadius: '8px',
+         boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
+      },
+    },
     muiRowDragHandleProps: ({ table }) => ({
       onDragEnd: () => {
         const { draggingRow, hoveredRow } = table.getState();
@@ -523,6 +536,7 @@ const Affiliation_Main = () => {
               setCrop1={setCrop1}
               affiliation_errors1={affiliation_errors1}
               profile_img1={profile_img1}
+              fileInputRef1={fileInputRef1}
 
             />
           </div>

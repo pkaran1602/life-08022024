@@ -34,7 +34,7 @@ const AppHeaderDropdown = () => {
       text: "Are you sure you want to logout?",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "rgba(201, 153, 33, 0.733)",
+      confirmButtonColor: "#CBB989",
       customClass: {
         confirmButton: 'custom-swal-button',
         cancelButton:'custom-swal-button'
@@ -60,7 +60,7 @@ const AppHeaderDropdown = () => {
   return (
     <CDropdown className='my_nav' variant="nav-item">
       <CDropdownToggle placement="bottom-end" className="py-0 profile_img" caret={false}>
-        <CAvatar    src={user_data.profile_pic} size="md" />
+        <CAvatar alt="admin-pic"   src={user_data.profile_pic} size="md" />
       </CDropdownToggle>
       <CDropdownMenu className="pt-0 " placement="bottom-end">
         <CDropdownHeader className="bg-light fw-semibold py-2"></CDropdownHeader>

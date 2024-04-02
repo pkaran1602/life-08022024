@@ -41,11 +41,12 @@ const Forgot_pass = () => {
   };
 
   const handleChange1 = (e) => {
-    setOtp(e.target.value)
-    validate(e.target.name, e.target.value)
-    if(e.target.value === ""){
-      setVerify_error("OTP is required");
-    }
+    if (/^\d*$/.test(e.target.value)) {
+      // Ensure the length of OTP is not more than 4
+      if (e.target.value.length <= 4) {
+          setOtp(e.target.value);
+      }
+  }
   };
 
   const validate = (name, value) => {
@@ -71,7 +72,7 @@ const Forgot_pass = () => {
           default:
             break
     }
-  }
+  };
   const validate_fun =async ()=>{
     let error = errors;
     if(email.length === 0){
@@ -79,7 +80,7 @@ const Forgot_pass = () => {
       setErrors({ ...errors, email: 'Please enter valid email address' });
     }
     return error;
-  }
+  };
   const submitFun =async (e) => {
     e.preventDefault();
     const error = await validate_fun();
@@ -107,7 +108,7 @@ const Forgot_pass = () => {
       }
     });
   };
-}
+};
   const closeFun = () => {
     setIsOpen(false);
     setVerify_error(null);
@@ -137,10 +138,8 @@ const Forgot_pass = () => {
         dispatch(token_expire());
       }
     })
-  }
+  };
       
-    
-
 
   const verifyFun =  (e) => {
     e.preventDefault();
@@ -201,7 +200,7 @@ const Forgot_pass = () => {
                       )}
                         <CRow>
                           <div className={style.my_btn}>
-                            <button type="submit">Send OTP</button>
+                            <button style={{color:"black"}} type="submit">Send OTP</button>
                           </div>
                         </CRow>
                       </CForm>

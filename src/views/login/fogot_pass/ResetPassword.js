@@ -10,6 +10,7 @@ import { reset_Password } from 'src/axios/Api'
 import { useDispatch } from 'react-redux'
 import { reset_success_Fun } from 'src/redux/actions/authAction'
 import My_Loader from 'src/components/loader/My_Loader'
+import { PropTypes } from 'prop-types'        
 import {
   CCard,
   CCardBody,
@@ -24,7 +25,7 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
-import { FaEyeSlash ,FaEye } from "react-icons/fa";
+import { FaEyeSlash, FaEye } from "react-icons/fa";
 
 
 // const ResetPassword = () => {
@@ -145,7 +146,7 @@ import { FaEyeSlash ,FaEye } from "react-icons/fa";
 //     setIsLoading(false);
 //    }, 2000)
 //   }, [])
-  
+
 
 //   return (
 //     <div>
@@ -261,147 +262,147 @@ import { FaEyeSlash ,FaEye } from "react-icons/fa";
 const ResetPassword = () => {
 
   const navigate = useNavigate();
-    const dispatch = useDispatch();
-  
-    const [isLoading, setIsLoading] = useState(true);
-    const [errors, setErrors] = useState({})
-    const [error2, setError2] = useState(false)
-    const [ptype, setPtype] = useState('password')
-    const [eye1, seteye1] = useState(true);
-    const [eye2, seteye2] = useState(true);
-    const [ptype1, setPtype1] = useState('password')
-    const [ptype2, setPtype2] = useState('password')
-  
-    const { state } = useLocation();
-    if (state === null) {
-      navigate('/login');
+  const dispatch = useDispatch();
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [errors, setErrors] = useState({})
+  const [error2, setError2] = useState(false)
+  const [ptype, setPtype] = useState('password')
+  const [eye1, seteye1] = useState(true);
+  const [eye2, seteye2] = useState(true);
+  const [ptype1, setPtype1] = useState('password')
+  const [ptype2, setPtype2] = useState('password')
+
+  const { state } = useLocation();
+  if (state === null) {
+    navigate('/login');
+  }
+  const [data, setData] = useState({
+    email: state.email,
+    password: '',
+    confirm_password: ''
+  });
+
+  const submit_fun = async (e) => {
+    e.preventDefault();
+    const error = await validate_fun();
+    setErrors(error);
+    if (Object.keys(errors).length === 0) {
+      reset_Password(data).then((res) => {
+        console.log(res)
+        setIsLoading(false);
+        if (res.status === 1) {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            text: "Password has been updated.",
+            showConfirmButton: false,
+            timer: 2000
+          });
+          dispatch(reset_success_Fun());
+        }
+      })
+    } else {
+
     }
-    const [data, setData] = useState({
-      email: state.email,
-      password: '',
-      confirm_password: ''
-    });
-  
-    const submit_fun = async (e) => {
-      e.preventDefault();
-      const error = await validate_fun();
-      setErrors(error);
-      if (Object.keys(errors).length === 0) {
-        reset_Password(data).then((res) => {
-          console.log(res)
-          setIsLoading(false);
-          if (res.status === 1) {
-            Swal.fire({
-              position: "center",
-              icon: "success",
-              text: "Password has been updated.",
-              showConfirmButton: false,
-              timer: 2000
-            });
-            dispatch(reset_success_Fun());
-          }
-        })
-      } else {
-  
-      }
-    };
-    const handleChange = (e) => {
-      validate(e.target.name, e.target.value)
-      setData({ ...data, [e.target.name]: e.target.value });
-    };
-    const validate = (name, value) => {
-      switch (name) {
-        case 'password':
-          if (value.length === 0) {
-            // Clear all errors when password length is 0
-            setErrors({});
-          }
-          else if (value.length < 8) {
-            setErrors({ ...errors, password: 'Password should be of minimum eight characters.' });
-          }
-          else if (value.length > 20) {
-            setErrors({ ...errors, password: 'Password should be of maximum twenty characters.' });
-          }
-          else if (data.confirm_password.length>0 && data.confirm_password !== value) {
-            setErrors({ ...errors, password: 'New password and Confirm password does not match.' });
-          }
-          else if(data.confirm_password === value){
-            delete errors.password;
-            delete errors.confirm_password;
-            setErrors(errors);
-          }
-           else {
-            delete errors.password;
-            setErrors(errors);
-          }
-          break
-        case 'confirm_password':
-          if (value.length === 0) {
-            // Clear all errors when password length is 0
-            setErrors({});
-          }
-          else if (value.length < 8) {
-            setErrors({ ...errors, confirm_password: 'Password should be of minimum eight characters.' });
-          }
-          else if (value.length > 20) {
-            setErrors({ ...errors, confirm_password: 'Password should be of maximum twenty characters.' });
-          }
-          else if (data.password.length>0 && data.password !== value) {
-            setErrors({ ...errors, confirm_password: 'New password and Confirm password does not match.' });
-          }
-          else if(data.password === value){
-            delete errors.confirm_password;
-            delete errors.password;
-            setErrors(errors);
-          } 
-          else {
-            delete errors.confirm_password;
-            setErrors(errors);
-          }
-          break
-      }
+  };
+  const handleChange = (e) => {
+    validate(e.target.name, e.target.value)
+    setData({ ...data, [e.target.name]: e.target.value });
+  };
+  const validate = (name, value) => {
+    switch (name) {
+      case 'password':
+        if (value.length === 0) {
+          // Clear all errors when password length is 0
+          setErrors({});
+        }
+        else if (value.length < 8) {
+          setErrors({ ...errors, password: 'Password should be of minimum eight characters.' });
+        }
+        else if (value.length > 20) {
+          setErrors({ ...errors, password: 'Password should be of maximum twenty characters.' });
+        }
+        else if (data.confirm_password.length > 0 && data.confirm_password !== value) {
+          setErrors({ ...errors, password: 'New password and Confirm password does not match.' });
+        }
+        else if (data.confirm_password === value) {
+          delete errors.password;
+          delete errors.confirm_password;
+          setErrors(errors);
+        }
+        else {
+          delete errors.password;
+          setErrors(errors);
+        }
+        break
+      case 'confirm_password':
+        if (value.length === 0) {
+          // Clear all errors when password length is 0
+          setErrors({});
+        }
+        else if (value.length < 8) {
+          setErrors({ ...errors, confirm_password: 'Password should be of minimum eight characters.' });
+        }
+        else if (value.length > 20) {
+          setErrors({ ...errors, confirm_password: 'Password should be of maximum twenty characters.' });
+        }
+        else if (data.password.length > 0 && data.password !== value) {
+          setErrors({ ...errors, confirm_password: 'New password and Confirm password does not match.' });
+        }
+        else if (data.password === value) {
+          delete errors.confirm_password;
+          delete errors.password;
+          setErrors(errors);
+        }
+        else {
+          delete errors.confirm_password;
+          setErrors(errors);
+        }
+        break
     }
-    const validate_fun = async () => {
-      let error = errors;
-      if (data.password === "") {
-        error["password"] = "New Password is required."
-        setErrors({ ...errors, password: 'Password should be of minimum eight characters.' });
-      }
-      if (data.confirm_password.length === 0) {
-        error["confirm_password"] = "Confirm Password is required."
-        setErrors({ ...errors, confirm_password: 'Password should be of minimum eight characters.' });
-      }
-      console.log(error)
-      return error;
+  }
+  const validate_fun = async () => {
+    let error = errors;
+    if (data.password === "") {
+      error["password"] = "New Password is required."
+      setErrors({ ...errors, password: 'Password should be of minimum eight characters.' });
     }
-  
-    const show_password1 = ()=>{
-      if (ptype1 === "password") {
-        setPtype1("text");
-        seteye1(false);
-      }
-      else {
-        setPtype1("password");
-        seteye1(true);
-      }
+    if (data.confirm_password.length === 0) {
+      error["confirm_password"] = "Confirm Password is required."
+      setErrors({ ...errors, confirm_password: 'Password should be of minimum eight characters.' });
     }
-    const show_password2 = ()=>{
-      if (ptype2 === "password") {
-        setPtype2("text");
-        seteye2(false);
-      }
-      else {
-        setPtype2("password");
-        seteye2(true);
-      }
+    console.log(error)
+    return error;
+  }
+
+  const show_password1 = () => {
+    if (ptype1 === "password") {
+      setPtype1("text");
+      seteye1(false);
     }
-  
-    useEffect(() => {
-     setTimeout(()=>{
+    else {
+      setPtype1("password");
+      seteye1(true);
+    }
+  }
+  const show_password2 = () => {
+    if (ptype2 === "password") {
+      setPtype2("text");
+      seteye2(false);
+    }
+    else {
+      setPtype2("password");
+      seteye2(true);
+    }
+  }
+
+  useEffect(() => {
+    setTimeout(() => {
       setIsLoading(false);
-     }, 2000)
-    }, [])
-    
+    }, 2000)
+  }, [])
+
 
   return (
     <>
@@ -427,57 +428,57 @@ const ResetPassword = () => {
                         <h5>Create New Password</h5>
                         <br />
                         <div className='mb-3'>
-                        <CInputGroup>
-                          <CInputGroupText>
-                            <CIcon icon={cilLockLocked} />
-                          </CInputGroupText>
-                          <CFormInput
-                            placeholder="New Password"
-                            type={ptype1}
-                            name="password"
-                            value={data.password}
-                            onChange={handleChange}
+                          <CInputGroup>
+                            <CInputGroupText>
+                              <CIcon icon={cilLockLocked} />
+                            </CInputGroupText>
+                            <CFormInput
+                              placeholder="New Password"
+                              type={ptype1}
+                              name="password"
+                              value={data.password}
+                              onChange={handleChange}
                             // required
-                          />
-                             <div style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)' }}>
-                          {eye1 &&
-                 <FaEyeSlash style={{}} onClick={show_password1} />
-              }
-             {!eye1 &&
-                <FaEye style={{}} onClick={show_password1} />
-              }
-      </div>
-                        </CInputGroup>
-      {errors && errors.password && (
-                        <p  className="text-danger">{errors.password}</p>
-                      )}
+                            />
+                            <div style={{ position: 'absolute', right: '10px', top: '50%',zIndex: '5', transform: 'translateY(-50%)' }}>
+                              {eye1 &&
+                                <FaEyeSlash style={{}} onClick={show_password1} />
+                              }
+                              {!eye1 &&
+                                <FaEye style={{}} onClick={show_password1} />
+                              }
+                            </div>
+                          </CInputGroup>
+                          {errors && errors.password && (
+                            <p className="text-danger">{errors.password}</p>
+                          )}
                         </div>
                         <div className='mb-3'>
-                        <CInputGroup>
-                          <CInputGroupText>
-                            <CIcon icon={cilLockLocked} />
-                          </CInputGroupText>
-                          <CFormInput
-                            placeholder="Confirm Password"
-                            type={ptype2}
-                            name="confirm_password"
-                            value={data.confirm_password}
-                            onChange={handleChange}
-                            // required
-                            style={{ paddingRight: '2.5rem' }} // Adjust padding for the icon to fit
-                          />
-                          <div style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)' }}>
-                          {eye2 &&
-                 <FaEyeSlash style={{}} onClick={show_password2} />
-              }
-             {!eye2 &&
-                <FaEye style={{}} onClick={show_password2} />
-              }
-      </div>
-                        </CInputGroup>
-                        {errors && errors.confirm_password && (
-                        <p className="text-danger">{errors.confirm_password}</p>
-                      )}
+                          <CInputGroup>
+                            <CInputGroupText>
+                              <CIcon icon={cilLockLocked} />
+                            </CInputGroupText>
+                            <CFormInput
+                              placeholder="Confirm Password"
+                              type={ptype2}
+                              name="confirm_password"
+                              value={data.confirm_password}
+                              onChange={handleChange}
+                              // required
+                              style={{ paddingRight: '2.5rem' }} // Adjust padding for the icon to fit
+                            />
+                            <div style={{ position: 'absolute', right: '10px', top: '50%',zIndex: '5', transform: 'translateY(-50%)' }}>
+                              {eye2 &&
+                                <FaEyeSlash style={{}} onClick={show_password2} />
+                              }
+                              {!eye2 &&
+                                <FaEye style={{}} onClick={show_password2} />
+                              }
+                            </div>
+                          </CInputGroup>
+                          {errors && errors.confirm_password && (
+                            <p className="text-danger">{errors.confirm_password}</p>
+                          )}
                         </div>
                         {/* {invalidCred &&
                         <CRow>
@@ -486,7 +487,7 @@ const ResetPassword = () => {
                         } */}
                         <CRow>
                           <div className={style.my_btn}>
-                            <button type="submit">Change Password</button>
+                            <button style={{ color: "black" }} type="submit">Change Password</button>
                           </div>
                         </CRow>
                         <br />

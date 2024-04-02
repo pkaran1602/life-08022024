@@ -16,14 +16,16 @@ import Modal from 'react-bootstrap/Modal';
 import My_Loader from 'src/components/loader/My_Loader'
 import { useDispatch } from 'react-redux'
 import { token_expire } from 'src/redux/actions/authAction'
+import { NumberFormatter } from 'react-number-formatter'
 
 
 const ASPECT_RATIO = 1;
-const MIN_DIMENSION = 150;
+const MIN_DIMENSION = 50;
 
 
 const User_Profile = () => {
 
+  const fileInputRef = useRef(null);
   const dispatch = useDispatch();
   const [user_data, setUser_data] = useState({});
   const [error2, setError2] = useState(false);
@@ -33,11 +35,12 @@ const User_Profile = () => {
 
 
   const handleCloseModal = () => {
+    handleFileSelect();
     setShowModal(false);
-  }
+  };
   const handleShowModal = () => {
     setShowModal(true);
-  }
+  };
   const imgRef = useRef(null);
   const previewCanvasRef = useRef(null);
   const [error, setError] = useState("");
@@ -57,7 +60,11 @@ const User_Profile = () => {
     if(cropDone === true){
       setCropDone(false);
     }
-  }
+  };
+
+  const handleFileSelect = () => {
+    fileInputRef.current.value = '';
+  };
 
   const handleFile = (e) => {
     const file = e.target.files?.[0];
@@ -113,33 +120,11 @@ const User_Profile = () => {
   };
 
   const handleChange = (e) => {
-    console.log(e.target.name)
     validate(e.target.name, e.target.value)
     const { name, value } = e.target;
-    if (name === "phone") {
-      let phoneDetail = value.trim(); // Trim any whitespace
-  
-      // Check if the trimmed phone number is empty or just '+61'
-      if (phoneDetail === "" || phoneDetail === "+61") {
-        phoneDetail = ""; // If so, set it to an empty string
-      } else if (!phoneDetail.startsWith('+61')) {
-        phoneDetail = '+61' + phoneDetail; // Prepend '+61' only if not already there
-      }
-  
-      setUser_data({ ...user_data, [name]: phoneDetail });
-    } else {
-      setUser_data({ ...user_data, [name]: value });
-    }
-    // if(e.target.name === "phone" ){
-    //   let phone_detail = e.target.value
-    //   if (phone_detail !== "") {
-    //     phone_detail ='+61' +phone_detail
-    //   }
-    //   setUser_data({ ...user_data, ["phone"]: phone_detail })  
-    // }else{
-    //   setUser_data({ ...user_data, [e.target.name]: e.target.value })
+    console.log(name,value)
+    setUser_data({ ...user_data, [name]: value });
 
-    // }
   };
 
   const validate = (name, value) => {
@@ -160,22 +145,7 @@ const User_Profile = () => {
           setErrors(errors);
         }
         break;
-      case "phone":
-        if (value.length === 0) {
-          delete errors.phone;
-          setErrors(errors);
-        }
-       else if (value.length < 8) {
-          setErrors({ ...errors, phone: 'Phone Number should be of minimum eight characters.' });
-        }
-        else if(value.length > 12){
-          setErrors({ ...errors, phone: 'Phone Number should be of maximun twelve characters.' });
-        }
-     else {
-          delete errors.phone;
-          setErrors(errors);
-        }
-        break;
+     
         case 'email':
           var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*\.com$/
           if (value.length === 0) {
@@ -243,6 +213,24 @@ const User_Profile = () => {
     }
   };
 
+  const phoneFun = (number)=>{
+    setUser_data({ ...user_data, ["phone"]: number });
+     
+      if(number.length < 12 && number.length !== 0){
+        setErrors({ ...errors, phone: 'Phone Number should be of minimum nine characters.' });
+      }
+      else  if (number.length === 0) {
+        delete errors.phone;
+        setErrors(errors);
+      }
+      else {
+              delete errors.phone;
+              setErrors(errors);
+            }
+      console.log(number.length)
+  };
+
+
   const user_profile = () => {
     get_admin_data().then((res) => {
       if (res.status === 1) {
@@ -253,6 +241,9 @@ const User_Profile = () => {
       }
     })
   };
+
+
+
 
   useEffect(() => {
     user_profile();
@@ -289,8 +280,7 @@ const User_Profile = () => {
                         </label>
                         <label>
                           <img src={user_data.profile_pic !== "" ? user_data.profile_pic : profile} title='Select Profile Picture' alt="" width="130px" />
-                          <input accept="image/png , image/jpeg,image/webp" type="file" name="file"  onChange={abc } hidden />
-                          {/* {!imgSelected ? null : <p>Please select your image</p>} */}
+                          <input accept="image/png , image/jpeg,image/webp"  ref={fileInputRef} type="file" name="file" onChange={abc} hidden />
                         </label>
                       </div>
                    
@@ -309,12 +299,6 @@ const User_Profile = () => {
                       <div>
                         <input
                         className='form-control'
-                          // style={{
-                          //   border: 'none',
-                          //   borderBottom: '1px solid #757575',
-                          //   outline: 'none',
-                          //   width: '80%'
-                          // }}
                           type="text"
                           name="name"
                           value={user_data.name}
@@ -378,18 +362,13 @@ const User_Profile = () => {
                         </span>
                       </label>
                       <div>
-                        <input
-                          className='form-control'
-                          // style={{
-                          //   border: 'none',
-                          //   borderBottom: '1px solid #757575',
-                          //   outline: 'none',
-                          //   width: '80%'
-                          // }}
-                          type="text"
-                          name="phone"
+                          <NumberFormatter
+                          format={"+61 ### ### #### "}
+                          placeholder='+61 xxx xxx xxx'
+                          type='num'
+                          name='phone'
                           value={user_data.phone}
-                          onChange={handleChange}
+                          getValue={(n) => phoneFun(n)}
                         />
                       </div>
                     </div>

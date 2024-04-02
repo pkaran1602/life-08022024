@@ -14,6 +14,7 @@ import ReactCrop, {
 
 const Add_affiliations = (props) => {
 
+  const fileInputRef = useRef(null);
   const ASPECT_RATIO = 1;
   const MIN_DIMENSION = 10;
 
@@ -34,8 +35,12 @@ const Add_affiliations = (props) => {
       setCropDone(false);
     }
   };
+  const handleFileSelect = () => {
+    fileInputRef.current.value = '';
+  };
 
   const closeModal = () => {
+    handleFileSelect()
     setIsModal(false)
   };
 
@@ -49,25 +54,26 @@ const Add_affiliations = (props) => {
         <Modal.Header style={{ backgroundColor: '#CBB989' }} closeButton>
           <Modal.Title style={{ alignContent: 'center' }}>Add Affiliation</Modal.Title>
         </Modal.Header>
-        <Modal.Body style={{ backgroundColor: 'whitesmoke' }}>
+        <Modal.Body style={{ backgroundColor: '#fff', borderRadius: "15px" }}>
           <div className={style.container}>
             <form onSubmit={addAffiliation_fun}>
-              <Container>
+              <Container style={{ paddingTop: '25px' }}>
                 <div>
-                <Row>
+                  <Row>
                     <Col className='col-md-4 col-sm-5 col-12 text-start'>
                       {/* <label style={{ fontSize: '22px', fontWeight: '400' }}>Logo</label> */}
                       <div className={style.profile_img} style={{ justifyContent: "center", display: "flex" }}>
                         <div>
                           <label>
-                            <p style={{ marginBottom: "10px", fontSize: "14px", fontWeight: "500"  }}>Please select Logo</p>
+                            {/* <p style={{ marginBottom: "10px", fontSize: "14px", fontWeight: "500"  }}>Please select Logo</p> */}
 
                             <div className={style.affiliation_img}>
-                              <img style={{ cursor: 'grabbing', width: '100%', maxWidth: '150px',  padding: '0px', borderRadius: "5px", marginBottom: '5px' }} src={profile_img ? profile_img : profile} width={75} alt="" />
+                              <img style={{ cursor: 'grabbing', width: '100%', maxWidth: '150px', padding: '0px', borderRadius: "5px", marginBottom: '5px' }} src={profile_img ? profile_img : profile} width={75} alt="" />
                             </div>
 
                             <input
                               accept="image/png , image/jpeg"
+                              ref={fileInputRef}
                               type="file"
                               name='file'
                               onChange={abc}
@@ -76,18 +82,18 @@ const Add_affiliations = (props) => {
                           </label>
                         </div>
                       </div>
-                    {affiliation_errors?.file_data &&
-                    <p className='text-danger'>Logo is required.</p>
-                  }
+                      {affiliation_errors?.file_data &&
+                        <p className='text-danger'>Logo is required.</p>
+                      }
                     </Col>
                     <Col className='col-md-8 col-sm-7 col-12 text-start'>
-                      <div style={{ paddingTop: '25px' }}>
+                      <div style={{ paddingTop: '0px' }}>
                         <div>
-                          <label style={{ fontSize: '18px', fontWeight: '400' }} htmlFor="link">Web URL</label>
+                          <label style={{ fontSize: '16px', fontWeight: '400' }} htmlFor="link">Web URL</label>
                         </div>
-                        <div style={{ paddingTop: '10px' }}>
+                        <div style={{ paddingTop: '5px' }}>
                           <input
-                            style={{ width: '100%', height: '45px', border: '1px solid #757575', borderRadius: '7px', padding: '0 8px' }}
+                            style={{ width: '100%', height: '40px', border: '1px solid #757575', borderRadius: '7px', padding: '0 8px' }}
                             type="text"
                             name='link'
                             onChange={handleChange}
@@ -99,9 +105,9 @@ const Add_affiliations = (props) => {
                           }
                         </div>
                       </div>
-                      <div style={{ marginTop: '20px' }}>
-                        <Button variant="secondary" type='submit' style={{ padding: '10px 30px' }}>
-                        Add Affiliation
+                      <div style={{ marginTop: '15px' }}>
+                        <Button variant="secondary" type='submit' style={{ padding: '7px 25px' }}>
+                          Add Affiliation
                         </Button>
                       </div>
                     </Col>

@@ -45,7 +45,12 @@ const Notification_table = (props) => {
     enableColumnActions: false,
     enableFullScreenToggle: false,
     enableDensityToggle:false,
-   
+    muiTablePaperProps: {
+      sx: {
+        borderRadius: '8px',
+         boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
+      },
+    },
   });
 
   return <MaterialReactTable table={table} />;

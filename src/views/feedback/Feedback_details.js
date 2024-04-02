@@ -35,7 +35,7 @@ const Feedback_details = (props) => {
       style={{ display: 'block', position: 'initial' }}
     >
       <Modal show={isOpen} onHide={close_fun} className={stylesheet.my_modal}>
-        <Modal.Header style={{backgroundColor:'rgba(201, 153, 33, 0.733)'}} closeButton>
+        <Modal.Header style={{backgroundColor:'#CBB989'}} closeButton>
           <Modal.Title>Feedback Details</Modal.Title>
         </Modal.Header>
         <Modal.Body className={stylesheet.main_body}>
@@ -64,7 +64,7 @@ const Feedback_details = (props) => {
                 <Col>
                 <div className={stylesheet.content_column}>
                 <div className={stylesheet.content_heading}><strong>Message</strong></div>
-                <div className={stylesheet.content_details} style={{whiteSpace:"pre-line"}}> <p>   {selectedUser.feedback ?selectedUser.feedback:"N/A"}</p></div>
+                <div className={stylesheet.content_details} style={{wordBreak:"break-word"}}> <p>   {selectedUser.feedback ?selectedUser.feedback:"N/A"}</p></div>
                 </div>
                 </Col>
                 </Row>

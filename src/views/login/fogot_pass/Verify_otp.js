@@ -3,14 +3,14 @@ import { Button, Col, Modal, Row } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 
 const Verify_otp = (props) => {
-    const { isOpen, closeFun, otp, setOtp, resend_otp,verifyFun, verify_error,handleChange1 } = props;
+    const { isOpen, closeFun, otp, setOtp, resend_otp, verifyFun, verify_error, handleChange1 } = props;
     console.log(verify_error)
 
-   
+
 
     return (
         <div>
-            <Modal show={isOpen} onHide={closeFun} backdrop="static" keyboard={false} style={{ marginTop: '110px'}}>
+            <Modal show={isOpen} onHide={closeFun} backdrop="static" keyboard={false} style={{ marginTop: '110px' }}>
                 <Modal.Header closeButton>
                     <Modal.Title>OTP Verification</Modal.Title>
                 </Modal.Header>
@@ -24,7 +24,7 @@ const Verify_otp = (props) => {
                         <Row >
                             <Col md={8}>
                                 <div>
-                                    <input 
+                                    <input
                                         className='form-control'
                                         name='otp'
                                         value={otp}
@@ -32,32 +32,32 @@ const Verify_otp = (props) => {
                                     />
                                 </div>
                             </Col>
-                          
+
                             <Col md={4}>
                                 <div>
                                     <Button type='submit'>Verify</Button>
                                 </div>
                             </Col>
-                          
+
                         </Row>
                         {verify_error &&
-                                <p style={{marginTop:'5px'}} className='text-danger'>{verify_error}</p>
-                            }
+                            <p style={{ marginTop: '5px' }} className='text-danger'>{verify_error}</p>
+                        }
                         <Row className='my-0'>
-                        <Col>
-                        <div style={{paddingTop:'15px'}} >
-                                    <NavLink  style={{textDecoration:'none'}} onClick={resend_otp}>Send Again</NavLink>
+                            <Col>
+                                <div style={{ paddingTop: '15px' }} >
+                                    <NavLink style={{ textDecoration: 'none', color: "black" }} onClick={resend_otp}>Resend OTP</NavLink>
                                 </div>
-                                </Col>
-                                <Col >
-                        <div style={{display:'flex',justifyContent:'flex-end' , paddingRight:'70px',paddingTop:'15px',}}>
-                            <NavLink style={{textDecoration:'none'}} to="/login" >Back to Login</NavLink>
-                          </div>
-                          </Col>
+                            </Col>
+                            <Col >
+                                <div style={{ display: 'flex', justifyContent: 'flex-end', paddingRight: '70px', paddingTop: '15px', }}>
+                                    <NavLink style={{ textDecoration: 'none', color: "black" }} to="/login" >Back to Login</NavLink>
+                                </div>
+                            </Col>
                         </Row>
-                       
-                               
-                            
+
+
+
                     </form>
                 </Modal.Body>
             </Modal>

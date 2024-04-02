@@ -173,18 +173,9 @@ const Dashboard = () => {
             </div>
           }
           <div >
-          <CRow>
-              <CCol style={{marginBottom:'-15px'}} xs>
-                <CCard style={{ border: 'none', backgroundColor: 'white', boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }} className="mb-4 ">
-                  <CCardBody>
-                    <Widgets2  className="cen"
-                      age_group_count={user_count} />
-                  </CCardBody>
-                </CCard>
-              </CCol>
-            </CRow>
-            <CRow className='mb-1'>
-              <CCol xs>
+          
+            <CRow>
+              <CCol style={{marginBottom:'-9px'}} xs>
                 <CCard style={{ border: 'none', backgroundColor: 'white', boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }} className="mb-4 ">
                   <CCardBody>
                     <div>
@@ -197,7 +188,16 @@ const Dashboard = () => {
                 </CCard>
               </CCol>
             </CRow>
-           
+            <CRow>
+              <CCol style={{marginBottom:'10px'}} xs>
+                <CCard style={{ border: 'none', backgroundColor: 'white', boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }} className="mb-4 ">
+                  <CCardBody>
+                    <Widgets2  className="cen"
+                      age_group_count={user_count} />
+                  </CCardBody>
+                </CCard>
+              </CCol>
+            </CRow>
           </div>
           <CRow className='mb-1'>
             <CCol xs>
